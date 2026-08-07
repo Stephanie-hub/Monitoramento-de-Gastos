@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>✨ Roleta da Val ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>🎬 Roleta da Val - Capas de Filmes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -18,8 +18,6 @@
             --rosa-chiclete: #FF69B4;
             --lilás: #DA70D6;
             --lavanda: #E6B5F0;
-            --branco: #FFFFFF;
-            --prata: #E8D5F2;
             --rosa-escuro: #FF1493;
             --roxo-escuro: #9932CC;
         }
@@ -53,25 +51,18 @@
         }
 
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 182, 217, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(255, 105, 180, 0.8); }
+            0%, 100% { box-shadow: 0 0 30px rgba(255, 105, 180, 0.5); }
+            50% { box-shadow: 0 0 60px rgba(255, 105, 180, 0.9); }
         }
 
         @keyframes sparkle {
             0% { transform: scale(0) rotate(0deg); opacity: 1; }
-            100% { transform: scale(1) rotate(360deg); opacity: 0; }
+            100% { transform: scale(1.5) rotate(360deg); opacity: 0; }
         }
 
-        @keyframes heart-float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes butterfly-float {
-            0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
-            25% { transform: translateX(30px) translateY(-30px) rotate(10deg); }
-            50% { transform: translateX(0) translateY(-60px) rotate(0deg); }
-            75% { transform: translateX(-30px) translateY(-30px) rotate(-10deg); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px) scale(0.8); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .stars-container {
@@ -94,31 +85,6 @@
             animation: twinkle 3s infinite;
         }
 
-        .sparkle-bg {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: radial-gradient(circle, #FFB6D9, transparent);
-            border-radius: 50%;
-            animation: twinkle 2s infinite;
-        }
-
-        .heart-bg {
-            position: absolute;
-            font-size: 14px;
-            opacity: 0.2;
-            animation: heart-float 15s linear infinite;
-            pointer-events: none;
-        }
-
-        .butterfly-bg {
-            position: absolute;
-            font-size: 16px;
-            opacity: 0.15;
-            animation: butterfly-float 8s ease-in-out infinite;
-            pointer-events: none;
-        }
-
         .container {
             position: relative;
             z-index: 10;
@@ -126,52 +92,38 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             padding: 20px;
-            text-align: center;
         }
 
         .header {
-            margin-top: 40px;
-            margin-bottom: 30px;
+            margin-top: 30px;
+            margin-bottom: 25px;
             animation: float 6s ease-in-out infinite;
         }
 
         .title {
-            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-size: clamp(2rem, 8vw, 4rem);
             font-weight: 800;
             background: linear-gradient(135deg, #FF1493, #DA70D6, #FF69B4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin: 0;
-            letter-spacing: 2px;
             text-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
-            filter: drop-shadow(0 0 20px rgba(255, 182, 217, 0.4));
         }
 
         .subtitle {
-            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-size: clamp(1rem, 3vw, 1.2rem);
             color: #9932CC;
             font-weight: 500;
-            margin-top: 15px;
+            margin-top: 10px;
             font-style: italic;
-            text-shadow: 0 0 15px rgba(230, 181, 240, 0.4);
-            letter-spacing: 1px;
-        }
-
-        .roulette-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-            margin-bottom: 60px;
         }
 
         .roulette-wrapper {
             position: relative;
-            width: clamp(250px, 80vw, 450px);
-            height: clamp(250px, 80vw, 450px);
+            width: clamp(280px, 85vw, 500px);
+            height: clamp(280px, 85vw, 500px);
+            margin: 10px auto;
         }
 
         .roulette-container {
@@ -180,13 +132,13 @@
             height: 100%;
             border-radius: 50%;
             box-shadow: 
-                0 0 60px rgba(255, 105, 180, 0.6),
-                0 20px 60px rgba(218, 112, 214, 0.4),
-                inset 0 0 30px rgba(255, 255, 255, 0.3);
-            border: 6px solid #FFF;
+                0 0 60px rgba(255, 105, 180, 0.5),
+                0 20px 60px rgba(218, 112, 214, 0.3),
+                inset 0 0 40px rgba(255, 255, 255, 0.2);
+            border: 8px solid white;
             animation: pulse-glow 3s ease-in-out infinite;
             overflow: hidden;
-            background: #FFF;
+            background: #f0f0f0;
         }
 
         .roulette {
@@ -194,7 +146,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            transition: transform 4s cubic-bezier(0.13, 0.65, 0.08, 0.99);
         }
 
         .slice {
@@ -205,64 +157,100 @@
             left: 50%;
             transform-origin: 0% 0%;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: clamp(0.6rem, 1.5vw, 0.9rem);
-            font-weight: 600;
-            color: white;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            padding: 5px;
-            text-align: center;
-            word-break: break-word;
-            line-height: 1.2;
+            cursor: default;
+            transition: filter 0.3s;
         }
 
-        .slice-text {
-            transform: rotate(0deg);
-            width: 80%;
+        .slice-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .slice-icon {
+            font-size: clamp(1.5rem, 4vw, 2.8rem);
+            margin-bottom: 2px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .slice-label {
+            color: white;
+            font-size: clamp(0.45rem, 1.2vw, 0.75rem);
+            font-weight: 700;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
             text-align: center;
+            line-height: 1.1;
+            padding: 0 8px;
+            word-break: break-word;
+            max-width: 80%;
+            background: rgba(0,0,0,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            backdrop-filter: blur(2px);
         }
 
         .pointer-wrapper {
             position: absolute;
-            top: -15px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 15;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            filter: drop-shadow(0 4px 12px rgba(255, 20, 147, 0.6));
         }
 
         .pointer {
             width: 0;
             height: 0;
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
-            border-top: 35px solid #FF1493;
-            filter: drop-shadow(0 0 15px rgba(255, 20, 147, 0.8));
-            animation: pulse-glow 2s ease-in-out infinite;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 38px solid #FF1493;
+            filter: drop-shadow(0 0 20px rgba(255, 20, 147, 0.8));
+            animation: pulse-glow 1.5s ease-in-out infinite;
         }
 
         .spin-button {
-            padding: 20px 50px;
-            font-size: clamp(1rem, 3vw, 1.4rem);
+            margin-top: 30px;
+            padding: 18px 50px;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             font-weight: 700;
             border: none;
             border-radius: 50px;
-            background: linear-gradient(135deg, #FF69B4, #DA70D6);
+            background: linear-gradient(135deg, #FF1493, #DA70D6);
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 
-                0 0 30px rgba(255, 105, 180, 0.6),
-                0 8px 25px rgba(218, 112, 214, 0.4);
+            box-shadow: 0 0 40px rgba(255, 105, 180, 0.5);
             letter-spacing: 2px;
             font-family: 'Fredoka', sans-serif;
+            text-transform: uppercase;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            touch-action: manipulation;
             position: relative;
             overflow: hidden;
-            text-transform: uppercase;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+        }
+
+        .spin-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .spin-button:hover::before {
+            opacity: 1;
         }
 
         .spin-button:active {
@@ -272,7 +260,6 @@
         .spin-button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: scale(0.98);
         }
 
         .result-overlay {
@@ -281,12 +268,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 100;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
         .result-overlay.active {
@@ -301,46 +288,31 @@
             padding: 40px;
             text-align: center;
             max-width: 90%;
-            width: 400px;
-            box-shadow: 0 0 60px rgba(255, 105, 180, 0.6);
+            width: 420px;
+            box-shadow: 0 0 80px rgba(255, 105, 180, 0.4);
             animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px) scale(0.8);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .result-card h2 {
-            font-size: 1.2rem;
-            color: #9932CC;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
+        .result-card .result-icon {
+            font-size: 4rem;
+            margin-bottom: 10px;
         }
 
         .result-card .movie-name {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
             font-weight: 800;
             background: linear-gradient(135deg, #FF1493, #DA70D6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin: 20px 0;
-            word-break: break-word;
+            margin: 15px 0;
         }
 
         .result-card p {
+            color: #555;
             font-size: 1rem;
-            color: #666;
-            margin-top: 20px;
-            line-height: 1.6;
+            margin-top: 10px;
         }
 
         .close-result {
@@ -352,50 +324,47 @@
             font-size: 2rem;
             cursor: pointer;
             color: #FF1493;
-            transition: transform 0.2s ease;
-            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.3s;
             touch-action: manipulation;
         }
 
-        .close-result:hover {
+        .close-result:active {
             transform: rotate(90deg) scale(1.2);
         }
 
         .manage-movies-section {
             position: relative;
             z-index: 11;
-            margin-bottom: 40px;
+            margin: 30px 0 20px;
             max-width: 600px;
             width: 100%;
         }
 
         .manage-card {
-            background: linear-gradient(135deg, rgba(255, 182, 217, 0.9), rgba(230, 181, 240, 0.9));
+            background: linear-gradient(135deg, rgba(255, 182, 217, 0.92), rgba(230, 181, 240, 0.92));
             backdrop-filter: blur(20px);
             border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 25px;
             padding: 25px;
-            box-shadow: 0 0 40px rgba(255, 105, 180, 0.5);
+            box-shadow: 0 0 40px rgba(255, 105, 180, 0.3);
         }
 
         .manage-card h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #9932CC;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            font-weight: 600;
+            margin-bottom: 15px;
         }
 
         .textarea-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 15px;
         }
 
         .movie-textarea {
             width: 100%;
-            height: 150px;
+            height: 140px;
             padding: 15px;
             border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 15px;
@@ -403,38 +372,32 @@
             font-family: 'Fredoka', sans-serif;
             font-size: 1rem;
             color: #333;
-            transition: all 0.3s ease;
             outline: none;
             resize: vertical;
-            min-height: 120px;
             line-height: 1.6;
-            -webkit-user-select: text;
-            user-select: text;
-            -webkit-touch-callout: default;
             touch-action: auto;
         }
 
         .movie-textarea:focus {
             background: rgba(255, 255, 255, 0.98);
             border-color: #FF69B4;
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
         }
 
         .process-list-btn {
-            padding: 15px 30px;
+            padding: 14px 30px;
             background: linear-gradient(135deg, #FF1493, #DA70D6);
             color: white;
             border: none;
             border-radius: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-family: 'Fredoka', sans-serif;
             font-size: 1.1rem;
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
             letter-spacing: 1px;
-            -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
+            transition: transform 0.2s;
         }
 
         .process-list-btn:active {
@@ -442,10 +405,10 @@
         }
 
         .movies-list-container {
-            max-height: 300px;
+            max-height: 250px;
             overflow-y: auto;
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 15px;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.3);
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -455,29 +418,23 @@
         .movies-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .movie-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.6);
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             animation: slideIn 0.3s ease;
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .movie-item-text {
@@ -492,29 +449,27 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
             margin-left: 10px;
-            -webkit-tap-highlight-color: transparent;
+            flex-shrink: 0;
             touch-action: manipulation;
+            transition: transform 0.2s;
         }
 
         .delete-movie-btn:active {
-            transform: scale(0.9);
+            transform: scale(0.9) rotate(90deg);
         }
 
         .empty-message {
             text-align: center;
-            color: rgba(153, 50, 204, 0.6);
+            color: rgba(153, 50, 204, 0.5);
             padding: 20px;
-            font-size: 0.95rem;
             font-style: italic;
         }
 
@@ -526,36 +481,30 @@
 
         .clear-all-btn, .toggle-manage-btn {
             flex: 1;
-            min-width: 140px;
+            min-width: 120px;
             padding: 12px;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-family: 'Fredoka', sans-serif;
-            font-size: 0.95rem;
-            -webkit-tap-highlight-color: transparent;
+            font-size: 0.9rem;
             touch-action: manipulation;
+            transition: transform 0.2s;
+            border: 2px solid rgba(255, 105, 180, 0.3);
+        }
+
+        .clear-all-btn:active, .toggle-manage-btn:active {
+            transform: scale(0.95);
         }
 
         .clear-all-btn {
-            background: linear-gradient(135deg, rgba(255, 105, 180, 0.15), rgba(218, 112, 214, 0.15));
-            border: 2px solid rgba(255, 105, 180, 0.3);
+            background: rgba(255, 105, 180, 0.1);
             color: #9932CC;
-        }
-
-        .clear-all-btn:active {
-            transform: scale(0.95);
         }
 
         .toggle-manage-btn {
-            background: linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(218, 112, 214, 0.2));
-            border: 2px solid rgba(255, 105, 180, 0.3);
+            background: rgba(255, 105, 180, 0.15);
             color: #9932CC;
-        }
-
-        .toggle-manage-btn:active {
-            transform: scale(0.95);
         }
 
         .manage-movies-section.collapsed .input-group,
@@ -565,24 +514,16 @@
 
         @media (max-width: 768px) {
             .roulette-wrapper {
-                width: clamp(200px, 70vw, 350px);
-                height: clamp(200px, 70vw, 350px);
+                width: clamp(220px, 75vw, 350px);
+                height: clamp(220px, 75vw, 350px);
             }
 
             .result-card {
-                width: calc(100vw - 40px);
                 padding: 30px 20px;
             }
 
             .manage-card {
-                padding: 15px;
-            }
-
-            .movie-textarea {
-                height: 120px;
-                min-height: 100px;
-                font-size: 0.95rem;
-                padding: 12px;
+                padding: 18px;
             }
         }
 
@@ -596,28 +537,13 @@
             }
 
             .spin-button {
-                padding: 15px 35px;
-                font-size: 1rem;
+                padding: 14px 30px;
+                font-size: 0.9rem;
             }
 
             .result-card {
                 border-radius: 20px;
                 padding: 25px 15px;
-            }
-
-            .process-list-btn {
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-
-            .manage-actions {
-                flex-direction: column;
-            }
-
-            .clear-all-btn,
-            .toggle-manage-btn {
-                min-width: 100%;
-                padding: 14px;
             }
         }
     </style>
@@ -629,23 +555,22 @@
     <div class="container">
         
         <div class="header">
-            <h1 class="title">✨ Roleta da Val ✨</h1>
-            <p class="subtitle">Escolhe o destino… e deixa a sorte decidir o próximo filme.</p>
+            <h1 class="title">🎬 Roleta da Val</h1>
+            <p class="subtitle">Gire e descubra qual filme assistir hoje!</p>
         </div>
 
         <div class="manage-movies-section" id="manageMoviesSection">
             <div class="manage-card">
-                <h3>🎬 Cole sua Lista de Filmes</h3>
+                <h3>📋 Adicione seus Filmes</h3>
                 
                 <div class="textarea-group">
                     <textarea 
                         id="movieTextarea" 
-                        placeholder="Cole sua lista aqui:&#10;&#10;Meninas Malvadas&#10;A Culpa é das Estrelas&#10;Clueless&#10;&#10;(Um filme por linha)"
+                        placeholder="Cole sua lista aqui:&#10;&#10;🎬 Meninas Malvadas&#10;🎬 A Culpa é das Estrelas&#10;🎬 Clueless&#10;&#10;(Um filme por linha)"
                         class="movie-textarea"
                         autocorrect="off"
                         autocapitalize="off"
                         spellcheck="false"
-                        autocomplete="off"
                     ></textarea>
                     <button id="processListBtn" class="process-list-btn">✨ Organizar Lista ✨</button>
                 </div>
@@ -655,47 +580,59 @@
                 </div>
 
                 <div class="manage-actions">
-                    <button id="clearAllBtn" class="clear-all-btn">🗑️ Limpar Tudo</button>
+                    <button id="clearAllBtn" class="clear-all-btn">🗑️ Limpar</button>
                     <button id="toggleManage" class="toggle-manage-btn">▼ Fechar</button>
                 </div>
             </div>
         </div>
 
-        <div class="roulette-section">
-            <div class="roulette-wrapper">
-                <div class="pointer-wrapper">
-                    <div class="pointer"></div>
-                </div>
-                <div class="roulette-container">
-                    <div class="roulette" id="roulette"></div>
-                </div>
+        <div class="roulette-wrapper">
+            <div class="pointer-wrapper">
+                <div class="pointer"></div>
             </div>
-
-            <div class="button-container">
-                <button class="spin-button" id="spinButton">✨ GIRAR ✨</button>
+            <div class="roulette-container">
+                <div class="roulette" id="roulette"></div>
             </div>
         </div>
+
+        <button class="spin-button" id="spinButton">🎲 GIRAR</button>
     </div>
 
     <div class="result-overlay" id="resultOverlay">
         <div class="result-card">
             <button class="close-result" id="closeResult">&times;</button>
-            <h2>✨✨✨</h2>
+            <div class="result-icon" id="resultIcon">🎬</div>
             <p>Hoje vocês vão assistir:</p>
             <div class="movie-name" id="movieName">🎬</div>
-            <p>✨✨✨</p>
+            <p>✨ Boa sessão! ✨</p>
         </div>
     </div>
 
     <script>
         // =============================================
-        // VARIÁVEIS GLOBAIS
+        // CONFIGURAÇÕES
+        // =============================================
+
+        const STORAGE_KEY = 'roleta-filmes-val';
+        const MAX_FILMES = 12;
+
+        // Emojis e cores para cada filme
+        const EMOJIS = ['🎬', '🎭', '🎪', '🎨', '🎯', '🎮', '🎵', '🎶', '🎼', '🎹', '🎺', '🎻', '🥁', '🎸', '🎷', '🎤', '🎧', '🎼', '🎭', '🎪'];
+        const CORES = [
+            '#FF1493', '#FF69B4', '#DA70D6', '#E6B5F0', 
+            '#FFB6D9', '#FF1493', '#FF69B4', '#DA70D6',
+            '#E6B5F0', '#FFB6D9', '#FF1493', '#FF69B4'
+        ];
+
+        // =============================================
+        // ELEMENTOS
         // =============================================
 
         const roulette = document.getElementById('roulette');
         const spinButton = document.getElementById('spinButton');
         const resultOverlay = document.getElementById('resultOverlay');
         const movieName = document.getElementById('movieName');
+        const resultIcon = document.getElementById('resultIcon');
         const closeResult = document.getElementById('closeResult');
         const starsContainer = document.getElementById('starsContainer');
         const movieTextarea = document.getElementById('movieTextarea');
@@ -708,14 +645,6 @@
         let filmes = [];
         let isSpinning = false;
         let currentRotation = 0;
-        const STORAGE_KEY = 'roleta-filmes-val';
-
-        // Cores para os slices
-        const cores = [
-            '#FF1493', '#FF69B4', '#DA70D6', '#E6B5F0',
-            '#FFB6D9', '#FF1493', '#FF69B4', '#DA70D6',
-            '#E6B5F0', '#FFB6D9', '#FF1493', '#FF69B4'
-        ];
 
         // =============================================
         // LOCALSTORAGE
@@ -736,12 +665,24 @@
                     "Clueless",
                     "10 Coisas que Odeio em Você",
                     "Bridget Jones",
-                    "Confissões de um Adolescente",
                     "O Diário da Princesa",
-                    "Legally Blonde"
+                    "Legally Blonde",
+                    "As Patricinhas de Beverly Hills"
                 ];
                 saveFilmes();
             }
+        }
+
+        // =============================================
+        // EMOJIS PARA FILMES
+        // =============================================
+
+        function getEmojiForMovie(index) {
+            return EMOJIS[index % EMOJIS.length];
+        }
+
+        function getColorForMovie(index) {
+            return CORES[index % CORES.length];
         }
 
         // =============================================
@@ -750,7 +691,7 @@
 
         function processMovieList(text) {
             const lines = text.split('\n')
-                .map(line => line.trim())
+                .map(line => line.replace(/^[🎬🎭🎪🎨🎯🎮🎵🎶🎼🎹🎺🎻🥁🎸🎷🎤🎧]\s*/, '').trim())
                 .filter(line => line.length > 0);
             
             if (lines.length === 0) {
@@ -764,7 +705,7 @@
             
             for (const movie of lines) {
                 if (!existingMovies.has(movie)) {
-                    if (filmes.length >= 12) {
+                    if (filmes.length >= MAX_FILMES) {
                         skippedCount++;
                         continue;
                     }
@@ -777,13 +718,13 @@
             }
 
             if (addedCount === 0 && skippedCount > 0) {
-                alert('Todos os filmes da lista já estão na roleta!');
+                alert('Todos os filmes já estão na roleta!');
                 return;
             }
 
-            let message = `✨ ${addedCount} filme(s) adicionado(s) com sucesso!`;
+            let message = `✨ ${addedCount} filme(s) adicionado(s)!`;
             if (skippedCount > 0) {
-                message += `\n\n${skippedCount} filme(s) foram ignorados (já existentes ou limite de 12).`;
+                message += `\n\n${skippedCount} ignorado(s) (já existentes ou limite de ${MAX_FILMES}).`;
             }
             alert(message);
 
@@ -791,7 +732,7 @@
             updateMoviesList();
             updateRoulette();
             movieTextarea.value = '';
-            createSparkles(15);
+            createSparkles(20);
         }
 
         function removeFilme(index) {
@@ -807,7 +748,7 @@
             if (filmes.length === 0) {
                 const emptyMsg = document.createElement('div');
                 emptyMsg.className = 'empty-message';
-                emptyMsg.textContent = '✨ Nenhum filme adicionado ainda.';
+                emptyMsg.textContent = '✨ Adicione filmes para começar!';
                 moviesList.appendChild(emptyMsg);
                 return;
             }
@@ -818,7 +759,7 @@
 
                 const textSpan = document.createElement('span');
                 textSpan.className = 'movie-item-text';
-                textSpan.textContent = `${index + 1}. ${filme}`;
+                textSpan.textContent = `${getEmojiForMovie(index)} ${filme}`;
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'delete-movie-btn';
@@ -844,7 +785,7 @@
         }
 
         // =============================================
-        // ROLETA - CORRIGIDA
+        // ROLETA COM CAPAS
         // =============================================
 
         function updateRoulette() {
@@ -856,7 +797,7 @@
             }
 
             spinButton.disabled = false;
-            spinButton.textContent = '✨ GIRAR ✨';
+            spinButton.textContent = '🎲 GIRAR';
             criarRoleta();
         }
 
@@ -869,44 +810,37 @@
                 const slice = document.createElement('div');
                 slice.className = 'slice';
                 
-                // Calcula a posição e rotação
                 const startAngle = index * angle;
-                const endAngle = (index + 1) * angle;
                 const midAngle = startAngle + (angle / 2);
+                const cor = getColorForMovie(index);
+                const emoji = getEmojiForMovie(index);
                 
-                // Define a cor
-                const cor = cores[index % cores.length];
-                slice.style.background = `linear-gradient(135deg, ${cor}, ${cor}dd)`;
-                
-                // Posiciona o slice
+                // Configura o slice
                 slice.style.transform = `rotate(${startAngle}deg)`;
                 slice.style.clipPath = `polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)`;
+                slice.style.background = `linear-gradient(135deg, ${cor}, ${cor}dd)`;
+                slice.style.border = '1px solid rgba(255,255,255,0.2)';
                 
-                // Cria o texto dentro do slice
-                const textSpan = document.createElement('span');
-                textSpan.className = 'slice-text';
-                textSpan.textContent = filme;
+                // Conteúdo
+                const content = document.createElement('div');
+                content.className = 'slice-content';
                 
-                // Rotaciona o texto para ficar legível
-                const textRotation = midAngle;
-                textSpan.style.transform = `rotate(${textRotation}deg)`;
-                textSpan.style.position = 'absolute';
-                textSpan.style.top = '50%';
-                textSpan.style.left = '50%';
-                textSpan.style.transformOrigin = '0% 0%';
-                textSpan.style.transform = `rotate(${textRotation - 90}deg)`;
-                textSpan.style.color = 'white';
-                textSpan.style.textShadow = '1px 1px 3px rgba(0,0,0,0.5)';
-                textSpan.style.fontWeight = '600';
-                textSpan.style.fontSize = 'clamp(0.6rem, 1.5vw, 0.9rem)';
-                textSpan.style.width = '45%';
-                textSpan.style.textAlign = 'center';
-                textSpan.style.position = 'absolute';
-                textSpan.style.left = '50%';
-                textSpan.style.top = '50%';
-                textSpan.style.transform = `translate(-50%, -50%) rotate(${midAngle - 90}deg)`;
+                const icon = document.createElement('div');
+                icon.className = 'slice-icon';
+                icon.textContent = emoji;
                 
-                slice.appendChild(textSpan);
+                const label = document.createElement('div');
+                label.className = 'slice-label';
+                label.textContent = filme.length > 15 ? filme.substring(0, 14) + '…' : filme;
+                
+                // Posiciona o conteúdo
+                const contentRotation = midAngle - 90;
+                content.style.transform = `rotate(${contentRotation}deg)`;
+                content.style.transformOrigin = 'center center';
+                
+                content.appendChild(icon);
+                content.appendChild(label);
+                slice.appendChild(content);
                 roulette.appendChild(slice);
             });
         }
@@ -926,23 +860,21 @@
             const angle = 360 / total;
             const randomIndex = Math.floor(Math.random() * total);
             
-            // Calcula o ângulo alvo
             const targetAngle = randomIndex * angle + (angle / 2);
             const fullRotations = 5 + Math.floor(Math.random() * 3);
             const targetRotation = fullRotations * 360 + (360 - targetAngle);
             
-            // Aplica a rotação
-            roulette.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+            roulette.style.transition = 'transform 4s cubic-bezier(0.13, 0.65, 0.08, 0.99)';
             roulette.style.transform = `rotate(${targetRotation}deg)`;
             
             currentRotation = targetRotation;
 
-            // Aguarda a animação terminar
             setTimeout(() => {
                 const selectedMovie = filmes[randomIndex];
-                showResult(selectedMovie);
+                const selectedEmoji = getEmojiForMovie(randomIndex);
+                showResult(selectedMovie, selectedEmoji);
                 createConfetti();
-                createSparkles(50);
+                createSparkles(40);
                 
                 isSpinning = false;
                 spinButton.disabled = false;
@@ -953,8 +885,9 @@
         // RESULTADO
         // =============================================
 
-        function showResult(movie) {
-            movieName.textContent = `🎬 ${movie}`;
+        function showResult(movie, emoji) {
+            resultIcon.textContent = emoji;
+            movieName.textContent = movie;
             resultOverlay.classList.add('active');
             playWinSound();
         }
@@ -974,29 +907,32 @@
         // =============================================
 
         function createConfetti() {
-            const emojis = ['✨', '💖', '⭐', '💫', '🎉', '🌟'];
-            for (let i = 0; i < 30; i++) {
+            const emojis = ['✨', '💖', '⭐', '💫', '🎉', '🌟', '🎊', '💕'];
+            for (let i = 0; i < 35; i++) {
                 const confetti = document.createElement('div');
                 confetti.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                confetti.style.position = 'fixed';
-                confetti.style.left = Math.random() * window.innerWidth + 'px';
-                confetti.style.top = '-20px';
-                confetti.style.fontSize = Math.random() * 20 + 15 + 'px';
-                confetti.style.opacity = '1';
-                confetti.style.pointerEvents = 'none';
-                confetti.style.zIndex = '101';
-                confetti.style.transition = 'all 3s ease-out';
+                confetti.style.cssText = `
+                    position: fixed;
+                    left: ${Math.random() * window.innerWidth}px;
+                    top: -20px;
+                    font-size: ${Math.random() * 20 + 15}px;
+                    opacity: 1;
+                    pointer-events: none;
+                    z-index: 101;
+                    transition: all 3.5s ease-out;
+                `;
                 
                 document.body.appendChild(confetti);
 
                 setTimeout(() => {
+                    const xOffset = (Math.random() - 0.5) * 200;
                     confetti.style.top = window.innerHeight + 20 + 'px';
-                    confetti.style.left = (parseFloat(confetti.style.left) + (Math.random() - 0.5) * 100) + 'px';
+                    confetti.style.left = (parseFloat(confetti.style.left) + xOffset) + 'px';
                     confetti.style.opacity = '0';
-                    confetti.style.transform = `rotate(${Math.random() * 720}deg)`;
+                    confetti.style.transform = `rotate(${Math.random() * 720}deg) scale(${0.5 + Math.random()})`;
                 }, 50);
 
-                setTimeout(() => confetti.remove(), 3500);
+                setTimeout(() => confetti.remove(), 4000);
             }
         }
 
@@ -1004,14 +940,16 @@
             for (let i = 0; i < count; i++) {
                 const sparkle = document.createElement('div');
                 sparkle.textContent = '✨';
-                sparkle.style.position = 'fixed';
-                sparkle.style.left = Math.random() * window.innerWidth + 'px';
-                sparkle.style.top = Math.random() * window.innerHeight + 'px';
-                sparkle.style.fontSize = Math.random() * 15 + 10 + 'px';
-                sparkle.style.opacity = '1';
-                sparkle.style.pointerEvents = 'none';
-                sparkle.style.zIndex = '99';
-                sparkle.style.transition = 'all 0.8s ease-out';
+                sparkle.style.cssText = `
+                    position: fixed;
+                    left: ${Math.random() * window.innerWidth}px;
+                    top: ${Math.random() * window.innerHeight}px;
+                    font-size: ${Math.random() * 15 + 10}px;
+                    opacity: 1;
+                    pointer-events: none;
+                    z-index: 99;
+                    transition: all 0.8s ease-out;
+                `;
                 
                 document.body.appendChild(sparkle);
 
@@ -1045,9 +983,7 @@
 
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 0.1);
-            } catch(e) {
-                // Silencia erros de áudio
-            }
+            } catch(e) {}
         }
 
         function playWinSound() {
@@ -1072,9 +1008,7 @@
                     oscillator.start(startTime);
                     oscillator.stop(startTime + 0.3);
                 });
-            } catch(e) {
-                // Silencia erros de áudio
-            }
+            } catch(e) {}
         }
 
         // =============================================
@@ -1091,32 +1025,16 @@
                 starsContainer.appendChild(star);
             }
 
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 20; i++) {
                 const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle-bg';
+                sparkle.className = 'star';
+                sparkle.style.width = '5px';
+                sparkle.style.height = '5px';
                 sparkle.style.left = Math.random() * 100 + '%';
                 sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.background = '#FFB6D9';
                 sparkle.style.animationDelay = Math.random() * 2 + 's';
                 starsContainer.appendChild(sparkle);
-            }
-
-            for (let i = 0; i < 8; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart-bg';
-                heart.textContent = '💖';
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.animationDelay = Math.random() * 15 + 's';
-                starsContainer.appendChild(heart);
-            }
-
-            for (let i = 0; i < 5; i++) {
-                const butterfly = document.createElement('div');
-                butterfly.className = 'butterfly-bg';
-                butterfly.textContent = '🦋';
-                butterfly.style.left = Math.random() * 100 + '%';
-                butterfly.style.top = Math.random() * 50 + '%';
-                butterfly.style.animationDelay = Math.random() * 8 + 's';
-                starsContainer.appendChild(butterfly);
             }
         }
 
@@ -1159,7 +1077,7 @@
 
         // Sparkles aleatórios
         setInterval(() => {
-            if (!isSpinning && Math.random() > 0.7) {
+            if (!isSpinning && Math.random() > 0.8) {
                 createSparkles(3);
             }
         }, 3000);
