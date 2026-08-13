@@ -102,6 +102,10 @@
     height: 160px;
     display:flex;
     align-items:center;
+    cursor: grab;
+  }
+  .reel-gate.dragging{
+    cursor: grabbing;
   }
   .reel-track{
     display:flex;
@@ -129,8 +133,13 @@
     background-position: center;
     color: white;
     text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-    transition: transform 0.3s;
     background-color: #1a1a2e;
+    cursor: pointer;
+    transition: transform 0.2s;
+    user-select: none;
+  }
+  .reel-card:active {
+    transform: scale(0.98);
   }
   .reel-card .cover-bg{
     position:absolute;
@@ -176,18 +185,6 @@
     border-radius: 6px;
     z-index:2;
     max-width:95%;
-  }
-  .reel-card .cover-img{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    max-width:95%;
-    max-height:85%;
-    border-radius:4px;
-    z-index:0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.8);
-    object-fit: contain;
   }
   .gate-pointer{
     position:absolute;
@@ -336,97 +333,167 @@
 
   .overlay{
     position:fixed; inset:0;
-    background: rgba(8,3,4,.78);
+    background: rgba(8,3,4,.88);
     display:flex; align-items:center; justify-content:center;
     padding: 20px;
     z-index: 50;
     opacity:0; pointer-events:none;
-    transition: opacity .25s ease;
-    backdrop-filter: blur(4px);
+    transition: opacity .3s ease;
+    backdrop-filter: blur(6px);
   }
   .overlay.show{ opacity:1; pointer-events:auto; }
+
   .ticket{
-    width:100%; max-width: 360px;
-    background: linear-gradient(170deg, var(--cream), #ecd9ab);
-    color: var(--black);
-    border-radius: 16px;
-    padding: 26px 22px 22px;
+    width:100%; max-width: 450px;
+    max-height: 90vh;
+    background: linear-gradient(135deg, #f6ead0 0%, #ecd9ab 100%);
+    color: #1a1a1a;
+    border-radius: 20px;
+    padding: 0;
     text-align:center;
     position:relative;
-    box-shadow: 0 20px 60px rgba(0,0,0,.6);
-    transform: scale(.9);
-    transition: transform .25s ease;
+    box-shadow: 0 25px 80px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.4);
+    transform: scale(.85);
+    transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow:hidden;
+    display: flex;
+    flex-direction: column;
   }
   .overlay.show .ticket{ transform: scale(1); }
-  .ticket::before, .ticket::after{
+
+  .ticket-header{
+    background: linear-gradient(135deg, var(--burgundy2) 0%, var(--burgundy) 100%);
+    padding: 20px 20px 16px;
+    position: relative;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  .ticket-header::before, .ticket-header::after{
     content:'';
     position:absolute;
-    width: 26px; height: 26px;
-    background: var(--black);
-    background: radial-gradient(circle, transparent 60%, transparent 61%);
+    width: 20px; height: 20px;
+    background: #1a0a0d;
     border-radius:50%;
     top:50%;
     transform: translateY(-50%);
   }
-  .ticket .eyebrow{
+  .ticket-header::before { left: -10px; }
+  .ticket-header::after { right: -10px; }
+
+  .ticket-header .eyebrow{
     font-family:'Barlow Condensed', sans-serif;
     letter-spacing: 3px;
     text-transform: uppercase;
     font-size: 12px;
-    color: var(--red);
+    color: var(--gold-soft);
     font-weight:700;
-    margin-bottom:6px;
+    margin: 0 0 8px;
   }
-  .ticket h2{
+  .ticket-header h2{
     font-family:'Playfair Display', serif;
-    font-size: 24px;
-    margin: 0 0 4px;
+    font-size: 28px;
+    margin: 0 0 6px;
     line-height:1.2;
+    color: var(--cream);
   }
-  .ticket .yr2{
+  .ticket-header .yr2{
     font-family:'Barlow Condensed', sans-serif;
-    font-size:15px;
-    color:#5c4326;
-    margin-bottom: 16px;
+    font-size:13px;
+    color: var(--gold-soft);
+    margin: 0;
+    letter-spacing: 1px;
   }
-  .ticket .poster-preview{
-    width: 180px;
-    height: 135px;
-    margin: 0 auto 16px;
-    border-radius: 8px;
+
+  .ticket-body{
+    padding: 22px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ticket-body::-webkit-scrollbar {
+    width: 6px;
+  }
+  .ticket-body::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.05);
+    border-radius: 10px;
+  }
+  .ticket-body::-webkit-scrollbar-thumb {
+    background: var(--gold-soft);
+    border-radius: 10px;
+  }
+
+  .poster-preview{
+    width: 160px;
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 12px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    box-shadow: 0 8px 24px rgba(0,0,0,.3);
     background-color: #1a1a2e;
+    border: 3px solid var(--gold-soft);
   }
+
+  .synopsis{
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #2a2a2a;
+    background: linear-gradient(135deg, rgba(212,175,55,.08) 0%, rgba(212,175,55,.04) 100%);
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 4px solid var(--gold);
+  }
+
   .rate-stars{
-    display:flex; justify-content:center; gap:6px; margin-bottom: 20px;
+    display:flex; justify-content:center; gap:8px; margin-top: 8px;
   }
   .rate-stars button{
-    background:none; border:none; font-size:28px; cursor:pointer;
-    color: rgba(0,0,0,.18); padding:0;
-    transition: color .2s;
+    background:none; border:none; font-size:32px; cursor:pointer;
+    color: rgba(0,0,0,.15); padding:0;
+    transition: color .2s, transform .2s;
+  }
+  .rate-stars button:hover {
+    transform: scale(1.15);
   }
   .rate-stars button.filled{ color: var(--gold); }
-  .ticket-actions{ display:flex; gap:10px; }
+
+  .ticket-actions{ 
+    display:flex; 
+    gap:12px;
+    padding: 0 22px 22px;
+    margin-top: auto;
+  }
   .ticket-actions button{
     flex:1;
-    padding: 12px 8px;
-    border-radius: 10px;
+    padding: 14px 12px;
+    border-radius: 12px;
     border:none;
     font-family:'Barlow Condensed', sans-serif;
     font-weight:700;
-    letter-spacing:1px;
-    font-size: 15px;
+    letter-spacing:1.5px;
+    font-size: 14px;
     text-transform:uppercase;
     cursor:pointer;
     transition: all .2s;
   }
-  .btn-confirm{ background: linear-gradient(180deg, var(--gold-soft), var(--gold)); color:var(--black); }
-  .btn-confirm:hover{ transform: scale(1.02); }
-  .btn-cancel{ background: transparent; border:2px solid #b8a476 !important; color:#5c4326; }
-  .btn-cancel:hover{ background: rgba(184, 164, 118, 0.1); }
+  .btn-confirm{ 
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold)); 
+    color:var(--black);
+    box-shadow: 0 6px 20px rgba(212,175,55,.3);
+  }
+  .btn-confirm:hover{ transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,.4); }
+  .btn-confirm:active { transform: translateY(0); }
+  .btn-cancel{ 
+    background: transparent; 
+    border:2px solid #b8a476 !important; 
+    color:#8b7d66;
+  }
+  .btn-cancel:hover{ background: rgba(184, 164, 118, 0.12); }
 
   .footer-note{
     text-align:center;
@@ -441,6 +508,14 @@
     transition: color .2s;
   }
   .reset-link:hover{ color: rgba(246,234,208,.7); }
+
+  .drag-hint{
+    text-align: center;
+    font-size: 12px;
+    color: rgba(246,234,208,.4);
+    margin-top: 8px;
+    font-style: italic;
+  }
 </style>
 </head>
 <body>
@@ -463,6 +538,8 @@
     <div class="sprockets"></div>
   </div>
 
+  <div class="drag-hint">Arraste ou clique em um filme para ver o resumo</div>
+
   <button class="spin-btn" id="spinBtn">🎬 Girar Roleta</button>
   <div class="empty-msg" id="emptyMsg" style="display:none;">Todos os vencedores já foram sorteados e assistidos! 🍿🏆</div>
 
@@ -480,11 +557,16 @@
 
   <div class="overlay" id="overlay">
     <div class="ticket">
-      <div class="eyebrow">Bilhete sorteado</div>
-      <div class="poster-preview" id="ticketPoster"></div>
-      <h2 id="ticketTitle">—</h2>
-      <div class="yr2" id="ticketYear">—</div>
-      <div class="rate-stars" id="ticketStars"></div>
+      <div class="ticket-header">
+        <div class="eyebrow">🎟️ Bilhete Sorteado</div>
+        <h2 id="ticketTitle">—</h2>
+        <p class="yr2" id="ticketYear">—</p>
+      </div>
+      <div class="ticket-body">
+        <div class="poster-preview" id="ticketPoster"></div>
+        <div class="synopsis" id="ticketSynopsis">—</div>
+        <div class="rate-stars" id="ticketStars"></div>
+      </div>
       <div class="ticket-actions">
         <button class="btn-cancel" id="btnCancel">Cancelar</button>
         <button class="btn-confirm" id="btnConfirm">Assistir</button>
@@ -590,6 +672,97 @@ const MOVIE_SEARCH = {
   '1942': 'Citizen Kane',
   '1941': 'The Great McGinty',
   '1940': 'Mr. Smith Goes to Washington'
+};
+
+// SINOPSES DETALHADAS E CRIATIVAS
+const SYNOPSES = {
+  '2026': 'Uma família do Harlem vê sua vida virar de cabeça para baixo quando segredos enterrados há tempos voltam à tona. Entre revelações chocantes, lealdades são testadas e a verdade emerge de forma brutal em um drama de tensão crescente.',
+  '2025': 'Anora, uma jovem mulher inteligente e perspicaz, trabalha como acompanhante em Nova York enquanto persegue seus sonhos de atriz. Sua vida muda radicalmente quando se envolve com a família ultrarrica de um cliente, desencadeando uma sequência de eventos inesperados.',
+  '2024': 'Sandra Voyt é acusada de assassinar seu marido em um case sensacionalista. Conforme seu julgamento se desdobra, a verdade sobre seu relacionamento tóxico é revelada de forma devastadora, desafiando a percepção da sociedade sobre vítimas e culpados.',
+  '2023': 'Evelyn Wang é uma mulher cansada levando uma vida monótona quando é arrastada para uma aventura alucinante através do multiverso. Armada com conhecimento absurdo e habilidades inesperadas, ela deve salvar a realidade enquanto descobre seu verdadeiro potencial.',
+  '2022': 'Um diretor retorna a Belfast, sua cidade natal, e revisita sua infância durante os violentos Troubles irlandeses. Através de memórias vívidas, ele reconstrói a mágica e o trauma de crescer em um lugar dividido pela guerra.',
+  '2021': 'Uma jovem mulher confronta um produtor cinematográfico poderoso em um julgamento explosivo por agressão sexual. Sua coragem em falar a verdade desafia a elite de Hollywood e inspira um movimento de mudança na indústria.',
+  '2020': 'A família Kim, pobre e desempregada, consegue trabalho infiltrando-se na vida luxuosa da família Park. O que começa como um arranjo financeiro se transforma em um thriller social revelador sobre classe, privilégio e desespero.',
+  '2019': 'Don Shirley, um genial pianista negro, contrata Tony Lip, um motorista branco do Bronx, para uma turnê pelo Profundo Sul segregacionista nos anos 60. A improvável amizade que surge desafia preconceitos enquanto enfrenta perigos raciais aterradores.',
+  '2018': 'Chris Washington, um jovem negro, é convidado para a casa da namorada para conhecer sua família branca. Conforme o fim de semana progride, ele descobre que está preso em uma conspiração aterradora e sofisticada de horror racial.',
+  '2017': 'Lee Chandler, um homem solitário vivendo modestamente, volta para sua cidade natal quando seu irmão morre. Forçado a enfrentar seu passado trágico e assumir o cuidado de seu sobrinho, ele gradualmente reconstrói sua vida com autenticidade.',
+  '2016': 'Jornalistas do Boston Globe investigam relatos de abuso sexual na Igreja Católica. Sua pesquisa meticulosa e corajosa revela um padrão sistemático de crimes encobertos que abala a instituição até seu núcleo.',
+  '2015': 'Sandro é maestro de renome que sofre um acidente vascular cerebral. Em sua jornada de recuperação em Manhattan, ele enfrenta limitações físicas, falta de esperança e pessoas inesperadas que o ajudam a redescobrir propósito.',
+  '2014': 'Theodore, um homem divorciado e introvertido, se apaixona por Samantha, um sistema operacional com inteligência artificial em um futuro próximo. Seu relacionamento inusitado explora temas de conexão humana em tempos digitais.',
+  '2013': 'Django é um escravo liberto que se une a um caçador de recompensas para encontrar sua esposa. Sua jornada sangrentamente épica pelo Antebellum South é um libelo contra a escravidão disfarçado de western satisfatório.',
+  '2012': 'Um casal americano em crise matrimonial embarca em uma fuga para Paris nos anos 1920. Conforme exploram a cidade mágica, eles descobre romance, nostalgia e a possibilidade de recuperar o que se perdeu.',
+  '2011': 'O Rei George VI precisa de ajuda para superar sua gagueira debilitante antes de fazer o discurso de sua vida durante a II Guerra Mundial. Um fonoaudiólogo sem convencionalismo o ajuda, e uma amizade improvável floresce.',
+  '2010': 'Uma equipe de artificieiros de bombas enfrenta diariamente a morte enquanto tenta desativar explosivos em Bagdá. Seu relacionamento com o perigo se torna obsessivo enquanto cada um lida com o trauma dessa profissão impossível.',
+  '2009': 'A vida de Harvey Milk, um jovem que se torna ativista LGBTQ+ e político em San Francisco, é retratada com urgência. Seu assassinato precoce marca um ponto de inflexão no movimento pelos direitos gays nos EUA.',
+  '2008': 'Juno McGuff é uma adolescente sarcástica que engravida e escolhe dar seu bebê para adoção. Sua jornada emocional a força a amadurecer enquanto navega relacionamentos complexos com sua família e a futura mãe.',
+  '2007': 'Olive Hoover, uma menina desajustada, quer se tornar uma campeã de beleza infantil para provar algo a si mesma. Sua jornada caótica por pequenas cidades americanas envolve sua família excêntrica em uma aventura memorável.',
+  '2006': 'Várias histórias se cruzam em Los Angeles após um acidente de carro que expõe as conexões invisíveis entre pessoas de diferentes raças, classes e circunstâncias.',
+  '2005': 'Um casal em crise terapêutica explora o conceito de relacionamentos abertos em Paris. Conforme as barreiras entre amor e desejo se dissolvem, eles confrontam a natureza elusiva da memória e conexão.',
+  '2004': 'Uma tradutora americana em Tóquio fica presa em um vácuo existencial. Seus encontros com um ator envelhecido desencadeiam uma conexão silenciosa e profunda que transcende idioma e idade.',
+  '2003': 'Um terapeuta de fala espanhol desenvolve uma relação terapêutica inusitada com um paciente com deficiência intelectual severa. Sua conexão abre caminhos inesperados para comunicação e amor.',
+  '2002': 'Vários membros da aristocracia britânica se reúnem em uma mansão durante tempos de mudança social. Seus segredos, paixões e intrigas refletem uma classe em declínio.',
+  '2001': 'Um adolescente idealista se torna amigo de jornalistas de rock nos anos 70 durante a golden age do rock and roll. Sua jornada de iniciação mistura música, ingenuidade e inocência perdida.',
+  '2000': 'Lester Burnham, homem de meia-idade atormentado, desmorona após descobrir que sua esposa quer o divórcio. Sua busca por redenção e significado o leva a explorar desejos reprimidos de forma perigosa.',
+  '1999': 'A vida de William Shakespeare é reimaginada enquanto ele luta com paixão, política e criatividade ao escrever Romeu e Julieta. A ficção e realidade se misturam em romance e teatro.',
+  '1998': 'Will Hunting é um gênio matemático preso em Boston que trabalha como porteiro. Quando seu talento é descoberto, dois professores o desafiam a confrontar seu passado traumático e potencial desperdiçado.',
+  '1997': 'Dois casais em Fargo, Minnesota, enfrentam o inverno brutal enquanto tramam um sequestro que sai desesperadamente do controle. A tensão moral e consequências éticas explodem de forma violenta.',
+  '1996': 'Criminosos, policiais e espiões se reúnem em um quarto de hotel em Los Angeles em uma teia de traição e morte. As narrativas se cruzam em um thriller de trama intrincada.',
+  '1995': 'Em Los Angeles, um criminoso e uma prostituta se encontram e exploram relacionamentos doentios e violência. Uma parábola sobre crime, romantismo e consequências morais.',
+  '1994': 'Ada McGrath, uma mulher muda com paixão ardente, é vendida em casamento para um fazendeiro na Nova Zelândia colonial. Seu instrumento, o piano, se torna sua voz enquanto ela navega amor, luto e rebelião.',
+  '1993': 'Um soldado volta para home de uma guerra no exterior carregando a culpa de suas ações. A paranoia e trauma o arrastam para um ciclo destruidor enquanto tenta readaptar-se à vida civil.',
+  '1992': 'Thelma e Louise, duas mulheres ordinárias cansadas de suas vidas, embarcam em uma fuga que se torna cada vez mais selvagem. Sua jornada de autodescobrimento desafia gênero e mortalidade.',
+  '1991': 'O fantasma de Sam Wheat retorna para o mundo dos vivos após seu assassinato. Usando uma médium com poderes, ele tenta salvar sua namorada Molly de forma sobrenatural e romântica.',
+  '1990': 'Professor Keating inspira seus alunos em uma escola preparatória de elite a "carpe diem" e pensar por si próprios. Seu ensinamento transforma gerações enquanto ele enfrenta a instituição conservadora.',
+  '1989': 'Raymond Babbit é um homem com autismo e deficiências intelectuais que é libertado de uma instituição. Sua jornada inesperada com seu irmão o revela como savant extraordinário enquanto ambos aprendem sobre conexão.',
+  '1988': 'Loretta Castorini é uma viúva de meia-idade em Brooklyn que se apaixona por seu futuro cunhado. A comédia romântica explora família italiana, tradição e oportunidades inesperadas de amor.',
+  '1987': 'As vidas interconectadas de um grupo de mulheres em Nova York se desenrolam com humor, melancolia e profundidade. Relacionamentos, carreiras e autossabotagem são explorados com gentileza.',
+  '1986': 'John Book é um policial que vive a vida dupla entre a comunidade Amish onde se esconde e o mundo criminal. Sua evolução pessoal desafia ambas as culturas que reclama como lar.',
+  '1985': 'Edna Spalding, viúva desesperada, torna-se fotoperiodista para sustentar sua família. Seu crescimento pessoal é inspirador enquanto ela documenta histórias humanas pelo mundo.',
+  '1984': 'Udall Hatch é um homem com deficiência que oferece sua vida para salvar seu juiz e professor. Seu sacrifício e redenção formam um drama musical comovente sobre conexão humana.',
+  '1983': 'A vida épica de Mahatma Gandhi é retratada desde sua transformação de advogado tímido até líder de uma revolução não-violenta. Sua jornada gegen o imperialismo britânico inspirou gerações.',
+  '1982': 'Dois atletas britânicos competem nas Olimpíadas de 1924 com razões diferentes. Um é judeu enfrentando preconceço; o outro busca honra. Sua histórias de determinação exploram classe e discriminação.',
+  '1981': 'Um homem ordinário ganha o jackpot da loteria mas enfrenta tentações de sua comunidade. Seu infortúnio financeiro inesperado testa sua moralidade e relacionamentos.',
+  '1980': 'Dave Stohler é um garotinho talentoso que descobre seu amor por ciclismo em um verão transformador. Seu crescimento pessoal reflete juventude americana e possibilidades.',
+  '1979': 'Dois amantes soldados, um americano e uma vietnamita, são separados pela guerra. Sua correspondência épica reflete o impacto humano do conflito vietnamita.',
+  '1978': 'Annie Hall é uma mulher sofisticada em Nova York que navega amor, carreira e identidade. Sua relação com Alvy Singer captura a melancolia romântica e autossabotagem urbana.',
+  '1977': 'Howard Beale, âncora de notícias enlouquecido, desencadeia uma revolta cultural contra a corrupção corporativa. Seu manifesto profético questiona realidade e ratings televisivos.',
+  '1976': 'Frank Morris, um gênio criminoso, é confinado em Alcatraz. Sua fuga audaciosa é um testamento de inteligência, determinação e esperança contra sistemas opressivos.',
+  '1975': 'Jake Gittes é um detetive particular envolvido em um caso aparentemente simples que desmorona em conspiraçãoo e corrupção. Seu desespero crescente reflete injustiça sistêmica.',
+  '1974': 'Dois comparsas de sucesso que roubam principalmente executam uma string of elaborate cons culminando em seu maior golpe. Sua química e confiança mantêm histórias envolventes.',
+  '1973': 'Um homem ordinário se candidata a prefeito em uma pequena cidade e descobre a corrupção sistêmica da política local. Seu idealismo enfrenta pragmatismo e compromisso moral.',
+  '1972': 'Um hospital urbano é o palco para diárias morais enquanto médicos e pacientes enfrentam vida e morte. Suas histórias entrelaçadas revelam humanidade no caos médico.',
+  '1971': 'General George Patton lidera tropas americanas na Europa durante a II Guerra Mundial. Seu carisma, ambição e lealdade moldam campanhas que mudam o curso da guerra.',
+  '1970': 'Butch Cassidy e o Sundance Kid são ladrões de trem encantadores enfrentando progresso inevitável. Sua amizade e humor definem clássicos westerns enquanto fogem do fim.',
+  '1969': 'Dois produtores de teatro nervosos financiam uma peça sobre a história de Hitler esperando fracassar. Sua conspiração se transforma em sucesso inesperado em um cabaré absurdo.',
+  '1968': 'Joanna Drayton leva seu namorado negro para conhecer sua família branca saudável durante a era dos direitos civis. As dinâmicas raciais e familiares criam comédia e tensão genuína.',
+  '1967': 'Um homem é executado injustamente por um crime que não cometeu. Sua busca por vingança atravessa fronteiras enquanto confronta assassinos e injustiça sistêmica.',
+  '1966': 'Uma mulher britânica é seduzida e manipulada por um estranho em um jogo perigoso e erótico. Seu poder desaparece conforme ela se afunda mais profundamente em obsessão e risco.',
+  '1965': 'Um viúvo militar e uma viúva ao seu lado formam uma ligação tocante enquanto enfrentam solidão. Seu romance nascente é gentil, melancolicamente esperançoso.',
+  '1964': 'A jornada épica de construir a primeira ferrovia transcontinental americana é retratada com escala cinematográfica. Seus engenheiros, capitalistas e operários moldam o destino manifesto.',
+  '1963': 'Um marido italiano engana sua esposa repetidamente enquanto ela planeja sua vingança criativa. Seu divórcio é tanto cômico quanto corrosivo, refletindo dinâmicas matrimoniais decadentes.',
+  '1962': 'Um menino jovem anseia por experiências sexuais enquanto sua namorada abastada o observa com afeição proteora. Seus namoros exploram adolescência, classe e inocência perdida.',
+  '1961': 'C.C. Baxter é gerente de apartamento envolvido em políticas corporativas corruptas. Sua jornada moral desafia conformidade enquanto ele confronta favoritismo executivo.',
+  '1960': 'Um compositor apaixonado compõe uma música para uma mulher que o rejeita. Seu romance não retornado é expresso através de melodia inesquecível e nostalgia eterna.',
+  '1959': 'Dois homens negros são acusados de estupro em um julgamento explosivo no sul segregacionista. Sua defesa legal é um testamento contra preconceito racial institucionalizado.',
+  '1958': 'Uma mulher confronta inseguranças sobre seu corpo e feminilidade. Sua jornada de autoaceitação é tocante enquanto ela redescobre confiança em si mesma.',
+  '1957': 'Um balão vermelho mágico segue um menino pela Paris poética. Seu relacionamento imaginário é alegoria tocar sobre infância, inocência e beleza perdida.',
+  '1956': 'Uma mulher recupera sua vida e carreira de concertina após sofrer um acidente devastador. Sua resiliência é musical e inspiradora enquanto ela confronta limitações físicas.',
+  '1955': 'Um fazendeiro enfrenta conflitos familiares profundos em seu rancho. Suas relacionamentos complexos revelam tensões sobre herança, honra e lealdade.',
+  '1954': 'Os passageiros do Titanic enfrentam seus destinos conforme o navio afunda no Atlântico. Suas histórias entrelaçadas revelam classe, coragem e sacrifício durante o desastre.',
+  '1953': 'Criminosos sofisticados planejam o roubo perfeito na famosa Colina Lavanda. Sua execução elaborada é um testamento à inteligência criminal e diversão astuta.',
+  '1952': 'Um soldado americano e uma bailarina francesa se apaixonam em Paris pós-guerra. Seu romance transatlântico é musical e bittersweet enquanto navegam destinos separados.',
+  '1951': 'Norma Desmond, estrela de cinema esquecida, vive reclusivamente enquanto um jovem roteirista a explora. Seu descenso à loucura retrata obsessão e declínio de Hollywood.',
+  '1950': 'Soldados americanos experimentam a realidade brutal da Guerra da Coreia. Suas histórias revelam humanidade sob fogo enquanto eles navegam moralidade em guerra.',
+  '1949': 'Uma mãe pesquisa desesperadamente por seu filho perdido durante a II Guerra Mundial. Sua jornada emocional transcontinental é um testamento ao amor materno inabalável.',
+  '1948': 'Um sargento experiente se apaixona por uma mulher jovem em uma base militar americana. Seu romance militar testa lealdade entre dever e coração.',
+  '1947': 'Uma mulher heroicamente esconde um desertor da Gestapo durante a ocupação nazista da Europa. Seu sacrifício é um testamento à coragem humana contra tirania.',
+  '1946': 'Duas meninas se conhecem na Suíça durante a guerra e desenvolvem amizade profunda. Seu relacionamento especial captura inocência ameaçada pelo conflito global.',
+  '1945': 'O presidente Franklin D. Roosevelt lidera a nação através da Grande Depressão e II Guerra Mundial. Seu liderança persistente molda o século americano.',
+  '1944': 'Uma mulher criativa se disfarça para evitar um casamento indesejado. Sua fuga e romance subsequente celebram agência feminina com humor e encanto.',
+  '1943': 'Uma mulher rivalizacom seu colega de trabalho pelo amor de um homem em contexto corporativo. Seu triângulo amoroso reflete dinâmicas de gênero e poder no local de trabalho.',
+  '1942': 'Charles Foster Kane é um magnata poderoso que controla a vida em sua pequena cidade americana. Seu império de ilusão desmorona conforme seus segredos são revelados.',
+  '1941': 'Um homem simples cuja lealdade é explorada se torna governador através de maquinações políticas. Sua ascensão retrata corrupção política e ambição mal orientada.',
+  '1940': 'Um cidadão comum confronta o sistema político aterrorizado por corrupção. Seu discurso apaixonado em defesa da democracia permanece atemporal em relevância.'
 };
 
 async function fetchPosterUrl(year, title) {
@@ -771,9 +944,13 @@ const MOVIES = [
 ["1940","Mr. Smith Goes to Washington"],
 ].map(([year,title]) => ({ id: year, year, title }));
 
-const STORAGE_KEY = 'oscar-roulette-state-v4';
+const STORAGE_KEY = 'oscar-roulette-state-v6';
 let state = null;
 let spinning = false;
+let dragging = false;
+let dragStart = 0;
+let dragOffset = 0;
+let currentTranslate = 0;
 let pendingRating = 0;
 let pendingTarget = null;
 
@@ -790,6 +967,7 @@ const els = {
   ticketTitle: document.getElementById('ticketTitle'),
   ticketYear: document.getElementById('ticketYear'),
   ticketPoster: document.getElementById('ticketPoster'),
+  ticketSynopsis: document.getElementById('ticketSynopsis'),
   ticketStars: document.getElementById('ticketStars'),
   btnConfirm: document.getElementById('btnConfirm'),
   btnCancel: document.getElementById('btnCancel'),
@@ -818,6 +996,8 @@ function shuffle(arr){
 function makeCard(movie){
   const d = document.createElement('div');
   d.className = 'reel-card';
+  d.dataset.year = movie.year;
+  d.dataset.title = movie.title;
   
   const bgDiv = document.createElement('div');
   bgDiv.className = 'cover-bg';
@@ -830,12 +1010,23 @@ function makeCard(movie){
     <div class="yr">${movie.year}</div>
     <div class="tt">${movie.title}</div>
   `;
+  
+  d.addEventListener('click', (e) => {
+    if (!dragging && !spinning) {
+      const found = state.pending.find(m => m.year === movie.year && m.title === movie.title);
+      if (found) {
+        openTicket(found);
+      }
+    }
+  });
+  
   return d;
 }
 
 function renderStaticReel(){
   els.reelTrack.style.transition = 'none';
   els.reelTrack.style.transform = 'translateX(0)';
+  currentTranslate = 0;
   els.reelTrack.innerHTML = '';
   const showList = state.pending.length ? state.pending : [{year:'', title:'Sem filmes'}];
   const display = shuffle(showList).slice(0, 12);
@@ -941,26 +1132,62 @@ function refreshTicketStars(){
   });
 }
 
+// INTERAÇÃO COM ARRASTO
+const cardWidth = 148, gap = 10, step = cardWidth + gap;
+const gateWidth = els.reelGate.clientWidth;
+
+function onDragStart(e) {
+  if (spinning) return;
+  dragging = true;
+  dragStart = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+  els.reelGate.classList.add('dragging');
+  els.reelTrack.style.transition = 'none';
+}
+
+function onDragMove(e) {
+  if (!dragging) return;
+  const now = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+  dragOffset = now - dragStart;
+  const newTranslate = currentTranslate + dragOffset;
+  els.reelTrack.style.transform = `translateX(${-newTranslate}px)`;
+}
+
+function onDragEnd(e) {
+  if (!dragging) return;
+  dragging = false;
+  els.reelGate.classList.remove('dragging');
+  
+  currentTranslate += dragOffset;
+  
+  const snappedIndex = Math.round(currentTranslate / step);
+  const snappedTranslate = snappedIndex * step;
+  
+  currentTranslate = snappedTranslate;
+  els.reelTrack.style.transition = 'transform 0.3s ease-out';
+  els.reelTrack.style.transform = `translateX(-${snappedTranslate}px)`;
+  
+  dragOffset = 0;
+}
+
+els.reelGate.addEventListener('mousedown', onDragStart);
+els.reelGate.addEventListener('touchstart', onDragStart);
+document.addEventListener('mousemove', onDragMove);
+document.addEventListener('touchmove', onDragMove);
+document.addEventListener('mouseup', onDragEnd);
+document.addEventListener('touchend', onDragEnd);
+
 async function spin(){
   if(spinning || state.pending.length === 0) return;
   spinning = true;
   els.spinBtn.disabled = true;
 
-  // Seleciona o filme alvo ANTES de construir a sequência
   const targetIndex = Math.floor(Math.random() * state.pending.length);
   const target = state.pending[targetIndex];
 
-  const cardWidth = 148, gap = 10, step = cardWidth + gap;
-  
-  // CORREÇÃO: Cria sequência SEM repetições desnecessárias do mesmo filme
   let sequence = [];
-  
-  // Pega todos os filmes MENOS o alvo
   const otherMovies = state.pending.filter(m => m.id !== target.id);
   
-  // Monta a sequência com filmes diversos
   if (otherMovies.length > 0) {
-    // Preenche com loops de filmes diferentes
     while (sequence.length < 60) {
       const shuffled = shuffle(otherMovies);
       sequence = sequence.concat(shuffled);
@@ -968,20 +1195,21 @@ async function spin(){
     sequence = sequence.slice(0, 60);
   }
   
-  // Adiciona o filme alvo no final GARANTIDAMENTE
   sequence.push(target);
 
   els.reelTrack.style.transition = 'none';
   els.reelTrack.style.transform = 'translateX(0)';
+  currentTranslate = 0;
   els.reelTrack.innerHTML = '';
   sequence.forEach(m => els.reelTrack.appendChild(makeCard(m)));
 
   void els.reelTrack.offsetWidth;
 
-  const gateWidth = els.reelGate.clientWidth;
   const targetIdxInSeq = sequence.length - 1;
   const targetCenter = 10 + targetIdxInSeq * step + cardWidth/2;
   const offset = targetCenter - gateWidth/2;
+
+  currentTranslate = offset;
 
   requestAnimationFrame(() => {
     els.reelTrack.style.transition = 'transform 4.4s cubic-bezier(0.10,0.68,0.14,1)';
@@ -1002,6 +1230,7 @@ function openTicket(movie){
   pendingRating = 0;
   els.ticketTitle.textContent = movie.title;
   els.ticketYear.textContent = `Vencedor de ${movie.year}`;
+  els.ticketSynopsis.textContent = SYNOPSES[movie.year] || 'Sinopse não disponível.';
   
   loadPosterIntoElement(els.ticketPoster, movie.year, movie.title);
   
