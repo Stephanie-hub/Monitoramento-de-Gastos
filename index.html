@@ -9,14 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black-deep: #070708;
-  --red-crimson: #8f0712;
-  --red-intense: #c1121f;
-  --blue-deep: #07152f;
-  --blue-saturated: #123c78;
-  --cream-aged: #e8dfc8;
-  --film-gray: #77736a;
-  --shadow: 0 10px 30px rgba(0,0,0,0.7);
+  --black: #000000;
+  --red-hot: #ff006e;
+  --red-deep: #c2185b;
+  --pink-magenta: #f50057;
+  --yellow-warm: #ffd700;
+  --blue-elec: #00d4ff;
+  --orange-fire: #ff6b00;
+  --cream: #faf0e6;
 }
 
 * {
@@ -32,11 +32,12 @@ html, body {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(199, 18, 31, 0.35) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 70%, rgba(7, 21, 47, 0.4) 0%, transparent 45%),
-    linear-gradient(180deg, #070708 0%, #0a0a0d 50%, #070708 100%);
+    radial-gradient(ellipse at 10% 20%, rgba(255, 0, 110, 0.6) 0%, transparent 30%),
+    radial-gradient(ellipse at 90% 80%, rgba(0, 212, 255, 0.5) 0%, transparent 35%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 107, 0, 0.3) 0%, transparent 45%),
+    linear-gradient(135deg, #000000 0%, #1a0a2e 40%, #000000 100%);
   font-family: 'Barlow', sans-serif;
-  color: var(--cream-aged);
+  color: var(--cream);
   padding: 18px 14px 60px;
   overflow-x: hidden;
   position: relative;
@@ -46,18 +47,21 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' fill='%23070708' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='6' /%3E%3C/filter%3E%3Crect width='300' height='300' fill='%23000' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1;
-  mix-blend-mode: multiply;
+  mix-blend-mode: screen;
 }
 
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: 
+    radial-gradient(circle at 15% 25%, rgba(255, 0, 110, 0.15) 0%, transparent 25%),
+    radial-gradient(circle at 85% 75%, rgba(0, 212, 255, 0.12) 0%, transparent 25%),
+    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -65,12 +69,15 @@ body::after {
 .marquee {
   position: relative;
   text-align: center;
-  padding: 22px 10px 18px;
-  margin-bottom: 18px;
-  border: 2px solid var(--red-intense);
-  border-radius: 4px;
-  background: linear-gradient(180deg, rgba(7, 21, 47, 0.3), rgba(139, 7, 18, 0.2));
-  box-shadow: 0 0 30px rgba(199, 18, 31, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.4);
+  padding: 32px 12px 26px;
+  margin-bottom: 24px;
+  border: 4px solid var(--yellow-warm);
+  border-radius: 0;
+  background: linear-gradient(45deg, rgba(255, 0, 110, 0.25) 0%, rgba(0, 212, 255, 0.15) 50%, rgba(255, 107, 0, 0.2) 100%);
+  box-shadow: 
+    0 0 60px rgba(255, 0, 110, 0.6),
+    0 0 100px rgba(0, 212, 255, 0.3),
+    inset 0 0 60px rgba(255, 215, 0, 0.15);
   z-index: 2;
   position: relative;
 }
@@ -78,53 +85,63 @@ body::after {
 .marquee h1 {
   font-family: 'Playfair Display', serif;
   font-weight: 900;
-  font-size: clamp(22px, 7vw, 36px);
-  letter-spacing: 2px;
-  margin: 0 0 6px;
-  color: var(--red-intense);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  font-size: clamp(26px, 9vw, 48px);
+  letter-spacing: 4px;
+  margin: 0 0 10px;
+  color: var(--yellow-warm);
+  text-shadow: 
+    0 0 20px rgba(255, 0, 110, 1),
+    0 0 40px rgba(0, 212, 255, 0.6),
+    0 0 60px rgba(255, 107, 0, 0.4),
+    0 6px 12px rgba(0, 0, 0, 0.9);
 }
 
 .marquee p {
   margin: 0;
   font-family: 'Barlow Condensed', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 4px;
-  font-size: 12px;
-  color: var(--cream-aged);
-  opacity: 0.75;
+  letter-spacing: 5px;
+  font-size: 14px;
+  color: var(--cream);
+  text-shadow: 
+    0 0 15px rgba(255, 0, 110, 0.8),
+    0 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 .reel-wrap {
   position: relative;
-  margin: 0 auto 16px;
+  margin: 0 auto 24px;
   max-width: 520px;
   z-index: 2;
-  position: relative;
 }
 
 .sprockets {
-  height: 14px;
-  background-color: var(--black-deep);
-  background-image: radial-gradient(circle, var(--red-crimson) 3px, transparent 3.4px);
-  background-size: 26px 14px;
+  height: 18px;
+  background-color: var(--black);
+  background-image: radial-gradient(circle, var(--yellow-warm) 4px, transparent 4.5px);
+  background-size: 30px 18px;
   background-repeat: repeat-x;
   background-position: center;
-  border-radius: 2px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 0;
+  box-shadow: 
+    inset 0 4px 8px rgba(0, 0, 0, 0.8),
+    0 0 25px rgba(255, 215, 0, 0.4);
 }
 
 .reel-gate {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #0a0a0d 0%, #0d0d10 100%);
-  border-left: 3px solid var(--red-crimson);
-  border-right: 3px solid var(--red-crimson);
+  background: linear-gradient(180deg, #000000 0%, #0a0a1a 50%, #000000 100%);
+  border-left: 5px solid var(--red-hot);
+  border-right: 5px solid var(--red-hot);
   height: 160px;
   display: flex;
   align-items: center;
   cursor: grab;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(199, 18, 31, 0.15);
+  box-shadow: 
+    inset 0 0 40px rgba(0, 0, 0, 0.95),
+    0 0 50px rgba(255, 0, 110, 0.4),
+    0 0 80px rgba(0, 212, 255, 0.2);
 }
 
 .reel-gate.dragging {
@@ -134,7 +151,7 @@ body::after {
 .reel-track {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   padding: 0 10px;
   will-change: transform;
   transform: translateX(0);
@@ -144,98 +161,97 @@ body::after {
   flex: 0 0 auto;
   width: 148px;
   height: 140px;
-  border-radius: 6px;
+  border-radius: 0;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   text-align: center;
-  padding: 6px 8px 12px;
-  box-shadow: inset 0 0 0 1px rgba(199, 18, 31, 0.25), 0 4px 16px rgba(0, 0, 0, 0.7);
-  background-size: contain;
+  padding: 8px 8px 12px;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #0a0a0a;
   color: white;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
-  background-color: #0a0a12;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
   user-select: none;
   overflow: hidden;
+  box-shadow: 
+    inset 0 0 0 2px rgba(255, 0, 110, 0.4),
+    0 0 25px rgba(255, 0, 110, 0.3),
+    0 0 40px rgba(0, 212, 255, 0.15),
+    0 8px 25px rgba(0, 0, 0, 0.85);
 }
 
 .reel-card:active {
-  transform: scale(0.97);
-}
-
-.reel-card .cover-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  border-radius: 6px;
-  z-index: 0;
-  opacity: 0.15;
-  filter: blur(12px);
-  transform: scale(1.1);
-  transition: opacity 0.3s;
+  transform: scale(0.95);
+  box-shadow: 
+    inset 0 0 0 2px rgba(255, 0, 110, 0.6),
+    0 0 35px rgba(255, 0, 110, 0.4),
+    0 0 60px rgba(0, 212, 255, 0.2),
+    0 8px 25px rgba(0, 0, 0, 0.85);
 }
 
 .reel-card .cover-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
-  border-radius: 6px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.85) 100%);
   z-index: 1;
 }
 
 .reel-card .yr {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 2px;
-  color: var(--red-intense);
-  background: rgba(0, 0, 0, 0.75);
-  padding: 0 8px;
-  border-radius: 3px;
-  margin-bottom: 3px;
+  color: var(--yellow-warm);
+  background: rgba(0, 0, 0, 0.9);
+  padding: 3px 10px;
+  border-radius: 0;
+  margin-bottom: 4px;
   z-index: 2;
+  position: relative;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+  text-shadow: 0 0 6px rgba(255, 0, 110, 0.5);
 }
 
 .reel-card .tt {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
   font-size: 12px;
-  line-height: 1.1;
+  line-height: 1.15;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.75);
-  padding: 2px 6px;
-  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 5px 8px;
+  border-radius: 0;
   z-index: 2;
   max-width: 95%;
+  position: relative;
+  text-shadow: 0 0 8px rgba(255, 0, 110, 0.4);
 }
 
 .gate-pointer {
   position: absolute;
   left: 50%;
-  top: -4px;
+  top: -8px;
   transform: translateX(-50%);
   width: 0;
   height: 0;
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-  border-top: 12px solid var(--red-intense);
-  filter: drop-shadow(0 2px 4px rgba(199, 18, 31, 0.5));
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 16px solid var(--red-hot);
+  filter: drop-shadow(0 3px 8px rgba(255, 0, 110, 1));
   z-index: 3;
 }
 
 .gate-pointer.bottom {
   top: auto;
-  bottom: -4px;
+  bottom: -8px;
   transform: translateX(-50%) rotate(180deg);
 }
 
@@ -244,48 +260,53 @@ body::after {
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: 4px;
   transform: translateX(-50%);
-  background: linear-gradient(180deg, transparent, rgba(199, 18, 31, 0.3), transparent);
+  background: linear-gradient(180deg, transparent, rgba(255, 0, 110, 0.7), transparent);
   z-index: 2;
   pointer-events: none;
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.8);
 }
 
 .gate-fade {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 60px;
+  width: 70px;
   z-index: 2;
   pointer-events: none;
 }
 
 .gate-fade.left {
   left: 0;
-  background: linear-gradient(90deg, #0a0a0d, transparent);
+  background: linear-gradient(90deg, #000000, transparent);
 }
 
 .gate-fade.right {
   right: 0;
-  background: linear-gradient(270deg, #0a0a0d, transparent);
+  background: linear-gradient(270deg, #000000, transparent);
 }
 
 .spin-btn {
   display: block;
-  margin: 18px auto 22px;
-  width: min(280px, 84%);
-  padding: 15px 18px;
+  margin: 26px auto 32px;
+  width: min(290px, 88%);
+  padding: 18px 24px;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
-  font-size: 18px;
-  letter-spacing: 3px;
+  font-size: 19px;
+  letter-spacing: 4px;
   text-transform: uppercase;
   text-align: center;
-  color: var(--black-deep);
-  background: linear-gradient(180deg, var(--red-intense), var(--red-crimson));
-  border: 2px solid var(--red-crimson);
-  border-radius: 4px;
-  box-shadow: 0 8px 20px rgba(199, 18, 31, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  color: #000000;
+  background: linear-gradient(135deg, var(--red-hot), var(--pink-magenta), var(--red-deep));
+  border: 4px solid var(--yellow-warm);
+  border-radius: 0;
+  box-shadow: 
+    0 0 40px rgba(255, 0, 110, 0.7),
+    0 0 80px rgba(255, 0, 110, 0.4),
+    0 12px 35px rgba(0, 0, 0, 0.9),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   position: relative;
@@ -293,56 +314,64 @@ body::after {
 }
 
 .spin-btn:active {
-  transform: scale(0.96);
-  box-shadow: 0 4px 12px rgba(199, 18, 31, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: scale(0.93);
+  box-shadow: 
+    0 0 30px rgba(255, 0, 110, 0.6),
+    0 0 60px rgba(255, 0, 110, 0.3),
+    0 6px 20px rgba(0, 0, 0, 0.9),
+    inset 0 2px 0 rgba(255, 255, 255, 0.2);
 }
 
 .spin-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.35;
   cursor: default;
 }
 
 .empty-msg {
   text-align: center;
   font-family: 'Playfair Display', serif;
-  font-size: 16px;
-  color: var(--red-intense);
-  margin: 10px 0 20px;
+  font-size: 17px;
+  color: var(--red-hot);
+  margin: 18px 0 28px;
   padding: 0 10px;
   position: relative;
   z-index: 2;
+  text-shadow: 0 0 12px rgba(255, 0, 110, 0.5);
 }
 
 .tabs {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   max-width: 520px;
-  margin: 0 auto 14px;
+  margin: 0 auto 18px;
   position: relative;
   z-index: 2;
 }
 
 .tab-btn {
   flex: 1;
-  padding: 10px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--blue-saturated);
-  background: rgba(7, 21, 47, 0.2);
-  color: var(--cream-aged);
+  padding: 12px 12px;
+  border-radius: 0;
+  border: 3px solid var(--blue-elec);
+  background: rgba(0, 212, 255, 0.08);
+  color: var(--cream);
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   letter-spacing: 1px;
-  font-size: 14px;
+  font-size: 15px;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .tab-btn.active {
-  background: linear-gradient(180deg, rgba(199, 18, 31, 0.3), rgba(139, 7, 18, 0.2));
-  border-color: var(--red-intense);
-  color: var(--red-intense);
-  box-shadow: 0 0 12px rgba(199, 18, 31, 0.15);
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.35), rgba(255, 107, 0, 0.25));
+  border-color: var(--red-hot);
+  color: var(--yellow-warm);
+  box-shadow: 
+    0 0 25px rgba(255, 0, 110, 0.35),
+    0 0 15px rgba(255, 107, 0, 0.2),
+    inset 0 0 20px rgba(255, 0, 110, 0.1);
 }
 
 .list-wrap {
@@ -356,36 +385,38 @@ body::after {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: linear-gradient(160deg, rgba(232, 223, 200, 0.05), rgba(232, 223, 200, 0.02));
-  border: 1px solid rgba(199, 18, 31, 0.2);
-  border-radius: 6px;
-  padding: 10px 12px;
-  margin-bottom: 8px;
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.1) 0%, rgba(0, 212, 255, 0.06) 100%);
+  border: 2px solid rgba(255, 0, 110, 0.3);
+  border-radius: 0;
+  padding: 12px 14px;
+  margin-bottom: 9px;
   position: relative;
+  box-shadow: 0 0 18px rgba(255, 0, 110, 0.12);
 }
 
 .movie-row .badge-year {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   font-size: 13px;
-  color: var(--red-intense);
-  background: rgba(139, 7, 18, 0.25);
-  padding: 4px 8px;
-  border-radius: 3px;
+  color: var(--yellow-warm);
+  background: rgba(255, 0, 110, 0.25);
+  padding: 6px 10px;
+  border-radius: 0;
   flex: 0 0 auto;
-  border: 1px solid rgba(199, 18, 31, 0.2);
+  border: 1px solid rgba(255, 0, 110, 0.4);
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
 }
 
 .movie-row .m-title {
   flex: 1;
   font-size: 14px;
-  line-height: 1.25;
-  color: var(--cream-aged);
+  line-height: 1.3;
+  color: var(--cream);
 }
 
 .movie-row .stars {
   display: flex;
-  gap: 2px;
+  gap: 3px;
   flex: 0 0 auto;
 }
 
@@ -394,24 +425,25 @@ body::after {
   border: none;
   padding: 0;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1;
-  color: rgba(232, 223, 200, 0.25);
-  transition: color 0.2s;
+  color: rgba(250, 240, 230, 0.25);
+  transition: all 0.2s;
 }
 
 .movie-row .stars button.filled {
-  color: var(--red-intense);
+  color: var(--red-hot);
+  text-shadow: 0 0 8px rgba(255, 0, 110, 0.7);
 }
 
 .movie-row .undo-btn {
   flex: 0 0 auto;
   background: transparent;
-  border: 1px solid rgba(199, 18, 31, 0.3);
-  color: var(--red-intense);
-  border-radius: 3px;
+  border: 1px solid rgba(255, 0, 110, 0.4);
+  color: var(--red-hot);
+  border-radius: 0;
   font-size: 11px;
-  padding: 5px 7px;
+  padding: 6px 9px;
   cursor: pointer;
   font-family: 'Barlow Condensed', sans-serif;
   text-transform: uppercase;
@@ -420,22 +452,23 @@ body::after {
 }
 
 .movie-row .undo-btn:hover {
-  background: rgba(199, 18, 31, 0.1);
-  border-color: var(--red-intense);
+  background: rgba(255, 0, 110, 0.18);
+  border-color: var(--red-hot);
+  box-shadow: 0 0 12px rgba(255, 0, 110, 0.25);
 }
 
 .empty-list {
   text-align: center;
-  color: rgba(232, 223, 200, 0.5);
+  color: rgba(250, 240, 230, 0.55);
   font-size: 14px;
-  padding: 30px 10px;
+  padding: 40px 10px;
   font-style: italic;
 }
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(7, 7, 8, 0.92);
+  background: rgba(0, 0, 0, 0.97);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -444,7 +477,7 @@ body::after {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
 }
 
 .overlay.show {
@@ -454,21 +487,25 @@ body::after {
 
 .ticket {
   width: 100%;
-  max-width: 450px;
+  max-width: 480px;
   max-height: 90vh;
-  background: linear-gradient(135deg, #0d0d15 0%, #141420 100%);
-  color: var(--cream-aged);
-  border-radius: 8px;
+  background: linear-gradient(135deg, #000000 0%, #0a0a1a 40%, #000000 100%);
+  color: var(--cream);
+  border-radius: 0;
   padding: 0;
   text-align: center;
   position: relative;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(199, 18, 31, 0.1);
-  transform: scale(0.85);
+  box-shadow: 
+    0 0 80px rgba(255, 0, 110, 0.5),
+    0 0 120px rgba(0, 212, 255, 0.25),
+    0 40px 100px rgba(0, 0, 0, 0.95),
+    inset 0 0 60px rgba(255, 0, 110, 0.1);
+  transform: scale(0.80);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(199, 18, 31, 0.25);
+  border: 3px solid rgba(255, 0, 110, 0.4);
 }
 
 .overlay.show .ticket {
@@ -476,141 +513,153 @@ body::after {
 }
 
 .ticket-header {
-  background: linear-gradient(135deg, rgba(139, 7, 18, 0.4) 0%, rgba(7, 21, 47, 0.3) 100%);
-  padding: 20px 20px 16px;
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.25) 0%, rgba(255, 107, 0, 0.15) 100%);
+  padding: 28px 24px 22px;
   position: relative;
-  border-bottom: 2px solid var(--red-intense);
+  border-bottom: 4px solid var(--red-hot);
+  box-shadow: 0 0 40px rgba(255, 0, 110, 0.2);
 }
 
 .ticket-header .eyebrow {
   font-family: 'Barlow Condensed', sans-serif;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  font-size: 12px;
-  color: var(--red-intense);
+  font-size: 13px;
+  color: var(--yellow-warm);
   font-weight: 700;
-  margin: 0 0 8px;
+  margin: 0 0 12px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
 }
 
 .ticket-header h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  margin: 0 0 6px;
-  line-height: 1.2;
-  color: var(--cream-aged);
+  font-size: 32px;
+  margin: 0 0 10px;
+  line-height: 1.25;
+  color: var(--cream);
+  text-shadow: 0 0 20px rgba(255, 0, 110, 0.35);
 }
 
 .ticket-header .yr2 {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  color: var(--red-intense);
+  font-size: 14px;
+  color: var(--red-hot);
   margin: 0;
   letter-spacing: 1px;
 }
 
 .ticket-body {
-  padding: 22px;
+  padding: 28px;
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .ticket-body::-webkit-scrollbar {
-  width: 6px;
+  width: 7px;
 }
 
 .ticket-body::-webkit-scrollbar-track {
-  background: rgba(199, 18, 31, 0.05);
-  border-radius: 10px;
+  background: rgba(255, 0, 110, 0.08);
 }
 
 .ticket-body::-webkit-scrollbar-thumb {
-  background: var(--red-intense);
-  border-radius: 10px;
+  background: linear-gradient(180deg, var(--red-hot), var(--pink-magenta));
 }
 
 .poster-preview {
-  width: 160px;
-  height: 120px;
+  width: 180px;
+  height: 140px;
   margin: 0 auto;
-  border-radius: 4px;
-  background-size: contain;
+  border-radius: 0;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  box-shadow: 0 8px 24px rgba(199, 18, 31, 0.2);
-  background-color: #0a0a12;
-  border: 2px solid rgba(199, 18, 31, 0.35);
+  box-shadow: 
+    0 0 35px rgba(255, 0, 110, 0.4),
+    0 0 60px rgba(0, 212, 255, 0.15),
+    0 12px 35px rgba(0, 0, 0, 0.85);
+  background-color: #0a0a0a;
+  border: 3px solid rgba(255, 0, 110, 0.35);
 }
 
 .synopsis {
   text-align: left;
   font-size: 14px;
-  line-height: 1.65;
-  color: var(--cream-aged);
-  background: linear-gradient(135deg, rgba(139, 7, 18, 0.1) 0%, rgba(7, 21, 47, 0.1) 100%);
-  padding: 16px;
-  border-radius: 4px;
-  border-left: 3px solid var(--red-intense);
+  line-height: 1.75;
+  color: var(--cream);
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.1) 0%, rgba(0, 212, 255, 0.06) 100%);
+  padding: 20px;
+  border-radius: 0;
+  border-left: 5px solid var(--red-hot);
+  box-shadow: 0 0 25px rgba(255, 0, 110, 0.1);
 }
 
 .rate-stars {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 .rate-stars button {
   background: none;
   border: none;
-  font-size: 32px;
+  font-size: 40px;
   cursor: pointer;
-  color: rgba(232, 223, 200, 0.2);
+  color: rgba(250, 240, 230, 0.2);
   padding: 0;
-  transition: color 0.2s, transform 0.2s;
+  transition: all 0.2s;
 }
 
 .rate-stars button:hover {
-  transform: scale(1.15);
+  transform: scale(1.25);
 }
 
 .rate-stars button.filled {
-  color: var(--red-intense);
+  color: var(--red-hot);
+  text-shadow: 0 0 12px rgba(255, 0, 110, 0.8);
 }
 
 .ticket-actions {
   display: flex;
-  gap: 12px;
-  padding: 0 22px 22px;
+  gap: 16px;
+  padding: 0 28px 28px;
   margin-top: auto;
 }
 
 .ticket-actions button {
   flex: 1;
-  padding: 14px 12px;
-  border-radius: 4px;
+  padding: 16px 16px;
+  border-radius: 0;
   border: none;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   letter-spacing: 1.5px;
-  font-size: 14px;
+  font-size: 15px;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-confirm {
-  background: linear-gradient(135deg, var(--red-intense), var(--red-crimson));
-  color: var(--black-deep);
-  box-shadow: 0 6px 20px rgba(199, 18, 31, 0.3);
-  border: 1px solid var(--red-crimson);
+  background: linear-gradient(135deg, var(--red-hot), var(--pink-magenta));
+  color: #000000;
+  box-shadow: 
+    0 0 40px rgba(255, 0, 110, 0.5),
+    0 0 25px rgba(255, 0, 110, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.85);
+  border: 3px solid var(--yellow-warm);
 }
 
 .btn-confirm:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(199, 18, 31, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 
+    0 0 50px rgba(255, 0, 110, 0.6),
+    0 0 35px rgba(255, 0, 110, 0.3),
+    0 14px 40px rgba(0, 0, 0, 0.85);
 }
 
 .btn-confirm:active {
@@ -619,20 +668,22 @@ body::after {
 
 .btn-cancel {
   background: transparent;
-  border: 1px solid rgba(232, 223, 200, 0.3);
-  color: var(--cream-aged);
+  border: 2px solid rgba(250, 240, 230, 0.35);
+  color: var(--cream);
+  box-shadow: 0 0 18px rgba(250, 240, 230, 0.1);
 }
 
 .btn-cancel:hover {
-  background: rgba(232, 223, 200, 0.08);
-  border-color: var(--cream-aged);
+  background: rgba(250, 240, 230, 0.08);
+  border-color: var(--cream);
+  box-shadow: 0 0 25px rgba(250, 240, 230, 0.15);
 }
 
 .footer-note {
   text-align: center;
   font-size: 11px;
-  color: rgba(232, 223, 200, 0.35);
-  margin-top: 26px;
+  color: rgba(250, 240, 230, 0.35);
+  margin-top: 32px;
   letter-spacing: 0.5px;
   position: relative;
   z-index: 2;
@@ -641,26 +692,28 @@ body::after {
 .reset-link {
   background: none;
   border: none;
-  color: rgba(232, 223, 200, 0.4);
+  color: rgba(250, 240, 230, 0.4);
   text-decoration: underline;
   font-size: 11px;
   cursor: pointer;
-  margin-top: 6px;
-  transition: color 0.2s;
+  margin-top: 10px;
+  transition: all 0.2s;
 }
 
 .reset-link:hover {
-  color: rgba(232, 223, 200, 0.7);
+  color: var(--red-hot);
+  text-shadow: 0 0 8px rgba(255, 0, 110, 0.4);
 }
 
 .drag-hint {
   text-align: center;
   font-size: 12px;
-  color: rgba(232, 223, 200, 0.4);
-  margin-top: 8px;
+  color: rgba(250, 240, 230, 0.4);
+  margin-top: 12px;
   font-style: italic;
   position: relative;
   z-index: 2;
+  text-shadow: 0 0 8px rgba(255, 0, 110, 0.15);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -692,28 +745,28 @@ body::after {
   <div class="sprockets"></div>
 </div>
 
-<div class="drag-hint">Arraste ou clique em um filme para ver detalhes</div>
+<div class="drag-hint">Arraste ou clique em um filme</div>
 
-<button class="spin-btn" id="spinBtn">SORTEAR FILME</button>
+<button class="spin-btn" id="spinBtn">SORTEAR</button>
 
-<div class="empty-msg" id="emptyMsg" style="display:none;">Todos os filmes já foram sorteados e assistidos!</div>
+<div class="empty-msg" id="emptyMsg" style="display:none;">Todos os filmes já foram sorteados!</div>
 
 <div class="tabs">
   <button class="tab-btn active" id="tabPending">LISTA</button>
-  <button class="tab-btn" id="tabWatched">ASSISTIDOS</button>
+  <button class="tab-btn" id="tabWatched">VISTOS</button>
 </div>
 
 <div class="list-wrap" id="listPending"></div>
 <div class="list-wrap" id="listWatched" style="display:none;"></div>
 
-<p class="footer-note">Toque nas estrelas para avaliar um filme assistido.<br>
-<button class="reset-link" id="resetBtn">reiniciar tudo</button>
+<p class="footer-note">Avalie tocando nas estrelas<br>
+<button class="reset-link" id="resetBtn">reiniciar</button>
 </p>
 
 <div class="overlay" id="overlay">
   <div class="ticket">
     <div class="ticket-header">
-      <div class="eyebrow">FILME SELECIONADO</div>
+      <div class="eyebrow">SELECIONADO</div>
       <h2 id="ticketTitle">—</h2>
       <p class="yr2" id="ticketYear">—</p>
     </div>
@@ -730,198 +783,122 @@ body::after {
 </div>
 
 <script>
-const TMDB_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlOGUyOWQ1ZDIxY2FhM2Y5NTBjM2JiODFhN2UxZWY0YyIsIm5iZiI6MTc4NTk2MTc0My40MTUsInN1YiI6IjZhNzM5ZDBmMWRlZTEwOGZmZTMzMzhlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RHZaXP91LPz7u3vTgYFqJNy692xFgruDLljXL23qsas';
-const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w300';
+const TMDB_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlOGUyOWQ1ZDIxY2FhM2Y5NTBjM2JiODFhN2UxZWY0YyIsIm5iZiI6MTc4NTk2MTc0My40MTUsInN1YiI6IjZhNzM5ZDBmMWRlZTEwOGZmZTMzMzhlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RHZaXP91LPz7u3vTgYFqJNy692xFgruDLljXL23qsas';
 const posterCache = new Map();
 
-// Mapeamento correto de filmes com anos de lançamento
-const MOVIE_SEARCH = {
-  'Jacob\'s Ladder': { year: 1990, query: 'Jacob\'s Ladder 1990' },
-  'Leviticus': { year: 1990, query: 'Leviticus' },
-  'Her Private Hell': { year: 1968, query: 'Her Private Hell 1968' },
-  'The Love Witch': { year: 2016, query: 'The Love Witch 2016' },
-  'Phenomena': { year: 1985, query: 'Phenomena 1985' },
-  'Deep Red': { year: 1975, query: 'Deep Red 1975' },
-  'Phantom of the Paradise': { year: 1974, query: 'Phantom of the Paradise 1974' },
-  'The Fly': { year: 1986, query: 'The Fly 1986' },
-  'mother!': { year: 2017, query: 'mother! 2017' },
-  'Bones and All': { year: 2022, query: 'Bones and All 2022' },
-  'Stoker': { year: 2013, query: 'Stoker 2013' },
-  'Hereditary': { year: 2018, query: 'Hereditary 2018' },
-  'Alice': { year: 1988, query: 'Alice 1988' },
-  'Frankenstein': { year: 1931, query: 'Frankenstein 1931' },
-  'Don\'t Look Now': { year: 1973, query: 'Don\'t Look Now 1973' },
-  'Lisa Frankenstein': { year: 2024, query: 'Lisa Frankenstein 2024' },
-  'Freaks': { year: 1932, query: 'Freaks 1932' },
-  'Audition': { year: 1999, query: 'Audition 1999' },
-  'Interview with the Vampire': { year: 1994, query: 'Interview with the Vampire 1994' },
-  'Nosferatu': { year: 1922, query: 'Nosferatu 1922' },
-  'Pulse': { year: 2001, query: 'Pulse 2001' },
-  'Jennifer\'s Body': { year: 2009, query: 'Jennifer\'s Body 2009' },
-  'Trouble Every Day': { year: 2001, query: 'Trouble Every Day 2001' },
-  'Bloody Muscle Body Builder in Hell': { year: 2012, query: 'Bloody Muscle Body Builder in Hell 2012' },
-  'Godzilla': { year: 1954, query: 'Godzilla 1954' },
-  'Opus': { year: 2025, query: 'Opus 2025' },
-  'Altered States': { year: 1980, query: 'Altered States 1980' },
-  'Late Night with the Devil': { year: 2023, query: 'Late Night with the Devil 2023' },
-  'Saint Maud': { year: 2019, query: 'Saint Maud 2019' },
-  'Nope': { year: 2022, query: 'Nope 2022' },
-  'Kinds of Kindness': { year: 2024, query: 'Kinds of Kindness 2024' }
-};
-
 const SYNOPSES = {
-  'Jacob\'s Ladder': 'Um veterano da Guerra do Vietnã retorna a Nova York assombrado por alucinações perturbadoras e pesadelos cada vez mais intensos que desafiam sua sanidade e realidade.',
-  'Leviticus': 'Um drama psicológico envolvido em mistério e horror, explorando temas de religião, trauma e a fragilidade da mente humana.',
-  'Her Private Hell': 'Uma exploração sombria da psique feminina em um romance gótico que combina sedução com horror latente.',
-  'The Love Witch': 'Uma bruxaria moderna disfarçada de contos de fadas, onde uma mulher sedutora navega amor e magia em um mundo que não a compreende.',
-  'Phenomena': 'Uma jovem com o dom de comunicar-se com insetos se vê envolvida em uma série de rituais de morte em uma escola de balé suíça.',
-  'Deep Red': 'Um compositor testemunha um assassinato brutal e entra em uma teia de morte, conspiração e mistério arquitetado de forma meticulosa.',
-  'Phantom of the Paradise': 'Um retorcimento moderno do clássico, onde um compositor desprezado se torna um monstro mascarado em um teatro de depravação.',
-  'The Fly': 'Um cientista se transforma gradualmente em uma criatura de inseto em uma exploração visceral de desumanização e perda de controle.',
-  'mother!': 'Uma mulher enfrenta um caos crescente quando sua casa é invadida por visitantes perturbadores em um filme de horror alucinógeno e alegórico.',
-  'Bones and All': 'Dois canibais marginalizados navegam o Midwest americano em um romance sombrio de amor, fome e sobrevivência à margem da sociedade.',
-  'Stoker': 'Uma menina órfã recebe a visita de um tio misterioso cuja presença desencadeia perturbações psicológicas e eróticas inquietantes.',
-  'Hereditary': 'Uma família é assombrada por segredos ocultos e presenças malignas que se revelam em um horror desesperador e verdadeiramente terrível.',
-  'Alice': 'Uma exploração surrealista e perturbadora de um conto infantil, onde o horror emerge das fraturas da imaginação.',
-  'Frankenstein': 'A tragédia seminal da criatura rejeitada, um testamento ao medo da imortalidade e consequências da ambição desmedida.',
-  'Don\'t Look Now': 'Um casal em luto em Veneza é perseguido por presenças espectrais e sinais perturbadores em um thriller de horror psicológico.',
-  'Lisa Frankenstein': 'Uma reinterpretação moderna e gótica do mito Frankenstein com humor negro e romance sombrio.',
-  'Freaks': 'Circo de horrores onde pessoas com deficiências físicas se tornam personagens perturbadores em uma narrativa de vingança e depravação.',
-  'Audition': 'Um homem viúvo busca amor em uma audição de cinema que se desdobra em tortura visceral e pesadelo psicológico.',
-  'Interview with the Vampire': 'Vampiros existem nas sombras da história humana em um épico gótico de sedução, condenação e imortalidade sofrida.',
-  'Nosferatu': 'O conde Orlock, vampiro ancestral, persegue uma cidade em pânico no clássico silencioso que definiu o horror cinematográfico.',
-  'Pulse': 'Computadores infectados por uma entidade sobrenatural transmitem morte através do ciberespaço em um horror tecnológico genuinamente perturbador.',
-  'Jennifer\'s Body': 'Uma adolescente é possuída por um demônio e se torna um predador em uma sátira de horror punk e feminismo perturbado.',
-  'Trouble Every Day': 'Recém-casados navegam Paris enquanto uma mulher sofre de um transtorno que a torna uma predadora canibal violenta.',
-  'Bloody Muscle Body Builder in Hell': 'Uma exploração extrema e transgressor de horror visual onde o corpo humano é destruído em rituais obscenos.',
-  'Godzilla': 'Uma criatura atômica emerge do oceano para devastar o Japão em metáfora poderosa sobre guerra nuclear e destruição.',
-  'Opus': 'Um compositor experimenta loucura e obsessão em busca de sua obra perfeita em um thriller psicológico perturbador.',
-  'Altered States': 'Um cientista experimenta com privação sensorial e drogas psicodélicas, desencadeando transformações evolucionárias e monstruosas.',
-  'Late Night with the Devil': 'Um programa de TV noturno descende ao caos quando forças sobrenaturais invadem a transmissão em tempo real.',
-  'Saint Maud': 'Uma enfermeira religiosa desenvolve obsessão violenta por sua paciente em um horror psicológico de fé corrompida.',
-  'Nope': 'Um casal de cineastas enfrenta um fenômeno aéreo alienígena e perturbador em um Western de ficção científica e horror.',
-  'Kinds of Kindness': 'Histórias entrelaçadas exploram a perversidade humana e o horror de relacionamentos tóxicos em comunidades isoladas.'
+  'Jacob\'s Ladder': 'Um veterano da Guerra do Vietnã retorna assombrado por alucinações perturbadoras.',
+  'Leviticus': 'Um drama psicológico envolvido em mistério e horror explorador de religião.',
+  'Her Private Hell': 'Uma exploração sombria da psique feminina em romance gótico.',
+  'The Love Witch': 'Uma bruxaria moderna onde uma mulher sedutora navega amor e magia.',
+  'Phenomena': 'Uma jovem com dom de comunicação com insetos em rituais de morte.',
+  'Deep Red': 'Um compositor testemunha assassinato brutal em teia de conspiração.',
+  'Phantom of the Paradise': 'Um compositor desprezado se torna monstro mascarado em teatro.',
+  'The Fly': 'Um cientista se transforma gradualmente em criatura de inseto.',
+  'mother!': 'Uma mulher enfrenta caos quando sua casa é invadida de forma perturbadora.',
+  'Bones and All': 'Dois canibais marginalizados navegam Midwest em romance sombrio.',
+  'Stoker': 'Uma menina órfã recebe tio misterioso cuja presença desencadeia perturbações.',
+  'Hereditary': 'Uma família é assombrada por segredos ocultos e presenças malignas.',
+  'Alice': 'Uma exploração surrealista de conto infantil onde horror emerge.',
+  'Frankenstein': 'A tragédia da criatura rejeitada, testamento ao medo da imortalidade.',
+  'Don\'t Look Now': 'Um casal em luto em Veneza perseguido por presenças espectrais.',
+  'Lisa Frankenstein': 'Uma reinterpretação moderna e gótica do mito Frankenstein.',
+  'Freaks': 'Circo de horrores onde pessoas com deficiências se tornam personagens perturbadores.',
+  'Audition': 'Um homem viúvo busca amor que se desdobra em tortura visceral.',
+  'Interview with the Vampire': 'Vampiros na história humana em épico gótico de imortalidade sofrida.',
+  'Nosferatu': 'O conde Orlock persegue cidade em pânico no clássico silencioso.',
+  'Pulse': 'Computadores infectados transmitem morte através ciberespaço.',
+  'Jennifer\'s Body': 'Uma adolescente possuída por demônio se torna predadora.',
+  'Trouble Every Day': 'Recém-casados em Paris enquanto mulher sofre transtorno canibal.',
+  'Bloody Muscle Body Builder in Hell': 'Uma exploração extrema de horror visual e rituais obscenos.',
+  'Godzilla': 'Uma criatura atômica emerge para devastar Japão.',
+  'Opus': 'Um compositor experimenta loucura em busca de obra perfeita.',
+  'Altered States': 'Um cientista experimenta privação sensorial e transformações monstruosas.',
+  'Late Night with the Devil': 'Um programa de TV noturno descende ao caos sobrenatural.',
+  'Saint Maud': 'Uma enfermeira desenvolve obsessão violenta por sua paciente.',
+  'Nope': 'Um casal enfrenta fenômeno alienígena perturbador.',
+  'Kinds of Kindness': 'Histórias exploram perversidade humana em relacionamentos tóxicos.'
 };
 
-async function fetchPosterUrl(year, title) {
-  const cacheKey = `${year}-${title}`;
-  if (posterCache.has(cacheKey)) {
-    return posterCache.get(cacheKey);
-  }
-
+async function fetchPoster(title) {
+  if (posterCache.has(title)) return posterCache.get(title);
+  
   try {
-    // Tenta buscar primeiro com ano e título
-    let query = title;
-    if (year && year !== '' && year !== '—') {
-      query = `${title} ${year}`;
-    }
-    
-    const searchData = MOVIE_SEARCH[title];
-    if (searchData && searchData.query) {
-      query = searchData.query;
-    }
-    
-    const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US`;
-    const response = await fetch(url, {
-      headers: {
-        'Authorization': `Bearer ${TMDB_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json'
-      }
+    const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(title)}`, {
+      headers: {'Authorization': `Bearer ${TMDB_TOKEN}`}
     });
-    const data = await response.json();
-    
-    if (data.results && data.results.length > 0) {
-      // Procura o filme com o ano correto
-      let bestMatch = data.results[0];
-      const targetYear = parseInt(year);
-      
-      if (targetYear && !isNaN(targetYear)) {
-        // Tenta encontrar um filme com o ano exato
-        for (const result of data.results) {
-          const releaseYear = result.release_date ? parseInt(result.release_date.substring(0, 4)) : null;
-          if (releaseYear === targetYear) {
-            bestMatch = result;
-            break;
-          }
-        }
-      }
-      
-      const posterPath = bestMatch.poster_path;
-      if (posterPath) {
-        const posterUrl = `${TMDB_IMAGE_BASE}${posterPath}`;
-        posterCache.set(cacheKey, posterUrl);
-        return posterUrl;
-      }
+    const data = await res.json();
+    if (data.results?.[0]?.poster_path) {
+      const url = `https://image.tmdb.org/t/p/w500${data.results[0].poster_path}`;
+      posterCache.set(title, url);
+      return url;
     }
-    
-    // Se não encontrou, tenta sem o ano
-    if (year && year !== '' && year !== '—') {
-      const fallbackUrl = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(title)}&language=en-US`;
-      const fallbackResponse = await fetch(fallbackUrl, {
-        headers: {
-          'Authorization': `Bearer ${TMDB_ACCESS_TOKEN}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      const fallbackData = await fallbackResponse.json();
-      
-      if (fallbackData.results && fallbackData.results.length > 0) {
-        const posterPath = fallbackData.results[0].poster_path;
-        if (posterPath) {
-          const posterUrl = `${TMDB_IMAGE_BASE}${posterPath}`;
-          posterCache.set(cacheKey, posterUrl);
-          return posterUrl;
-        }
-      }
-    }
-    
-    return null;
-  } catch (error) {
-    console.warn(`Erro ao buscar capa para ${title} (${year}):`, error);
-    return null;
-  }
+  } catch (e) {}
+  return null;
 }
 
-function generateFallbackPoster(year, title) {
+function makeFallback(title) {
+  const c = document.createElement('canvas');
+  c.width = 300; c.height = 450;
+  const ctx = c.getContext('2d');
+  
   const colors = [
-    ['#070708', '#0d0d15', '#c1121f'],
-    ['#07152f', '#123c78', '#c1121f'],
-    ['#0d0d0d', '#1a1a1a', '#8f0712'],
-    ['#070708', '#0d1a1d', '#123c78'],
-    ['#1a0a0a', '#2a1515', '#c1121f'],
-    ['#0a0a2a', '#15152a', '#8f0712']
+    ['#ff006e', '#ff6b00'],
+    ['#00d4ff', '#ff006e'],
+    ['#ffd700', '#ff006e'],
+    ['#ff006e', '#c2185b'],
+    ['#00d4ff', '#ffd700']
   ];
+  const [c1, c2] = colors[title.length % colors.length];
   
-  const yearNum = parseInt(year) || 0;
-  const idx = (yearNum + title.length) % colors.length;
-  const [bg1, bg2, accent] = colors[idx];
-  const shortTitle = title.length > 28 ? title.substring(0, 25) + '...' : title;
+  const g = ctx.createLinearGradient(0, 0, 300, 450);
+  g.addColorStop(0, c1);
+  g.addColorStop(1, c2);
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 300, 450);
   
-  return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='${bg1}'/%3E%3Cstop offset='100%25' stop-color='${bg2}'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='300' height='450' fill='url(%23g)'/%3E%3Crect x='10' y='10' width='280' height='430' fill='none' stroke='${accent}' stroke-width='2' opacity='0.4' rx='6'/%3E%3Ctext x='50%25' y='35%25' font-family='Playfair Display, serif' font-weight='700' font-size='48' fill='${accent}' text-anchor='middle' dominant-baseline='middle' opacity='0.6'%3E●%3C/text%3E%3Ctext x='50%25' y='55%25' font-family='Playfair Display, serif' font-weight='700' font-size='16' fill='${accent}' text-anchor='middle' dominant-baseline='middle'%3E${shortTitle}%3C/text%3E%3Ctext x='50%25' y='70%25' font-family='Barlow Condensed, sans-serif' font-weight='600' font-size='13' fill='rgba(255,255,255,0.35)' text-anchor='middle' dominant-baseline='middle'%3E${year || '—'}%3C/text%3E%3Crect x='0' y='0' width='300' height='4' fill='${accent}' opacity='0.6'/%3E%3Crect x='0' y='446' width='300' height='4' fill='${accent}' opacity='0.6'/%3E%3C/svg%3E`;
+  ctx.strokeStyle = '#ffd700';
+  ctx.lineWidth = 3;
+  ctx.globalAlpha = 0.6;
+  ctx.strokeRect(10, 10, 280, 430);
+  
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = '#ffd700';
+  ctx.font = '70px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('⬤', 150, 140);
+  
+  ctx.fillStyle = '#ffd700';
+  ctx.font = 'bold 16px Playfair Display, serif';
+  const words = title.split(' ');
+  let line = '';
+  let lines = [];
+  words.forEach(w => {
+    const test = line + w + ' ';
+    if (ctx.measureText(test).width > 260) {
+      if (line) lines.push(line);
+      line = w + ' ';
+    } else line = test;
+  });
+  if (line) lines.push(line);
+  
+  lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 150, 240 + i * 30));
+  
+  return c.toDataURL();
 }
 
-function loadPosterIntoElement(element, year, title) {
-  // Mostra fallback imediatamente
-  const fallback = generateFallbackPoster(year, title);
-  element.style.backgroundImage = `url('${fallback}')`;
-  element.style.backgroundSize = 'contain';
-  element.style.backgroundRepeat = 'no-repeat';
-  element.style.backgroundPosition = 'center';
-  
-  // Busca a capa real em segundo plano
-  fetchPosterUrl(year, title).then(posterUrl => {
-    if (posterUrl) {
-      element.style.backgroundImage = `url('${posterUrl}')`;
-      element.style.backgroundSize = 'contain';
-      element.style.backgroundRepeat = 'no-repeat';
-      element.style.backgroundPosition = 'center';
-    }
-  }).catch(() => {});
+function setPoster(el, title) {
+  fetchPoster(title).then(url => {
+    if (url) el.style.backgroundImage = `url('${url}')`;
+    else el.style.backgroundImage = `url('${makeFallback(title)}')`;
+  }).catch(() => {
+    el.style.backgroundImage = `url('${makeFallback(title)}')`;
+  });
 }
 
 const MOVIES = [
   ["1990", "Jacob's Ladder"],
-  ["1990", "Leviticus"],
+  ["", "Leviticus"],
   ["1968", "Her Private Hell"],
   ["2016", "The Love Witch"],
   ["1985", "Phenomena"],
@@ -933,11 +910,12 @@ const MOVIES = [
   ["2013", "Stoker"],
   ["2018", "Hereditary"],
   ["1988", "Alice"],
-  ["1931", "Frankenstein"],
+  ["", "Frankenstein"],
   ["1973", "Don't Look Now"],
   ["2024", "Lisa Frankenstein"],
   ["1932", "Freaks"],
   ["1999", "Audition"],
+  ["1931", "Frankenstein"],
   ["1994", "Interview with the Vampire"],
   ["1922", "Nosferatu"],
   ["2001", "Pulse"],
@@ -951,22 +929,10 @@ const MOVIES = [
   ["2019", "Saint Maud"],
   ["2022", "Nope"],
   ["2024", "Kinds of Kindness"]
-].map(([year, title], index) => ({
-  id: `${index}-${year}-${title}`,
-  year,
-  title
-}));
+].map(([y, t], i) => ({id: `${i}-${y}-${t}`, year: y, title: t}));
 
-const STORAGE_KEY = 'horror-roulette-state-v2';
-
-let state = null;
-let spinning = false;
-let dragging = false;
-let dragStart = 0;
-let dragOffset = 0;
-let currentTranslate = 0;
-let pendingRating = 0;
-let pendingTarget = null;
+const STORAGE_KEY = 'horror-roulette-v1';
+let state, spinning = false, dragging = false, dragStart = 0, dragOffset = 0, currentTranslate = 0, pendingRating = 0, pendingTarget = null;
 
 const els = {
   reelTrack: document.getElementById('reelTrack'),
@@ -990,21 +956,16 @@ const els = {
 };
 
 function loadState() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    state = JSON.parse(saved);
-  } else {
-    state = { pending: MOVIES.map(m => ({...m})), watched: [] };
-    saveState();
-  }
+  state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { pending: MOVIES.map(m => ({...m})), watched: [] };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-function shuffle(arr) {
-  const a = arr.slice();
+function shuffle(a) {
+  a = a.slice();
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
@@ -1012,252 +973,179 @@ function shuffle(arr) {
   return a;
 }
 
-function makeCard(movie) {
+function makeCard(m) {
   const d = document.createElement('div');
   d.className = 'reel-card';
-  d.dataset.year = movie.year;
-  d.dataset.title = movie.title;
-  
-  const bgDiv = document.createElement('div');
-  bgDiv.className = 'cover-bg';
-  d.appendChild(bgDiv);
-  
-  loadPosterIntoElement(d, movie.year, movie.title);
-  
-  d.innerHTML += `
-    <div class="cover-overlay"></div>
-    <div class="yr">${movie.year || '—'}</div>
-    <div class="tt">${movie.title}</div>
-  `;
-  
-  d.addEventListener('click', (e) => {
-    if (!dragging && !spinning) {
-      const found = state.pending.find(m => m.id === movie.id);
-      if (found) {
-        openTicket(found);
-      }
-    }
-  });
-  
+  d.dataset.year = m.year;
+  d.dataset.title = m.title;
+  setPoster(d, m.title);
+  d.innerHTML = `<div class="cover-overlay"></div><div class="yr">${m.year}</div><div class="tt">${m.title}</div>`;
+  d.onclick = () => !dragging && !spinning && (state.pending.find(x => x.id === m.id)) && openTicket(state.pending.find(x => x.id === m.id));
   return d;
 }
 
-function renderStaticReel() {
+function renderReel() {
   els.reelTrack.style.transition = 'none';
   els.reelTrack.style.transform = 'translateX(0)';
   currentTranslate = 0;
   els.reelTrack.innerHTML = '';
-  
-  const showList = state.pending.length ? state.pending : [{year: '', title: 'Sem filmes'}];
-  const display = shuffle(showList).slice(0, 12);
-  const cycle = display.concat(display).concat(display);
-  
-  cycle.forEach(m => els.reelTrack.appendChild(makeCard(m)));
+  const list = state.pending.length ? state.pending : [{year: '', title: 'Sem filmes'}];
+  const disp = shuffle(list).slice(0, 12);
+  disp.concat(disp).concat(disp).forEach(m => els.reelTrack.appendChild(makeCard(m)));
 }
 
 function updateCounter() {
-  els.counterText.textContent = `${state.pending.length} filmes · ${state.watched.length} assistidos`;
+  els.counterText.textContent = `${state.pending.length} filmes · ${state.watched.length} vistos`;
 }
 
 function renderLists() {
   updateCounter();
-  
   els.listPending.innerHTML = '';
-  if (state.pending.length === 0) {
-    els.listPending.innerHTML = '<div class="empty-list">Nenhum filme para assistir. Todos foram vistos!</div>';
+  if (!state.pending.length) {
+    els.listPending.innerHTML = '<div class="empty-list">Nenhum filme para assistir!</div>';
   } else {
-    state.pending.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year)).forEach(m => {
-      const row = document.createElement('div');
-      row.className = 'movie-row';
-      row.innerHTML = `<span class="badge-year">${m.year || '—'}</span><span class="m-title">${m.title}</span>`;
-      els.listPending.appendChild(row);
+    state.pending.slice().sort((a, b) => (b.year || 0) - (a.year || 0)).forEach(m => {
+      const r = document.createElement('div');
+      r.className = 'movie-row';
+      r.innerHTML = `<span class="badge-year">${m.year || '—'}</span><span class="m-title">${m.title}</span>`;
+      els.listPending.appendChild(r);
     });
   }
   
   els.listWatched.innerHTML = '';
-  if (state.watched.length === 0) {
-    els.listWatched.innerHTML = '<div class="empty-list">Nenhum filme assistido ainda.</div>';
+  if (!state.watched.length) {
+    els.listWatched.innerHTML = '<div class="empty-list">Nenhum filme assistido.</div>';
   } else {
-    state.watched.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year)).forEach(m => {
-      const row = document.createElement('div');
-      row.className = 'movie-row';
-      const starsHtml = [1, 2, 3, 4, 5].map(n =>
-        `<button data-id="${m.id}" data-n="${n}" class="star-edit ${n <= (m.rating || 0) ? 'filled' : ''}">★</button>`
-      ).join('');
-      row.innerHTML = `
-        <span class="badge-year">${m.year || '—'}</span>
-        <span class="m-title">${m.title}</span>
-        <span class="stars">${starsHtml}</span>
-        <button class="undo-btn" data-id="${m.id}">voltar</button>
-      `;
-      els.listWatched.appendChild(row);
+    state.watched.slice().sort((a, b) => (b.year || 0) - (a.year || 0)).forEach(m => {
+      const r = document.createElement('div');
+      r.className = 'movie-row';
+      const s = [1, 2, 3, 4, 5].map(n => `<button data-id="${m.id}" data-n="${n}" class="star-edit ${n <= (m.rating || 0) ? 'filled' : ''}">★</button>`).join('');
+      r.innerHTML = `<span class="badge-year">${m.year || '—'}</span><span class="m-title">${m.title}</span><span class="stars">${s}</span><button class="undo-btn" data-id="${m.id}">voltar</button>`;
+      els.listWatched.appendChild(r);
     });
-    
-    els.listWatched.querySelectorAll('.star-edit').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const id = btn.dataset.id, n = Number(btn.dataset.n);
-        const movie = state.watched.find(x => x.id === id);
-        if (movie) {
-          movie.rating = (movie.rating === n) ? 0 : n;
-          saveState();
-          renderLists();
-        }
-      });
+    els.listWatched.querySelectorAll('.star-edit').forEach(b => b.onclick = () => {
+      const m = state.watched.find(x => x.id === b.dataset.id);
+      if (m) { m.rating = m.rating === +b.dataset.n ? 0 : +b.dataset.n; saveState(); renderLists(); }
     });
-    
-    els.listWatched.querySelectorAll('.undo-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const id = btn.dataset.id;
-        const idx = state.watched.findIndex(x => x.id === id);
-        if (idx > -1) {
-          const [m] = state.watched.splice(idx, 1);
-          delete m.rating;
-          state.pending.push(m);
-          saveState();
-          renderLists();
-          renderStaticReel();
-          toggleEmptyState();
-        }
-      });
+    els.listWatched.querySelectorAll('.undo-btn').forEach(b => b.onclick = () => {
+      const i = state.watched.findIndex(x => x.id === b.dataset.id);
+      if (i > -1) {
+        const [m] = state.watched.splice(i, 1);
+        delete m.rating;
+        state.pending.push(m);
+        saveState();
+        renderLists();
+        renderReel();
+        toggleEmpty();
+      }
     });
   }
 }
 
-function toggleEmptyState() {
-  const empty = state.pending.length === 0;
-  els.spinBtn.style.display = empty ? 'none' : 'block';
-  els.emptyMsg.style.display = empty ? 'block' : 'none';
+function toggleEmpty() {
+  const e = !state.pending.length;
+  els.spinBtn.style.display = e ? 'none' : 'block';
+  els.emptyMsg.style.display = e ? 'block' : 'none';
 }
 
-function switchTab(which) {
-  const p = which === 'pending';
+function switchTab(w) {
+  const p = w === 'pending';
   els.tabPending.classList.toggle('active', p);
   els.tabWatched.classList.toggle('active', !p);
   els.listPending.style.display = p ? 'block' : 'none';
   els.listWatched.style.display = p ? 'none' : 'block';
 }
 
-function buildRateStars(container, initial, onChange) {
-  container.innerHTML = '';
+function buildStars(c, i, o) {
+  c.innerHTML = '';
   for (let n = 1; n <= 5; n++) {
     const b = document.createElement('button');
     b.textContent = '★';
-    b.dataset.n = n;
-    if (n <= initial) b.classList.add('filled');
-    b.addEventListener('click', () => onChange(n));
-    container.appendChild(b);
+    if (n <= i) b.classList.add('filled');
+    b.onclick = () => o(n);
+    c.appendChild(b);
   }
 }
 
-function refreshTicketStars() {
-  buildRateStars(els.ticketStars, pendingRating, (n) => {
-    pendingRating = (pendingRating === n) ? 0 : n;
-    refreshTicketStars();
-  });
-}
+const cardW = 148, gap = 14, step = cardW + gap, gateW = els.reelGate.clientWidth;
 
-const cardWidth = 148, gap = 10, step = cardWidth + gap;
-const gateWidth = els.reelGate.clientWidth;
-
-function onDragStart(e) {
+els.reelGate.onmousedown = els.reelGate.ontouchstart = (e) => {
   if (spinning) return;
   dragging = true;
   dragStart = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
   els.reelGate.classList.add('dragging');
   els.reelTrack.style.transition = 'none';
-}
+};
 
-function onDragMove(e) {
+document.onmousemove = document.ontouchmove = (e) => {
   if (!dragging) return;
-  const now = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-  dragOffset = now - dragStart;
-  const newTranslate = currentTranslate + dragOffset;
-  els.reelTrack.style.transform = `translateX(${-newTranslate}px)`;
-}
+  dragOffset = (e.type.includes('touch') ? e.touches[0].clientX : e.clientX) - dragStart;
+  els.reelTrack.style.transform = `translateX(${-(currentTranslate + dragOffset)}px)`;
+};
 
-function onDragEnd(e) {
+document.onmouseup = document.ontouchend = () => {
   if (!dragging) return;
   dragging = false;
   els.reelGate.classList.remove('dragging');
   currentTranslate += dragOffset;
-  const snappedIndex = Math.round(currentTranslate / step);
-  const snappedTranslate = snappedIndex * step;
-  currentTranslate = snappedTranslate;
+  const snap = Math.round(currentTranslate / step) * step;
+  currentTranslate = snap;
   els.reelTrack.style.transition = 'transform 0.3s ease-out';
-  els.reelTrack.style.transform = `translateX(-${snappedTranslate}px)`;
+  els.reelTrack.style.transform = `translateX(-${snap}px)`;
   dragOffset = 0;
-}
-
-els.reelGate.addEventListener('mousedown', onDragStart);
-els.reelGate.addEventListener('touchstart', onDragStart);
-document.addEventListener('mousemove', onDragMove);
-document.addEventListener('touchmove', onDragMove);
-document.addEventListener('mouseup', onDragEnd);
-document.addEventListener('touchend', onDragEnd);
+};
 
 async function spin() {
-  if (spinning || state.pending.length === 0) return;
-  
+  if (spinning || !state.pending.length) return;
   spinning = true;
   els.spinBtn.disabled = true;
   
-  const targetIndex = Math.floor(Math.random() * state.pending.length);
-  const target = state.pending[targetIndex];
-  
-  let sequence = [];
-  const otherMovies = state.pending.filter(m => m.id !== target.id);
-  
-  if (otherMovies.length > 0) {
-    while (sequence.length < 60) {
-      const shuffled = shuffle(otherMovies);
-      sequence = sequence.concat(shuffled);
-    }
-    sequence = sequence.slice(0, 60);
+  const t = state.pending[Math.floor(Math.random() * state.pending.length)];
+  let seq = [];
+  const others = state.pending.filter(m => m.id !== t.id);
+  if (others.length) {
+    while (seq.length < 60) seq = seq.concat(shuffle(others));
+    seq = seq.slice(0, 60);
   }
-  
-  sequence.push(target);
+  seq.push(t);
   
   els.reelTrack.style.transition = 'none';
   els.reelTrack.style.transform = 'translateX(0)';
   currentTranslate = 0;
   els.reelTrack.innerHTML = '';
-  
-  sequence.forEach(m => els.reelTrack.appendChild(makeCard(m)));
+  seq.forEach(m => els.reelTrack.appendChild(makeCard(m)));
   
   void els.reelTrack.offsetWidth;
   
-  const targetIdxInSeq = sequence.length - 1;
-  const targetCenter = 10 + targetIdxInSeq * step + cardWidth / 2;
-  const offset = targetCenter - gateWidth / 2;
-  
-  currentTranslate = offset;
+  const idx = seq.length - 1;
+  const center = 10 + idx * step + cardW / 2;
+  const off = center - gateW / 2;
+  currentTranslate = off;
   
   requestAnimationFrame(() => {
     els.reelTrack.style.transition = 'transform 4.4s cubic-bezier(0.10, 0.68, 0.14, 1)';
-    els.reelTrack.style.transform = `translateX(-${offset}px)`;
+    els.reelTrack.style.transform = `translateX(-${off}px)`;
   });
   
-  const onEnd = () => {
-    els.reelTrack.removeEventListener('transitionend', onEnd);
+  els.reelTrack.addEventListener('transitionend', function f() {
+    els.reelTrack.removeEventListener('transitionend', f);
     spinning = false;
     els.spinBtn.disabled = false;
-    openTicket(target);
-  };
-  
-  els.reelTrack.addEventListener('transitionend', onEnd);
+    openTicket(t);
+  });
 }
 
-function openTicket(movie) {
-  pendingTarget = movie;
+function openTicket(m) {
+  pendingTarget = m;
   pendingRating = 0;
-  
-  els.ticketTitle.textContent = movie.title;
-  els.ticketYear.textContent = movie.year ? `${movie.year}` : '—';
-  els.ticketSynopsis.textContent = SYNOPSES[movie.title] || 'Sinopse não disponível para este filme.';
-  
-  loadPosterIntoElement(els.ticketPoster, movie.year, movie.title);
-  refreshTicketStars();
-  
+  els.ticketTitle.textContent = m.title;
+  els.ticketYear.textContent = m.year || '—';
+  els.ticketSynopsis.textContent = SYNOPSES[m.title] || 'Sinopse não disponível.';
+  setPoster(els.ticketPoster, m.title);
+  buildStars(els.ticketStars, 0, (n) => {
+    pendingRating = pendingRating === n ? 0 : n;
+    buildStars(els.ticketStars, pendingRating, (n2) => { pendingRating = pendingRating === n2 ? 0 : n2; });
+  });
   els.overlay.classList.add('show');
 }
 
@@ -1266,46 +1154,37 @@ function closeTicket() {
   pendingTarget = null;
 }
 
-async function confirmTicket() {
+els.spinBtn.onclick = spin;
+els.btnConfirm.onclick = () => {
   if (!pendingTarget) return;
-  
-  const idx = state.pending.findIndex(m => m.id === pendingTarget.id);
-  if (idx > -1) {
-    const [m] = state.pending.splice(idx, 1);
+  const i = state.pending.findIndex(m => m.id === pendingTarget.id);
+  if (i > -1) {
+    const [m] = state.pending.splice(i, 1);
     m.rating = pendingRating;
     state.watched.push(m);
     saveState();
     renderLists();
-    renderStaticReel();
-    toggleEmptyState();
+    renderReel();
+    toggleEmpty();
   }
-  
   closeTicket();
-}
-
-async function resetAll() {
-  if (!confirm('Isso vai apagar todo o progresso e restaurar a lista original. Continuar?')) return;
-  
+};
+els.btnCancel.onclick = closeTicket;
+els.tabPending.onclick = () => switchTab('pending');
+els.tabWatched.onclick = () => switchTab('watched');
+els.resetBtn.onclick = () => {
+  if (!confirm('Restaurar lista original?')) return;
   state = { pending: MOVIES.map(m => ({...m})), watched: [] };
   saveState();
   renderLists();
-  renderStaticReel();
-  toggleEmptyState();
-}
+  renderReel();
+  toggleEmpty();
+};
 
-els.spinBtn.addEventListener('click', spin);
-els.btnConfirm.addEventListener('click', confirmTicket);
-els.btnCancel.addEventListener('click', closeTicket);
-els.tabPending.addEventListener('click', () => switchTab('pending'));
-els.tabWatched.addEventListener('click', () => switchTab('watched'));
-els.resetBtn.addEventListener('click', resetAll);
-
-(async function init() {
-  loadState();
-  renderLists();
-  renderStaticReel();
-  toggleEmptyState();
-})();
+loadState();
+renderLists();
+renderReel();
+toggleEmpty();
 </script>
 
 </body>
