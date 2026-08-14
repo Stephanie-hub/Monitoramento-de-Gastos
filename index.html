@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Roulette of Horror</title>
+<title>Roulette of Horror · Suspiria</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
@@ -17,6 +17,8 @@
   --blue-elec: #00d4ff;
   --orange-fire: #ff6b00;
   --cream: #faf0e6;
+  --purple-deep: #6a0dad;
+  --green-neon: #39ff14;
 }
 
 * {
@@ -48,7 +50,7 @@ body::before {
   position: fixed;
   inset: 0;
   background-image: 
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='6' /%3E%3C/filter%3E%3Crect width='300' height='300' fill='%23000' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='6' /%3E%3C/filter%3E%3Crect width='300' height='300' fill='%23000' filter='url(%23noise)' opacity='0.15'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1;
   mix-blend-mode: screen;
@@ -194,10 +196,37 @@ body::after {
     0 8px 25px rgba(0, 0, 0, 0.85);
 }
 
+/* EFEITO SUSPIRIA - Brilho pulsante */
+.reel-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 0;
+  padding: 2px;
+  background: linear-gradient(45deg, 
+    rgba(255, 0, 110, 0.6), 
+    rgba(255, 215, 0, 0.4), 
+    rgba(0, 212, 255, 0.6),
+    rgba(255, 0, 110, 0.6)
+  );
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 3;
+  pointer-events: none;
+  animation: borderPulse 3s ease-in-out infinite;
+}
+
+@keyframes borderPulse {
+  0%, 100% { opacity: 0.5; background-position: 0% 50%; }
+  50% { opacity: 1; background-position: 100% 50%; }
+}
+
 .reel-card .cover-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.85) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.85) 100%);
   z-index: 1;
 }
 
@@ -508,6 +537,17 @@ body::after {
   border: 3px solid rgba(255, 0, 110, 0.4);
 }
 
+.ticket::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 30% 20%, rgba(255, 0, 110, 0.15) 0%, transparent 40%),
+    radial-gradient(ellipse at 70% 80%, rgba(0, 212, 255, 0.10) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .overlay.show .ticket {
   transform: scale(1);
 }
@@ -518,6 +558,7 @@ body::after {
   position: relative;
   border-bottom: 4px solid var(--red-hot);
   box-shadow: 0 0 40px rgba(255, 0, 110, 0.2);
+  z-index: 1;
 }
 
 .ticket-header .eyebrow {
@@ -555,6 +596,8 @@ body::after {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .ticket-body::-webkit-scrollbar {
@@ -628,6 +671,8 @@ body::after {
   gap: 16px;
   padding: 0 28px 28px;
   margin-top: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .ticket-actions button {
@@ -716,19 +761,60 @@ body::after {
   text-shadow: 0 0 8px rgba(255, 0, 110, 0.15);
 }
 
+/* Efeito de gotejamento de sangue - SUSPIRIA */
+.drip {
+  position: fixed;
+  width: 2px;
+  background: var(--red-hot);
+  animation: drip 4s linear infinite;
+  opacity: 0;
+  z-index: 0;
+}
+
+.drip:nth-child(1) { left: 5%; animation-delay: 0s; height: 20px; }
+.drip:nth-child(2) { left: 15%; animation-delay: 1.2s; height: 30px; }
+.drip:nth-child(3) { left: 25%; animation-delay: 2.5s; height: 15px; }
+.drip:nth-child(4) { left: 35%; animation-delay: 0.8s; height: 25px; }
+.drip:nth-child(5) { left: 45%; animation-delay: 3.1s; height: 20px; }
+.drip:nth-child(6) { left: 55%; animation-delay: 1.8s; height: 30px; }
+.drip:nth-child(7) { left: 65%; animation-delay: 0.3s; height: 18px; }
+.drip:nth-child(8) { left: 75%; animation-delay: 2.2s; height: 22px; }
+.drip:nth-child(9) { left: 85%; animation-delay: 1.5s; height: 28px; }
+.drip:nth-child(10) { left: 95%; animation-delay: 3.5s; height: 16px; }
+
+@keyframes drip {
+  0% { top: -20px; opacity: 0; height: 10px; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100vh; opacity: 0; height: 40px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .drip { display: none; }
 }
 </style>
 </head>
 <body>
 
+<!-- Gotas de sangue - Efeito Suspiria -->
+<div class="drip"></div>
+<div class="drip"></div>
+<div class="drip"></div>
+<div class="drip"></div>
+<div class="drip"></div>
+<div class="drip"></div>
+<div class="drip"></div>
+<div class="drip"></div>
+<div class="drip"></div>
+<div class="drip"></div>
+
 <div class="marquee">
-  <h1>ROULETTE OF HORROR</h1>
+  <h1>🩸 ROULETTE OF HORROR</h1>
   <p id="counterText">carregando...</p>
 </div>
 
@@ -745,28 +831,28 @@ body::after {
   <div class="sprockets"></div>
 </div>
 
-<div class="drag-hint">Arraste ou clique em um filme</div>
+<div class="drag-hint">✧ arraste ou clique em um filme ✧</div>
 
-<button class="spin-btn" id="spinBtn">SORTEAR</button>
+<button class="spin-btn" id="spinBtn">⚡ SORTEAR</button>
 
-<div class="empty-msg" id="emptyMsg" style="display:none;">Todos os filmes já foram sorteados!</div>
+<div class="empty-msg" id="emptyMsg" style="display:none;">☠️ Todos os filmes já foram sorteados!</div>
 
 <div class="tabs">
-  <button class="tab-btn active" id="tabPending">LISTA</button>
-  <button class="tab-btn" id="tabWatched">VISTOS</button>
+  <button class="tab-btn active" id="tabPending">📜 LISTA</button>
+  <button class="tab-btn" id="tabWatched">👁️ VISTOS</button>
 </div>
 
 <div class="list-wrap" id="listPending"></div>
 <div class="list-wrap" id="listWatched" style="display:none;"></div>
 
 <p class="footer-note">Avalie tocando nas estrelas<br>
-<button class="reset-link" id="resetBtn">reiniciar</button>
+<button class="reset-link" id="resetBtn">⟳ reiniciar</button>
 </p>
 
 <div class="overlay" id="overlay">
   <div class="ticket">
     <div class="ticket-header">
-      <div class="eyebrow">SELECIONADO</div>
+      <div class="eyebrow">⚰️ SELECIONADO</div>
       <h2 id="ticketTitle">—</h2>
       <p class="yr2" id="ticketYear">—</p>
     </div>
@@ -776,8 +862,8 @@ body::after {
       <div class="rate-stars" id="ticketStars"></div>
     </div>
     <div class="ticket-actions">
-      <button class="btn-cancel" id="btnCancel">Cancelar</button>
-      <button class="btn-confirm" id="btnConfirm">Assistir</button>
+      <button class="btn-cancel" id="btnCancel">✕ Cancelar</button>
+      <button class="btn-confirm" id="btnConfirm">▶ Assistir</button>
     </div>
   </div>
 </div>
@@ -787,37 +873,37 @@ const TMDB_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlOGUyOWQ1ZDIxY2FhM2Y5NTBjM2J
 const posterCache = new Map();
 
 const SYNOPSES = {
-  'Jacob\'s Ladder': 'Um veterano da Guerra do Vietnã retorna assombrado por alucinações perturbadoras.',
-  'Leviticus': 'Um drama psicológico envolvido em mistério e horror explorador de religião.',
-  'Her Private Hell': 'Uma exploração sombria da psique feminina em romance gótico.',
-  'The Love Witch': 'Uma bruxaria moderna onde uma mulher sedutora navega amor e magia.',
-  'Phenomena': 'Uma jovem com dom de comunicação com insetos em rituais de morte.',
-  'Deep Red': 'Um compositor testemunha assassinato brutal em teia de conspiração.',
-  'Phantom of the Paradise': 'Um compositor desprezado se torna monstro mascarado em teatro.',
-  'The Fly': 'Um cientista se transforma gradualmente em criatura de inseto.',
-  'mother!': 'Uma mulher enfrenta caos quando sua casa é invadida de forma perturbadora.',
-  'Bones and All': 'Dois canibais marginalizados navegam Midwest em romance sombrio.',
-  'Stoker': 'Uma menina órfã recebe tio misterioso cuja presença desencadeia perturbações.',
-  'Hereditary': 'Uma família é assombrada por segredos ocultos e presenças malignas.',
-  'Alice': 'Uma exploração surrealista de conto infantil onde horror emerge.',
-  'Frankenstein': 'A tragédia da criatura rejeitada, testamento ao medo da imortalidade.',
-  'Don\'t Look Now': 'Um casal em luto em Veneza perseguido por presenças espectrais.',
-  'Lisa Frankenstein': 'Uma reinterpretação moderna e gótica do mito Frankenstein.',
-  'Freaks': 'Circo de horrores onde pessoas com deficiências se tornam personagens perturbadores.',
-  'Audition': 'Um homem viúvo busca amor que se desdobra em tortura visceral.',
-  'Interview with the Vampire': 'Vampiros na história humana em épico gótico de imortalidade sofrida.',
-  'Nosferatu': 'O conde Orlock persegue cidade em pânico no clássico silencioso.',
-  'Pulse': 'Computadores infectados transmitem morte através ciberespaço.',
-  'Jennifer\'s Body': 'Uma adolescente possuída por demônio se torna predadora.',
-  'Trouble Every Day': 'Recém-casados em Paris enquanto mulher sofre transtorno canibal.',
-  'Bloody Muscle Body Builder in Hell': 'Uma exploração extrema de horror visual e rituais obscenos.',
-  'Godzilla': 'Uma criatura atômica emerge para devastar Japão.',
-  'Opus': 'Um compositor experimenta loucura em busca de obra perfeita.',
-  'Altered States': 'Um cientista experimenta privação sensorial e transformações monstruosas.',
-  'Late Night with the Devil': 'Um programa de TV noturno descende ao caos sobrenatural.',
-  'Saint Maud': 'Uma enfermeira desenvolve obsessão violenta por sua paciente.',
-  'Nope': 'Um casal enfrenta fenômeno alienígena perturbador.',
-  'Kinds of Kindness': 'Histórias exploram perversidade humana em relacionamentos tóxicos.'
+  'Jacob\'s Ladder': 'Um veterano da Guerra do Vietnã retorna assombrado por alucinações perturbadoras que desafiam sua sanidade.',
+  'Leviticus': 'Um drama psicológico envolvido em mistério e horror que explora os limites da fé e da loucura.',
+  'Her Private Hell': 'Uma exploração sombria da psique feminina em um romance gótico de sedução e horror.',
+  'The Love Witch': 'Uma bruxa moderna usa magia para encontrar amor, mas seus feitiços têm consequências mortais.',
+  'Phenomena': 'Uma jovem com o dom de se comunicar com insetos é envolvida em uma série de assassinatos em uma escola de balé.',
+  'Deep Red': 'Um compositor testemunha um assassinato brutal e se vê em uma teia de conspiração e mistério.',
+  'Phantom of the Paradise': 'Um compositor desprezado se torna um monstro mascarado em um teatro de depravação e vingança.',
+  'The Fly': 'Um cientista se transforma gradualmente em uma criatura híbrida de inseto em uma exploração visceral.',
+  'mother!': 'Uma mulher enfrenta o caos quando sua casa é invadida por visitantes perturbadores em uma alegoria de horror.',
+  'Bones and All': 'Dois canibais marginalizados navegam o Midwest em um romance sombrio de amor, fome e sobrevivência.',
+  'Stoker': 'Uma menina órfã recebe a visita de um tio misterioso cuja presença desencadeia perturbações psicológicas.',
+  'Hereditary': 'Uma família é assombrada por segredos ocultos e presenças malignas que se revelam em terror desesperador.',
+  'Alice': 'Uma exploração surrealista e perturbadora de um conto infantil onde o horror emerge das fraturas da imaginação.',
+  'Frankenstein': 'A tragédia seminal da criatura rejeitada, um testamento ao medo da imortalidade e da ambição.',
+  'Don\'t Look Now': 'Um casal em luto em Veneza é perseguido por presenças espectrais e sinais perturbadores.',
+  'Lisa Frankenstein': 'Uma reinterpretação moderna e gótica do mito Frankenstein com humor negro e romance sombrio.',
+  'Freaks': 'Um circo de horrores onde pessoas com deficiências físicas se tornam personagens perturbadores e vingativos.',
+  'Audition': 'Um homem viúvo busca amor em uma audição que se desdobra em tortura visceral e pesadelo psicológico.',
+  'Interview with the Vampire': 'Vampiros imortais navegam a história humana em um épico gótico de sedução e condenação.',
+  'Nosferatu': 'O conde Orlock, vampiro ancestral, persegue uma cidade em pânico no clássico silencioso do horror.',
+  'Pulse': 'Computadores infectados por entidades sobrenaturais transmitem morte através do ciberespaço.',
+  'Jennifer\'s Body': 'Uma adolescente possuída por um demônio se torna uma predadora em uma sátira de horror punk.',
+  'Trouble Every Day': 'Recém-casados em Paris enquanto uma mulher sofre de um transtorno que a torna uma predadora canibal.',
+  'Bloody Muscle Body Builder in Hell': 'Uma exploração extrema de horror visual onde corpos são destruídos em rituais obscenos.',
+  'Godzilla': 'Uma criatura atômica emerge do oceano para devastar o Japão em uma metáfora sobre guerra nuclear.',
+  'Opus': 'Um compositor experimenta loucura e obsessão em busca de sua obra perfeita em um thriller psicológico.',
+  'Altered States': 'Um cientista experimenta privação sensorial e drogas psicodélicas, desencadeando transformações monstruosas.',
+  'Late Night with the Devil': 'Um programa de TV noturno descende ao caos quando forças sobrenaturais invadem a transmissão.',
+  'Saint Maud': 'Uma enfermeira religiosa desenvolve uma obsessão violenta por sua paciente em um horror de fé corrompida.',
+  'Nope': 'Um casal de cineastas enfrenta um fenômeno aéreo alienígena em um western de ficção científica e horror.',
+  'Kinds of Kindness': 'Histórias entrelaçadas exploram a perversidade humana e o horror de relacionamentos tóxicos.'
 };
 
 async function fetchPoster(title) {
@@ -842,14 +928,15 @@ function makeFallback(title) {
   c.width = 300; c.height = 450;
   const ctx = c.getContext('2d');
   
-  const colors = [
+  const palettes = [
     ['#ff006e', '#ff6b00'],
     ['#00d4ff', '#ff006e'],
     ['#ffd700', '#ff006e'],
     ['#ff006e', '#c2185b'],
-    ['#00d4ff', '#ffd700']
+    ['#6a0dad', '#ff006e'],
+    ['#39ff14', '#ff006e']
   ];
-  const [c1, c2] = colors[title.length % colors.length];
+  const [c1, c2] = palettes[title.length % palettes.length];
   
   const g = ctx.createLinearGradient(0, 0, 300, 450);
   g.addColorStop(0, c1);
@@ -857,18 +944,26 @@ function makeFallback(title) {
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, 300, 450);
   
+  // Textura granulada (Suspiria)
+  for (let i = 0; i < 500; i++) {
+    ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.08})`;
+    ctx.fillRect(Math.random() * 300, Math.random() * 450, 2, 2);
+  }
+  
   ctx.strokeStyle = '#ffd700';
   ctx.lineWidth = 3;
   ctx.globalAlpha = 0.6;
   ctx.strokeRect(10, 10, 280, 430);
   
-  ctx.globalAlpha = 1;
+  ctx.globalAlpha = 0.8;
   ctx.fillStyle = '#ffd700';
-  ctx.font = '70px Arial';
+  ctx.font = '80px Arial';
   ctx.textAlign = 'center';
   ctx.fillText('⬤', 150, 140);
   
   ctx.fillStyle = '#ffd700';
+  ctx.shadowColor = 'rgba(255, 0, 110, 0.5)';
+  ctx.shadowBlur = 20;
   ctx.font = 'bold 16px Playfair Display, serif';
   const words = title.split(' ');
   let line = '';
@@ -882,6 +977,7 @@ function makeFallback(title) {
   });
   if (line) lines.push(line);
   
+  ctx.shadowBlur = 10;
   lines.slice(0, 2).forEach((l, i) => ctx.fillText(l, 150, 240 + i * 30));
   
   return c.toDataURL();
@@ -931,7 +1027,7 @@ const MOVIES = [
   ["2024", "Kinds of Kindness"]
 ].map(([y, t], i) => ({id: `${i}-${y}-${t}`, year: y, title: t}));
 
-const STORAGE_KEY = 'horror-roulette-v1';
+const STORAGE_KEY = 'horror-roulette-v2';
 let state, spinning = false, dragging = false, dragStart = 0, dragOffset = 0, currentTranslate = 0, pendingRating = 0, pendingTarget = null;
 
 const els = {
@@ -956,8 +1052,13 @@ const els = {
 };
 
 function loadState() {
-  state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || { pending: MOVIES.map(m => ({...m})), watched: [] };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    state = JSON.parse(saved);
+  } else {
+    state = { pending: MOVIES.map(m => ({...m})), watched: [] };
+    saveState();
+  }
 }
 
 function saveState() {
@@ -965,12 +1066,12 @@ function saveState() {
 }
 
 function shuffle(a) {
-  a = a.slice();
-  for (let i = a.length - 1; i > 0; i--) {
+  const arr = a.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return a;
+  return arr;
 }
 
 function makeCard(m) {
@@ -980,7 +1081,12 @@ function makeCard(m) {
   d.dataset.title = m.title;
   setPoster(d, m.title);
   d.innerHTML = `<div class="cover-overlay"></div><div class="yr">${m.year}</div><div class="tt">${m.title}</div>`;
-  d.onclick = () => !dragging && !spinning && (state.pending.find(x => x.id === m.id)) && openTicket(state.pending.find(x => x.id === m.id));
+  d.onclick = () => {
+    if (!dragging && !spinning) {
+      const found = state.pending.find(x => x.id === m.id);
+      if (found) openTicket(found);
+    }
+  };
   return d;
 }
 
@@ -989,9 +1095,10 @@ function renderReel() {
   els.reelTrack.style.transform = 'translateX(0)';
   currentTranslate = 0;
   els.reelTrack.innerHTML = '';
-  const list = state.pending.length ? state.pending : [{year: '', title: 'Sem filmes'}];
+  const list = state.pending.length ? state.pending : [{year: '', title: 'Sem filmes', id: 'empty'}];
   const disp = shuffle(list).slice(0, 12);
-  disp.concat(disp).concat(disp).forEach(m => els.reelTrack.appendChild(makeCard(m)));
+  const cycle = disp.concat(disp).concat(disp);
+  cycle.forEach(m => els.reelTrack.appendChild(makeCard(m)));
 }
 
 function updateCounter() {
@@ -1000,9 +1107,10 @@ function updateCounter() {
 
 function renderLists() {
   updateCounter();
+  
   els.listPending.innerHTML = '';
   if (!state.pending.length) {
-    els.listPending.innerHTML = '<div class="empty-list">Nenhum filme para assistir!</div>';
+    els.listPending.innerHTML = '<div class="empty-list">☠️ Nenhum filme para assistir!</div>';
   } else {
     state.pending.slice().sort((a, b) => (b.year || 0) - (a.year || 0)).forEach(m => {
       const r = document.createElement('div');
@@ -1014,60 +1122,78 @@ function renderLists() {
   
   els.listWatched.innerHTML = '';
   if (!state.watched.length) {
-    els.listWatched.innerHTML = '<div class="empty-list">Nenhum filme assistido.</div>';
+    els.listWatched.innerHTML = '<div class="empty-list">👻 Nenhum filme assistido ainda.</div>';
   } else {
     state.watched.slice().sort((a, b) => (b.year || 0) - (a.year || 0)).forEach(m => {
       const r = document.createElement('div');
       r.className = 'movie-row';
-      const s = [1, 2, 3, 4, 5].map(n => `<button data-id="${m.id}" data-n="${n}" class="star-edit ${n <= (m.rating || 0) ? 'filled' : ''}">★</button>`).join('');
-      r.innerHTML = `<span class="badge-year">${m.year || '—'}</span><span class="m-title">${m.title}</span><span class="stars">${s}</span><button class="undo-btn" data-id="${m.id}">voltar</button>`;
+      const stars = [1, 2, 3, 4, 5].map(n => 
+        `<button data-id="${m.id}" data-n="${n}" class="star-edit ${n <= (m.rating || 0) ? 'filled' : ''}">★</button>`
+      ).join('');
+      r.innerHTML = `
+        <span class="badge-year">${m.year || '—'}</span>
+        <span class="m-title">${m.title}</span>
+        <span class="stars">${stars}</span>
+        <button class="undo-btn" data-id="${m.id}">voltar</button>
+      `;
       els.listWatched.appendChild(r);
     });
-    els.listWatched.querySelectorAll('.star-edit').forEach(b => b.onclick = () => {
-      const m = state.watched.find(x => x.id === b.dataset.id);
-      if (m) { m.rating = m.rating === +b.dataset.n ? 0 : +b.dataset.n; saveState(); renderLists(); }
+    
+    els.listWatched.querySelectorAll('.star-edit').forEach(b => {
+      b.onclick = () => {
+        const m = state.watched.find(x => x.id === b.dataset.id);
+        if (m) {
+          m.rating = m.rating === +b.dataset.n ? 0 : +b.dataset.n;
+          saveState();
+          renderLists();
+        }
+      };
     });
-    els.listWatched.querySelectorAll('.undo-btn').forEach(b => b.onclick = () => {
-      const i = state.watched.findIndex(x => x.id === b.dataset.id);
-      if (i > -1) {
-        const [m] = state.watched.splice(i, 1);
-        delete m.rating;
-        state.pending.push(m);
-        saveState();
-        renderLists();
-        renderReel();
-        toggleEmpty();
-      }
+    
+    els.listWatched.querySelectorAll('.undo-btn').forEach(b => {
+      b.onclick = () => {
+        const idx = state.watched.findIndex(x => x.id === b.dataset.id);
+        if (idx > -1) {
+          const [m] = state.watched.splice(idx, 1);
+          delete m.rating;
+          state.pending.push(m);
+          saveState();
+          renderLists();
+          renderReel();
+          toggleEmpty();
+        }
+      };
     });
   }
 }
 
 function toggleEmpty() {
-  const e = !state.pending.length;
-  els.spinBtn.style.display = e ? 'none' : 'block';
-  els.emptyMsg.style.display = e ? 'block' : 'none';
+  const empty = !state.pending.length;
+  els.spinBtn.style.display = empty ? 'none' : 'block';
+  els.emptyMsg.style.display = empty ? 'block' : 'none';
 }
 
-function switchTab(w) {
-  const p = w === 'pending';
+function switchTab(which) {
+  const p = which === 'pending';
   els.tabPending.classList.toggle('active', p);
   els.tabWatched.classList.toggle('active', !p);
   els.listPending.style.display = p ? 'block' : 'none';
   els.listWatched.style.display = p ? 'none' : 'block';
 }
 
-function buildStars(c, i, o) {
-  c.innerHTML = '';
+function buildStars(container, initial, onChange) {
+  container.innerHTML = '';
   for (let n = 1; n <= 5; n++) {
     const b = document.createElement('button');
     b.textContent = '★';
-    if (n <= i) b.classList.add('filled');
-    b.onclick = () => o(n);
-    c.appendChild(b);
+    if (n <= initial) b.classList.add('filled');
+    b.onclick = () => onChange(n);
+    container.appendChild(b);
   }
 }
 
-const cardW = 148, gap = 14, step = cardW + gap, gateW = els.reelGate.clientWidth;
+const cardW = 148, gap = 14, step = cardW + gap;
+const gateW = els.reelGate.clientWidth;
 
 els.reelGate.onmousedown = els.reelGate.ontouchstart = (e) => {
   if (spinning) return;
@@ -1079,7 +1205,8 @@ els.reelGate.onmousedown = els.reelGate.ontouchstart = (e) => {
 
 document.onmousemove = document.ontouchmove = (e) => {
   if (!dragging) return;
-  dragOffset = (e.type.includes('touch') ? e.touches[0].clientX : e.clientX) - dragStart;
+  const now = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+  dragOffset = now - dragStart;
   els.reelTrack.style.transform = `translateX(${-(currentTranslate + dragOffset)}px)`;
 };
 
@@ -1097,42 +1224,48 @@ document.onmouseup = document.ontouchend = () => {
 
 async function spin() {
   if (spinning || !state.pending.length) return;
+  
   spinning = true;
   els.spinBtn.disabled = true;
   
-  const t = state.pending[Math.floor(Math.random() * state.pending.length)];
-  let seq = [];
-  const others = state.pending.filter(m => m.id !== t.id);
+  const target = state.pending[Math.floor(Math.random() * state.pending.length)];
+  let sequence = [];
+  const others = state.pending.filter(m => m.id !== target.id);
+  
   if (others.length) {
-    while (seq.length < 60) seq = seq.concat(shuffle(others));
-    seq = seq.slice(0, 60);
+    while (sequence.length < 60) {
+      sequence = sequence.concat(shuffle(others));
+    }
+    sequence = sequence.slice(0, 60);
   }
-  seq.push(t);
+  sequence.push(target);
   
   els.reelTrack.style.transition = 'none';
   els.reelTrack.style.transform = 'translateX(0)';
   currentTranslate = 0;
   els.reelTrack.innerHTML = '';
-  seq.forEach(m => els.reelTrack.appendChild(makeCard(m)));
+  sequence.forEach(m => els.reelTrack.appendChild(makeCard(m)));
   
   void els.reelTrack.offsetWidth;
   
-  const idx = seq.length - 1;
+  const idx = sequence.length - 1;
   const center = 10 + idx * step + cardW / 2;
-  const off = center - gateW / 2;
-  currentTranslate = off;
+  const offset = center - gateW / 2;
+  currentTranslate = offset;
   
   requestAnimationFrame(() => {
     els.reelTrack.style.transition = 'transform 4.4s cubic-bezier(0.10, 0.68, 0.14, 1)';
-    els.reelTrack.style.transform = `translateX(-${off}px)`;
+    els.reelTrack.style.transform = `translateX(-${offset}px)`;
   });
   
-  els.reelTrack.addEventListener('transitionend', function f() {
-    els.reelTrack.removeEventListener('transitionend', f);
+  const onEnd = () => {
+    els.reelTrack.removeEventListener('transitionend', onEnd);
     spinning = false;
     els.spinBtn.disabled = false;
-    openTicket(t);
-  });
+    openTicket(target);
+  };
+  
+  els.reelTrack.addEventListener('transitionend', onEnd);
 }
 
 function openTicket(m) {
@@ -1142,10 +1275,14 @@ function openTicket(m) {
   els.ticketYear.textContent = m.year || '—';
   els.ticketSynopsis.textContent = SYNOPSES[m.title] || 'Sinopse não disponível.';
   setPoster(els.ticketPoster, m.title);
+  
   buildStars(els.ticketStars, 0, (n) => {
     pendingRating = pendingRating === n ? 0 : n;
-    buildStars(els.ticketStars, pendingRating, (n2) => { pendingRating = pendingRating === n2 ? 0 : n2; });
+    buildStars(els.ticketStars, pendingRating, (n2) => {
+      pendingRating = pendingRating === n2 ? 0 : n2;
+    });
   });
+  
   els.overlay.classList.add('show');
 }
 
@@ -1157,9 +1294,9 @@ function closeTicket() {
 els.spinBtn.onclick = spin;
 els.btnConfirm.onclick = () => {
   if (!pendingTarget) return;
-  const i = state.pending.findIndex(m => m.id === pendingTarget.id);
-  if (i > -1) {
-    const [m] = state.pending.splice(i, 1);
+  const idx = state.pending.findIndex(m => m.id === pendingTarget.id);
+  if (idx > -1) {
+    const [m] = state.pending.splice(idx, 1);
     m.rating = pendingRating;
     state.watched.push(m);
     saveState();
@@ -1169,11 +1306,12 @@ els.btnConfirm.onclick = () => {
   }
   closeTicket();
 };
+
 els.btnCancel.onclick = closeTicket;
 els.tabPending.onclick = () => switchTab('pending');
 els.tabWatched.onclick = () => switchTab('watched');
 els.resetBtn.onclick = () => {
-  if (!confirm('Restaurar lista original?')) return;
+  if (!confirm('⚠️ Restaurar lista original?')) return;
   state = { pending: MOVIES.map(m => ({...m})), watched: [] };
   saveState();
   renderLists();
