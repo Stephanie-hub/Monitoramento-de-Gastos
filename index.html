@@ -9,14 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black-deep: #070708;
-  --red-crimson: #8f0712;
-  --red-intense: #c1121f;
-  --blue-deep: #07152f;
-  --blue-saturated: #123c78;
+  --black-deep: #0a0a0a;
+  --red-intense: #ff1744;
+  --red-dark: #c41c3b;
+  --yellow-bright: #ffd700;
+  --green-neon: #00ff41;
+  --blue-electric: #0088ff;
+  --magenta: #ff00ff;
   --cream-aged: #e8dfc8;
-  --film-gray: #77736a;
-  --shadow: 0 10px 30px rgba(0,0,0,0.7);
+  --shadow: 0 10px 40px rgba(0,0,0,0.9);
 }
 
 * {
@@ -32,9 +33,10 @@ html, body {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(199, 18, 31, 0.35) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 70%, rgba(7, 21, 47, 0.4) 0%, transparent 45%),
-    linear-gradient(180deg, #070708 0%, #0a0a0d 50%, #070708 100%);
+    radial-gradient(ellipse at 15% 25%, rgba(255, 23, 68, 0.5) 0%, transparent 35%),
+    radial-gradient(ellipse at 85% 75%, rgba(0, 136, 255, 0.4) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a0520 50%, #0a1a2e 100%);
   font-family: 'Barlow', sans-serif;
   color: var(--cream-aged);
   padding: 18px 14px 60px;
@@ -46,18 +48,21 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' fill='%23070708' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='5' /%3E%3C/filter%3E%3Crect width='200' height='200' fill='%230a0a0a' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1;
-  mix-blend-mode: multiply;
+  mix-blend-mode: overlay;
 }
 
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 23, 68, 0.1) 0%, transparent 30%),
+    radial-gradient(circle at 80% 70%, rgba(0, 136, 255, 0.1) 0%, transparent 30%),
+    radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -65,12 +70,15 @@ body::after {
 .marquee {
   position: relative;
   text-align: center;
-  padding: 22px 10px 18px;
-  margin-bottom: 18px;
-  border: 2px solid var(--red-intense);
-  border-radius: 4px;
-  background: linear-gradient(180deg, rgba(7, 21, 47, 0.3), rgba(139, 7, 18, 0.2));
-  box-shadow: 0 0 30px rgba(199, 18, 31, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.4);
+  padding: 28px 10px 22px;
+  margin-bottom: 20px;
+  border: 3px solid var(--yellow-bright);
+  border-radius: 2px;
+  background: linear-gradient(135deg, rgba(255, 23, 68, 0.15) 0%, rgba(0, 136, 255, 0.1) 100%);
+  box-shadow: 
+    0 0 40px rgba(255, 23, 68, 0.4),
+    0 0 80px rgba(0, 136, 255, 0.2),
+    inset 0 0 40px rgba(255, 215, 0, 0.1);
   z-index: 2;
   position: relative;
 }
@@ -78,11 +86,14 @@ body::after {
 .marquee h1 {
   font-family: 'Playfair Display', serif;
   font-weight: 900;
-  font-size: clamp(22px, 7vw, 36px);
-  letter-spacing: 2px;
-  margin: 0 0 6px;
-  color: var(--red-intense);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  font-size: clamp(24px, 8vw, 42px);
+  letter-spacing: 3px;
+  margin: 0 0 8px;
+  color: var(--yellow-bright);
+  text-shadow: 
+    0 0 10px rgba(255, 23, 68, 0.8),
+    0 0 20px rgba(0, 136, 255, 0.5),
+    0 4px 8px rgba(0, 0, 0, 0.8);
 }
 
 .marquee p {
@@ -90,41 +101,45 @@ body::after {
   font-family: 'Barlow Condensed', sans-serif;
   text-transform: uppercase;
   letter-spacing: 4px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--cream-aged);
-  opacity: 0.75;
+  text-shadow: 0 0 8px rgba(255, 23, 68, 0.5);
 }
 
 .reel-wrap {
   position: relative;
-  margin: 0 auto 16px;
+  margin: 0 auto 20px;
   max-width: 520px;
   z-index: 2;
-  position: relative;
 }
 
 .sprockets {
-  height: 14px;
+  height: 16px;
   background-color: var(--black-deep);
-  background-image: radial-gradient(circle, var(--red-crimson) 3px, transparent 3.4px);
-  background-size: 26px 14px;
+  background-image: radial-gradient(circle, var(--yellow-bright) 3.5px, transparent 4px);
+  background-size: 28px 16px;
   background-repeat: repeat-x;
   background-position: center;
   border-radius: 2px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.8),
+    0 0 15px rgba(255, 215, 0, 0.3);
 }
 
 .reel-gate {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #0a0a0d 0%, #0d0d10 100%);
-  border-left: 3px solid var(--red-crimson);
-  border-right: 3px solid var(--red-crimson);
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a0a2e 50%, #0a0a0a 100%);
+  border-left: 4px solid var(--red-intense);
+  border-right: 4px solid var(--red-intense);
   height: 160px;
   display: flex;
   align-items: center;
   cursor: grab;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(199, 18, 31, 0.15);
+  box-shadow: 
+    inset 0 0 30px rgba(0, 0, 0, 0.9),
+    0 0 35px rgba(255, 23, 68, 0.3),
+    0 0 60px rgba(0, 136, 255, 0.15);
 }
 
 .reel-gate.dragging {
@@ -134,7 +149,7 @@ body::after {
 .reel-track {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 0 10px;
   will-change: transform;
   transform: translateX(0);
@@ -144,48 +159,45 @@ body::after {
   flex: 0 0 auto;
   width: 148px;
   height: 140px;
-  border-radius: 6px;
+  border-radius: 2px;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   text-align: center;
-  padding: 6px 8px 12px;
-  box-shadow: inset 0 0 0 1px rgba(199, 18, 31, 0.25), 0 4px 16px rgba(0, 0, 0, 0.7);
-  background-size: contain;
+  padding: 8px 8px 12px;
+  box-shadow: 
+    inset 0 0 0 2px rgba(255, 23, 68, 0.3),
+    0 0 20px rgba(255, 23, 68, 0.2),
+    0 0 30px rgba(0, 136, 255, 0.1),
+    0 6px 20px rgba(0, 0, 0, 0.8);
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   color: white;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
   background-color: #0a0a12;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
   user-select: none;
   overflow: hidden;
 }
 
 .reel-card:active {
-  transform: scale(0.97);
-}
-
-.reel-card .cover-bg {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  border-radius: 6px;
-  z-index: 0;
-  opacity: 0.2;
-  filter: blur(8px);
-  transform: scale(1.1);
+  transform: scale(0.96);
+  box-shadow: 
+    inset 0 0 0 2px rgba(255, 23, 68, 0.5),
+    0 0 30px rgba(255, 23, 68, 0.3),
+    0 0 50px rgba(0, 136, 255, 0.2),
+    0 6px 20px rgba(0, 0, 0, 0.8);
 }
 
 .reel-card .cover-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.75) 100%);
-  border-radius: 6px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+  border-radius: 2px;
   z-index: 1;
 }
 
@@ -194,12 +206,14 @@ body::after {
   font-weight: 700;
   font-size: 11px;
   letter-spacing: 2px;
-  color: var(--red-intense);
-  background: rgba(0, 0, 0, 0.75);
-  padding: 0 8px;
-  border-radius: 3px;
-  margin-bottom: 3px;
+  color: var(--yellow-bright);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2px 8px;
+  border-radius: 2px;
+  margin-bottom: 4px;
   z-index: 2;
+  position: relative;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
 }
 
 .reel-card .tt {
@@ -211,30 +225,31 @@ body::after {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.75);
-  padding: 2px 6px;
-  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 4px 6px;
+  border-radius: 2px;
   z-index: 2;
   max-width: 95%;
+  position: relative;
 }
 
 .gate-pointer {
   position: absolute;
   left: 50%;
-  top: -4px;
+  top: -6px;
   transform: translateX(-50%);
   width: 0;
   height: 0;
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-  border-top: 12px solid var(--red-intense);
-  filter: drop-shadow(0 2px 4px rgba(199, 18, 31, 0.5));
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-top: 14px solid var(--red-intense);
+  filter: drop-shadow(0 2px 6px rgba(255, 23, 68, 0.8));
   z-index: 3;
 }
 
 .gate-pointer.bottom {
   top: auto;
-  bottom: -4px;
+  bottom: -6px;
   transform: translateX(-50%) rotate(180deg);
 }
 
@@ -243,11 +258,12 @@ body::after {
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: 3px;
   transform: translateX(-50%);
-  background: linear-gradient(180deg, transparent, rgba(199, 18, 31, 0.3), transparent);
+  background: linear-gradient(180deg, transparent, rgba(255, 23, 68, 0.5), transparent);
   z-index: 2;
   pointer-events: none;
+  box-shadow: 0 0 10px rgba(255, 23, 68, 0.6);
 }
 
 .gate-fade {
@@ -261,19 +277,19 @@ body::after {
 
 .gate-fade.left {
   left: 0;
-  background: linear-gradient(90deg, #0a0a0d, transparent);
+  background: linear-gradient(90deg, #0a0a0a, transparent);
 }
 
 .gate-fade.right {
   right: 0;
-  background: linear-gradient(270deg, #0a0a0d, transparent);
+  background: linear-gradient(270deg, #0a0a0a, transparent);
 }
 
 .spin-btn {
   display: block;
-  margin: 18px auto 22px;
-  width: min(280px, 84%);
-  padding: 15px 18px;
+  margin: 22px auto 28px;
+  width: min(280px, 86%);
+  padding: 16px 20px;
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   font-size: 18px;
@@ -281,10 +297,14 @@ body::after {
   text-transform: uppercase;
   text-align: center;
   color: var(--black-deep);
-  background: linear-gradient(180deg, var(--red-intense), var(--red-crimson));
-  border: 2px solid var(--red-crimson);
-  border-radius: 4px;
-  box-shadow: 0 8px 20px rgba(199, 18, 31, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, var(--red-intense), var(--magenta));
+  border: 3px solid var(--yellow-bright);
+  border-radius: 2px;
+  box-shadow: 
+    0 0 30px rgba(255, 23, 68, 0.6),
+    0 0 60px rgba(255, 0, 255, 0.3),
+    0 10px 25px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   position: relative;
@@ -292,12 +312,16 @@ body::after {
 }
 
 .spin-btn:active {
-  transform: scale(0.96);
-  box-shadow: 0 4px 12px rgba(199, 18, 31, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: scale(0.94);
+  box-shadow: 
+    0 0 20px rgba(255, 23, 68, 0.5),
+    0 0 40px rgba(255, 0, 255, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .spin-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: default;
 }
 
@@ -306,27 +330,28 @@ body::after {
   font-family: 'Playfair Display', serif;
   font-size: 16px;
   color: var(--red-intense);
-  margin: 10px 0 20px;
+  margin: 15px 0 25px;
   padding: 0 10px;
   position: relative;
   z-index: 2;
+  text-shadow: 0 0 10px rgba(255, 23, 68, 0.4);
 }
 
 .tabs {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   max-width: 520px;
-  margin: 0 auto 14px;
+  margin: 0 auto 16px;
   position: relative;
   z-index: 2;
 }
 
 .tab-btn {
   flex: 1;
-  padding: 10px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--blue-saturated);
-  background: rgba(7, 21, 47, 0.2);
+  padding: 11px 10px;
+  border-radius: 2px;
+  border: 2px solid var(--blue-electric);
+  background: rgba(0, 136, 255, 0.1);
   color: var(--cream-aged);
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
@@ -338,10 +363,12 @@ body::after {
 }
 
 .tab-btn.active {
-  background: linear-gradient(180deg, rgba(199, 18, 31, 0.3), rgba(139, 7, 18, 0.2));
+  background: linear-gradient(135deg, rgba(255, 23, 68, 0.3), rgba(255, 0, 255, 0.2));
   border-color: var(--red-intense);
-  color: var(--red-intense);
-  box-shadow: 0 0 12px rgba(199, 18, 31, 0.15);
+  color: var(--yellow-bright);
+  box-shadow: 
+    0 0 20px rgba(255, 23, 68, 0.3),
+    0 0 10px rgba(255, 0, 255, 0.2);
 }
 
 .list-wrap {
@@ -355,24 +382,25 @@ body::after {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: linear-gradient(160deg, rgba(232, 223, 200, 0.05), rgba(232, 223, 200, 0.02));
-  border: 1px solid rgba(199, 18, 31, 0.2);
-  border-radius: 6px;
-  padding: 10px 12px;
+  background: linear-gradient(135deg, rgba(255, 23, 68, 0.06) 0%, rgba(0, 136, 255, 0.04) 100%);
+  border: 2px solid rgba(255, 23, 68, 0.25);
+  border-radius: 2px;
+  padding: 11px 13px;
   margin-bottom: 8px;
   position: relative;
+  box-shadow: 0 0 15px rgba(255, 23, 68, 0.08);
 }
 
 .movie-row .badge-year {
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   font-size: 13px;
-  color: var(--red-intense);
-  background: rgba(139, 7, 18, 0.25);
-  padding: 4px 8px;
-  border-radius: 3px;
+  color: var(--yellow-bright);
+  background: rgba(255, 23, 68, 0.2);
+  padding: 5px 8px;
+  border-radius: 2px;
   flex: 0 0 auto;
-  border: 1px solid rgba(199, 18, 31, 0.2);
+  border: 1px solid rgba(255, 23, 68, 0.3);
 }
 
 .movie-row .m-title {
@@ -384,7 +412,7 @@ body::after {
 
 .movie-row .stars {
   display: flex;
-  gap: 2px;
+  gap: 3px;
   flex: 0 0 auto;
 }
 
@@ -395,22 +423,23 @@ body::after {
   cursor: pointer;
   font-size: 16px;
   line-height: 1;
-  color: rgba(232, 223, 200, 0.25);
-  transition: color 0.2s;
+  color: rgba(232, 223, 200, 0.2);
+  transition: color 0.2s, text-shadow 0.2s;
 }
 
 .movie-row .stars button.filled {
   color: var(--red-intense);
+  text-shadow: 0 0 6px rgba(255, 23, 68, 0.6);
 }
 
 .movie-row .undo-btn {
   flex: 0 0 auto;
   background: transparent;
-  border: 1px solid rgba(199, 18, 31, 0.3);
+  border: 1px solid rgba(255, 23, 68, 0.4);
   color: var(--red-intense);
-  border-radius: 3px;
+  border-radius: 2px;
   font-size: 11px;
-  padding: 5px 7px;
+  padding: 5px 8px;
   cursor: pointer;
   font-family: 'Barlow Condensed', sans-serif;
   text-transform: uppercase;
@@ -419,22 +448,23 @@ body::after {
 }
 
 .movie-row .undo-btn:hover {
-  background: rgba(199, 18, 31, 0.1);
+  background: rgba(255, 23, 68, 0.15);
   border-color: var(--red-intense);
+  box-shadow: 0 0 10px rgba(255, 23, 68, 0.2);
 }
 
 .empty-list {
   text-align: center;
   color: rgba(232, 223, 200, 0.5);
   font-size: 14px;
-  padding: 30px 10px;
+  padding: 35px 10px;
   font-style: italic;
 }
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(7, 7, 8, 0.92);
+  background: rgba(10, 10, 10, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -443,7 +473,7 @@ body::after {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 
 .overlay.show {
@@ -453,21 +483,25 @@ body::after {
 
 .ticket {
   width: 100%;
-  max-width: 450px;
+  max-width: 460px;
   max-height: 90vh;
-  background: linear-gradient(135deg, #0d0d15 0%, #141420 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0520 50%, #0a0a2e 100%);
   color: var(--cream-aged);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0;
   text-align: center;
   position: relative;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(199, 18, 31, 0.1);
-  transform: scale(0.85);
+  box-shadow: 
+    0 0 60px rgba(255, 23, 68, 0.4),
+    0 0 100px rgba(0, 136, 255, 0.2),
+    0 30px 90px rgba(0, 0, 0, 0.95),
+    inset 0 0 50px rgba(255, 23, 68, 0.08);
+  transform: scale(0.82);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(199, 18, 31, 0.25);
+  border: 2px solid rgba(255, 23, 68, 0.3);
 }
 
 .overlay.show .ticket {
@@ -475,10 +509,11 @@ body::after {
 }
 
 .ticket-header {
-  background: linear-gradient(135deg, rgba(139, 7, 18, 0.4) 0%, rgba(7, 21, 47, 0.3) 100%);
-  padding: 20px 20px 16px;
+  background: linear-gradient(135deg, rgba(255, 23, 68, 0.2) 0%, rgba(0, 136, 255, 0.15) 100%);
+  padding: 24px 22px 20px;
   position: relative;
-  border-bottom: 2px solid var(--red-intense);
+  border-bottom: 3px solid var(--red-intense);
+  box-shadow: 0 0 30px rgba(255, 23, 68, 0.15);
 }
 
 .ticket-header .eyebrow {
@@ -486,17 +521,19 @@ body::after {
   letter-spacing: 3px;
   text-transform: uppercase;
   font-size: 12px;
-  color: var(--red-intense);
+  color: var(--yellow-bright);
   font-weight: 700;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
 }
 
 .ticket-header h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  margin: 0 0 6px;
+  font-size: 30px;
+  margin: 0 0 8px;
   line-height: 1.2;
   color: var(--cream-aged);
+  text-shadow: 0 0 15px rgba(255, 23, 68, 0.3);
 }
 
 .ticket-header .yr2 {
@@ -508,12 +545,12 @@ body::after {
 }
 
 .ticket-body {
-  padding: 22px;
+  padding: 24px;
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .ticket-body::-webkit-scrollbar {
@@ -521,74 +558,79 @@ body::after {
 }
 
 .ticket-body::-webkit-scrollbar-track {
-  background: rgba(199, 18, 31, 0.05);
+  background: rgba(255, 23, 68, 0.1);
   border-radius: 10px;
 }
 
 .ticket-body::-webkit-scrollbar-thumb {
-  background: var(--red-intense);
+  background: linear-gradient(180deg, var(--red-intense), var(--magenta));
   border-radius: 10px;
 }
 
 .poster-preview {
-  width: 160px;
-  height: 120px;
+  width: 170px;
+  height: 130px;
   margin: 0 auto;
   border-radius: 4px;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  box-shadow: 0 8px 24px rgba(199, 18, 31, 0.2);
+  box-shadow: 
+    0 0 30px rgba(255, 23, 68, 0.3),
+    0 0 50px rgba(0, 136, 255, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.8);
   background-color: #0a0a12;
-  border: 2px solid rgba(199, 18, 31, 0.35);
+  border: 3px solid rgba(255, 23, 68, 0.35);
 }
 
 .synopsis {
   text-align: left;
   font-size: 14px;
-  line-height: 1.65;
+  line-height: 1.7;
   color: var(--cream-aged);
-  background: linear-gradient(135deg, rgba(139, 7, 18, 0.1) 0%, rgba(7, 21, 47, 0.1) 100%);
-  padding: 16px;
+  background: linear-gradient(135deg, rgba(255, 23, 68, 0.08) 0%, rgba(0, 136, 255, 0.05) 100%);
+  padding: 18px;
   border-radius: 4px;
-  border-left: 3px solid var(--red-intense);
+  border-left: 4px solid var(--red-intense);
+  box-shadow: 0 0 20px rgba(255, 23, 68, 0.08);
 }
 
 .rate-stars {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .rate-stars button {
   background: none;
   border: none;
-  font-size: 32px;
+  font-size: 36px;
   cursor: pointer;
   color: rgba(232, 223, 200, 0.2);
   padding: 0;
-  transition: color 0.2s, transform 0.2s;
+  transition: color 0.2s, transform 0.2s, text-shadow 0.2s;
 }
 
 .rate-stars button:hover {
-  transform: scale(1.15);
+  transform: scale(1.2);
 }
 
 .rate-stars button.filled {
   color: var(--red-intense);
+  text-shadow: 0 0 10px rgba(255, 23, 68, 0.7);
 }
 
 .ticket-actions {
   display: flex;
-  gap: 12px;
-  padding: 0 22px 22px;
+  gap: 14px;
+  padding: 0 24px 24px;
   margin-top: auto;
 }
 
 .ticket-actions button {
   flex: 1;
-  padding: 14px 12px;
+  padding: 15px 14px;
   border-radius: 4px;
   border: none;
   font-family: 'Barlow Condensed', sans-serif;
@@ -601,15 +643,21 @@ body::after {
 }
 
 .btn-confirm {
-  background: linear-gradient(135deg, var(--red-intense), var(--red-crimson));
+  background: linear-gradient(135deg, var(--red-intense), var(--magenta));
   color: var(--black-deep);
-  box-shadow: 0 6px 20px rgba(199, 18, 31, 0.3);
-  border: 1px solid var(--red-crimson);
+  box-shadow: 
+    0 0 30px rgba(255, 23, 68, 0.4),
+    0 0 20px rgba(255, 0, 255, 0.2),
+    0 8px 25px rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--yellow-bright);
 }
 
 .btn-confirm:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(199, 18, 31, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 
+    0 0 40px rgba(255, 23, 68, 0.5),
+    0 0 30px rgba(255, 0, 255, 0.3),
+    0 12px 30px rgba(0, 0, 0, 0.8);
 }
 
 .btn-confirm:active {
@@ -618,20 +666,22 @@ body::after {
 
 .btn-cancel {
   background: transparent;
-  border: 1px solid rgba(232, 223, 200, 0.3);
+  border: 2px solid rgba(232, 223, 200, 0.35);
   color: var(--cream-aged);
+  box-shadow: 0 0 15px rgba(232, 223, 200, 0.1);
 }
 
 .btn-cancel:hover {
   background: rgba(232, 223, 200, 0.08);
   border-color: var(--cream-aged);
+  box-shadow: 0 0 20px rgba(232, 223, 200, 0.15);
 }
 
 .footer-note {
   text-align: center;
   font-size: 11px;
   color: rgba(232, 223, 200, 0.35);
-  margin-top: 26px;
+  margin-top: 28px;
   letter-spacing: 0.5px;
   position: relative;
   z-index: 2;
@@ -644,22 +694,24 @@ body::after {
   text-decoration: underline;
   font-size: 11px;
   cursor: pointer;
-  margin-top: 6px;
-  transition: color 0.2s;
+  margin-top: 8px;
+  transition: all 0.2s;
 }
 
 .reset-link:hover {
-  color: rgba(232, 223, 200, 0.7);
+  color: var(--red-intense);
+  text-shadow: 0 0 6px rgba(255, 23, 68, 0.3);
 }
 
 .drag-hint {
   text-align: center;
   font-size: 12px;
   color: rgba(232, 223, 200, 0.4);
-  margin-top: 8px;
+  margin-top: 10px;
   font-style: italic;
   position: relative;
   z-index: 2;
+  text-shadow: 0 0 6px rgba(255, 23, 68, 0.2);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -695,7 +747,7 @@ body::after {
 
 <button class="spin-btn" id="spinBtn">SORTEAR FILME</button>
 
-<div class="empty-msg" id="emptyMsg" style="display:none;">Todos os filmes já foram sorteados e assistidos!</div>
+<div class="empty-msg" id="emptyMsg" style="display:none;">Todos os filmes já foram sorteados!</div>
 
 <div class="tabs">
   <button class="tab-btn active" id="tabPending">LISTA</button>
@@ -730,41 +782,41 @@ body::after {
 
 <script>
 const TMDB_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlOGUyOWQ1ZDIxY2FhM2Y5NTBjM2JiODFhN2UxZWY0YyIsIm5iZiI6MTc4NTk2MTc0My40MTUsInN1YiI6IjZhNzM5ZDBmMWRlZTEwOGZmZTMzMzhlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RHZaXP91LPz7u3vTgYFqJNy692xFgruDLljXL23qsas';
-const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w300';
+const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 const posterCache = new Map();
 
-const MOVIE_SEARCH = {
-  'Jacob\'s Ladder': '1990',
-  'Leviticus': '',
-  'Her Private Hell': '1968',
-  'The Love Witch': '2016',
-  'Phenomena': '1985',
-  'Deep Red': '1975',
-  'Phantom of the Paradise': '1974',
-  'The Fly': '1986',
-  'mother!': '2017',
-  'Bones and All': '2022',
-  'Stoker': '2013',
-  'Hereditary': '2018',
-  'Alice': '1988',
-  'Frankenstein': '',
-  'Don\'t Look Now': '1973',
-  'Lisa Frankenstein': '2024',
-  'Freaks': '1932',
-  'Audition': '1999',
-  'Interview with the Vampire': '1994',
-  'Nosferatu': '1922',
-  'Pulse': '2001',
-  'Jennifer\'s Body': '2009',
-  'Trouble Every Day': '2001',
-  'Bloody Muscle Body Builder in Hell': '2012',
-  'Godzilla': '1954',
-  'Opus': '2025',
-  'Altered States': '1980',
-  'Late Night with the Devil': '2023',
-  'Saint Maud': '2019',
-  'Nope': '2022',
-  'Kinds of Kindness': '2024'
+const MOVIE_SEARCH_MAP = {
+  "Jacob's Ladder": "Jacob's Ladder 1990",
+  "Leviticus": "Leviticus",
+  "Her Private Hell": "Her Private Hell 1968",
+  "The Love Witch": "The Love Witch 2015",
+  "Phenomena": "Phenomena 1985",
+  "Deep Red": "Deep Red 1975",
+  "Phantom of the Paradise": "Phantom of the Paradise 1974",
+  "The Fly": "The Fly 1986",
+  "mother!": "mother! 2017",
+  "Bones and All": "Bones and All 2022",
+  "Stoker": "Stoker 2013",
+  "Hereditary": "Hereditary 2018",
+  "Alice": "Alice 1988",
+  "Frankenstein": "Frankenstein 1931",
+  "Don't Look Now": "Don't Look Now 1973",
+  "Lisa Frankenstein": "Lisa Frankenstein 2024",
+  "Freaks": "Freaks 1932",
+  "Audition": "Audition 1999",
+  "Interview with the Vampire": "Interview with the Vampire 1994",
+  "Nosferatu": "Nosferatu 1922",
+  "Pulse": "Pulse 2001",
+  "Jennifer's Body": "Jennifer's Body 2009",
+  "Trouble Every Day": "Trouble Every Day 2001",
+  "Bloody Muscle Body Builder in Hell": "Bloody Muscle Body Builder in Hell 2012",
+  "Godzilla": "Godzilla 1954",
+  "Opus": "Opus 2025",
+  "Altered States": "Altered States 1980",
+  "Late Night with the Devil": "Late Night with the Devil 2023",
+  "Saint Maud": "Saint Maud 2019",
+  "Nope": "Nope 2022",
+  "Kinds of Kindness": "Kinds of Kindness 2024"
 };
 
 const SYNOPSES = {
@@ -808,71 +860,111 @@ async function fetchPosterUrl(year, title) {
   }
 
   try {
-    let query = title;
-    if (year && year !== '') {
-      query += ` ${year}`;
-    }
+    const searchQuery = MOVIE_SEARCH_MAP[title] || title;
+    const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(searchQuery)}&language=en-US`;
     
-    const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US`;
     const response = await fetch(url, {
       headers: {
         'Authorization': `Bearer ${TMDB_ACCESS_TOKEN}`,
         'Content-Type': 'application/json'
       }
     });
+    
     const data = await response.json();
+    
     if (data.results && data.results.length > 0) {
-      const posterPath = data.results[0].poster_path;
-      if (posterPath) {
-        const posterUrl = `${TMDB_IMAGE_BASE}${posterPath}`;
+      const result = data.results[0];
+      if (result.poster_path) {
+        const posterUrl = `${TMDB_IMAGE_BASE}${result.poster_path}`;
         posterCache.set(cacheKey, posterUrl);
         return posterUrl;
       }
     }
     return null;
   } catch (error) {
-    console.warn(`Erro ao buscar capa para ${title} (${year}):`, error);
     return null;
   }
 }
 
-function generateFallbackPoster(year, title) {
-  const colors = [
-    ['#070708', '#0d0d15', '#c1121f'],
-    ['#07152f', '#123c78', '#c1121f'],
-    ['#0d0d0d', '#1a1a1a', '#8f0712'],
-    ['#070708', '#0d1a1d', '#123c78'],
-    ['#1a0a0a', '#2a1515', '#c1121f'],
-    ['#0a0a2a', '#15152a', '#8f0712']
+function generateFallbackPoster(title) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 300;
+  canvas.height = 450;
+  const ctx = canvas.getContext('2d');
+  
+  const schemes = [
+    {bg: ['#ff1744', '#ff6e40'], accent: '#ffd700'},
+    {bg: ['#0088ff', '#00bfff'], accent: '#ff1744'},
+    {bg: ['#ff00ff', '#8b00ff'], accent: '#ffd700'},
+    {bg: ['#ff1744', '#8b00ff'], accent: '#00ff41'},
+    {bg: ['#0088ff', '#ff00ff'], accent: '#ffd700'},
   ];
   
-  const idx = (parseInt(year || 0) + title.length) % colors.length;
-  const [bg1, bg2, accent] = colors[idx];
-  const shortTitle = title.length > 28 ? title.substring(0, 25) + '...' : title;
+  const scheme = schemes[title.length % schemes.length];
   
-  return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='${bg1}'/%3E%3Cstop offset='100%25' stop-color='${bg2}'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='300' height='450' fill='url(%23g)'/%3E%3Crect x='10' y='10' width='280' height='430' fill='none' stroke='${accent}' stroke-width='2' opacity='0.4' rx='6'/%3E%3Ctext x='50%25' y='35%25' font-family='Playfair Display, serif' font-weight='700' font-size='48' fill='${accent}' text-anchor='middle' dominant-baseline='middle' opacity='0.6'%3E●%3C/text%3E%3Ctext x='50%25' y='55%25' font-family='Playfair Display, serif' font-weight='700' font-size='16' fill='${accent}' text-anchor='middle' dominant-baseline='middle'%3E${shortTitle}%3C/text%3E%3Ctext x='50%25' y='70%25' font-family='Barlow Condensed, sans-serif' font-weight='600' font-size='13' fill='rgba(255,255,255,0.35)' text-anchor='middle' dominant-baseline='middle'%3E${year}%3C/text%3E%3Crect x='0' y='0' width='300' height='4' fill='${accent}' opacity='0.6'/%3E%3Crect x='0' y='446' width='300' height='4' fill='${accent}' opacity='0.6'/%3E%3C/svg%3E`;
+  const grad = ctx.createLinearGradient(0, 0, 300, 450);
+  grad.addColorStop(0, scheme.bg[0]);
+  grad.addColorStop(1, scheme.bg[1]);
+  
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 300, 450);
+  
+  ctx.strokeStyle = scheme.accent;
+  ctx.lineWidth = 3;
+  ctx.globalAlpha = 0.7;
+  ctx.strokeRect(8, 8, 284, 434);
+  
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = scheme.accent;
+  ctx.font = 'bold 60px Arial';
+  ctx.textAlign = 'center';
+  ctx.globalAlpha = 0.7;
+  ctx.fillText('⬤', 150, 130);
+  
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = scheme.accent;
+  ctx.font = 'bold 16px Playfair Display, serif';
+  ctx.textAlign = 'center';
+  
+  const maxWidth = 260;
+  const words = title.split(' ');
+  let line = '';
+  let lines = [];
+  
+  words.forEach(word => {
+    const testLine = line + word + ' ';
+    const metrics = ctx.measureText(testLine);
+    if (metrics.width > maxWidth) {
+      if (line) lines.push(line);
+      line = word + ' ';
+    } else {
+      line = testLine;
+    }
+  });
+  if (line) lines.push(line);
+  
+  lines.slice(0, 2).forEach((l, i) => {
+    ctx.fillText(l, 150, 220 + (i * 28));
+  });
+  
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+  ctx.font = '12px Barlow Condensed, sans-serif';
+  ctx.fillText('HORROR', 150, 340);
+  
+  return canvas.toDataURL();
 }
 
 function loadPosterIntoElement(element, year, title) {
   fetchPosterUrl(year, title).then(posterUrl => {
     if (posterUrl) {
       element.style.backgroundImage = `url('${posterUrl}')`;
-      element.style.backgroundSize = 'contain';
-      element.style.backgroundRepeat = 'no-repeat';
-      element.style.backgroundPosition = 'center';
     } else {
-      const fallback = generateFallbackPoster(year, title);
+      const fallback = generateFallbackPoster(title);
       element.style.backgroundImage = `url('${fallback}')`;
-      element.style.backgroundSize = 'contain';
-      element.style.backgroundRepeat = 'no-repeat';
-      element.style.backgroundPosition = 'center';
     }
   }).catch(() => {
-    const fallback = generateFallbackPoster(year, title);
+    const fallback = generateFallbackPoster(title);
     element.style.backgroundImage = `url('${fallback}')`;
-    element.style.backgroundSize = 'contain';
-    element.style.backgroundRepeat = 'no-repeat';
-    element.style.backgroundPosition = 'center';
   });
 }
 
@@ -976,10 +1068,6 @@ function makeCard(movie) {
   d.dataset.year = movie.year;
   d.dataset.title = movie.title;
   
-  const bgDiv = document.createElement('div');
-  bgDiv.className = 'cover-bg';
-  d.appendChild(bgDiv);
-  
   loadPosterIntoElement(d, movie.year, movie.title);
   
   d.innerHTML += `
@@ -1024,7 +1112,7 @@ function renderLists() {
   if (state.pending.length === 0) {
     els.listPending.innerHTML = '<div class="empty-list">Nenhum filme para assistir. Todos foram vistos!</div>';
   } else {
-    state.pending.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year)).forEach(m => {
+    state.pending.slice().sort((a, b) => parseInt(b.year || 0) - parseInt(a.year || 0)).forEach(m => {
       const row = document.createElement('div');
       row.className = 'movie-row';
       row.innerHTML = `<span class="badge-year">${m.year || '—'}</span><span class="m-title">${m.title}</span>`;
@@ -1036,7 +1124,7 @@ function renderLists() {
   if (state.watched.length === 0) {
     els.listWatched.innerHTML = '<div class="empty-list">Nenhum filme assistido ainda.</div>';
   } else {
-    state.watched.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year)).forEach(m => {
+    state.watched.slice().sort((a, b) => parseInt(b.year || 0) - parseInt(a.year || 0)).forEach(m => {
       const row = document.createElement('div');
       row.className = 'movie-row';
       const starsHtml = [1, 2, 3, 4, 5].map(n =>
@@ -1114,7 +1202,7 @@ function refreshTicketStars() {
   });
 }
 
-const cardWidth = 148, gap = 10, step = cardWidth + gap;
+const cardWidth = 148, gap = 12, step = cardWidth + gap;
 const gateWidth = els.reelGate.clientWidth;
 
 function onDragStart(e) {
