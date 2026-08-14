@@ -3,788 +3,824 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Roleta dos Oscars</title>
+<title>Roulette of Horror</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --black:#120709;
-    --burgundy:#360d13;
-    --burgundy2:#4d131b;
-    --burgundy-light:#6a1c26;
-    --gold:#d4af37;
-    --gold-soft:#eecf7c;
-    --cream:#f6ead0;
-    --red:#9c1f27;
-    --green-ok:#5c9a5a;
-    --shadow: 0 10px 30px rgba(0,0,0,.5);
-  }
-  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
-  html,body{margin:0;padding:0;}
-  body{
-    min-height:100vh;
-    background:
-      radial-gradient(ellipse at 50% -10%, #5c1a24 0%, transparent 55%),
-      linear-gradient(180deg, var(--black) 0%, #1a0a0d 60%, var(--black) 100%);
-    font-family:'Barlow', sans-serif;
-    color:var(--cream);
-    padding: 18px 14px 60px;
-    overflow-x:hidden;
-  }
+:root {
+  --black-deep: #070708;
+  --red-crimson: #8f0712;
+  --red-intense: #c1121f;
+  --blue-deep: #07152f;
+  --blue-saturated: #123c78;
+  --cream-aged: #e8dfc8;
+  --film-gray: #77736a;
+  --shadow: 0 10px 30px rgba(0,0,0,0.7);
+}
 
-  .marquee{
-    position:relative;
-    text-align:center;
-    padding: 22px 10px 18px;
-    margin-bottom: 18px;
-    border: 3px solid var(--gold);
-    border-radius: 18px;
-    background: linear-gradient(180deg, var(--burgundy2), var(--burgundy));
-    box-shadow: var(--shadow), inset 0 0 40px rgba(0,0,0,.35);
-  }
-  .marquee::before, .marquee::after{
-    content:'';
-    position:absolute;
-    left:8px; right:8px; top:8px; bottom:8px;
-    border-radius: 12px;
-    pointer-events:none;
-    background-image: radial-gradient(circle, var(--gold-soft) 1.6px, transparent 1.8px);
-    background-size: 22px 22px;
-    background-position: 0 0, 0 0;
-    opacity:.55;
-    -webkit-mask: linear-gradient(#000,#000) top / 100% 3px no-repeat,
-                   linear-gradient(#000,#000) bottom / 100% 3px no-repeat;
-    mask: linear-gradient(#000,#000) top / 100% 3px no-repeat,
-          linear-gradient(#000,#000) bottom / 100% 3px no-repeat;
-    animation: blink 1.6s steps(2) infinite;
-  }
-  @keyframes blink{ 50%{opacity:.15;} }
-  .marquee h1{
-    font-family:'Playfair Display', serif;
-    font-weight:900;
-    font-size: clamp(26px, 8vw, 40px);
-    letter-spacing: .5px;
-    margin: 0 0 4px;
-    color: var(--gold-soft);
-    text-shadow: 0 2px 0 rgba(0,0,0,.5);
-  }
-  .marquee p{
-    margin:0;
-    font-family:'Barlow Condensed', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 13px;
-    color: var(--cream);
-    opacity:.8;
-  }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
 
-  .reel-wrap{
-    position:relative;
-    margin: 0 auto 16px;
-    max-width: 520px;
-  }
-  .sprockets{
-    height: 14px;
-    background-color: var(--black);
-    background-image: radial-gradient(circle, var(--burgundy-light) 3px, transparent 3.4px);
-    background-size: 26px 14px;
-    background-repeat: repeat-x;
-    background-position: center;
-    border-radius: 4px;
-  }
-  .reel-gate{
-    position:relative;
-    overflow:hidden;
-    background: repeating-linear-gradient(45deg, #1c0d10, #1c0d10 10px, #200e11 10px, #200e11 20px);
-    border-left: 4px solid var(--black);
-    border-right: 4px solid var(--black);
-    height: 160px;
-    display:flex;
-    align-items:center;
-    cursor: grab;
-  }
-  .reel-gate.dragging{
-    cursor: grabbing;
-  }
-  .reel-track{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding: 0 10px;
-    will-change: transform;
-    transform: translateX(0);
-  }
-  .reel-card{
-    flex: 0 0 auto;
-    width: 148px;
-    height: 140px;
-    border-radius: 8px;
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-end;
-    text-align:center;
-    padding: 6px 8px 12px;
-    box-shadow: inset 0 0 0 2px rgba(60,20,10,.15), 0 4px 12px rgba(0,0,0,0.5);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: white;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-    background-color: #1a1a2e;
-    cursor: pointer;
-    transition: transform 0.2s;
-    user-select: none;
-  }
-  .reel-card:active {
-    transform: scale(0.98);
-  }
-  .reel-card .cover-bg{
-    position:absolute;
-    inset:0;
-    background-size: cover;
-    background-position: center;
-    border-radius:8px;
-    z-index:0;
-    opacity:0.15;
-    filter: blur(8px);
-    transform: scale(1.1);
-  }
-  .reel-card .cover-overlay{
-    position:absolute;
-    inset:0;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
-    border-radius:8px;
-    z-index:1;
-  }
-  .reel-card .yr{
-    font-family:'Barlow Condensed', sans-serif;
-    font-weight:700;
-    font-size: 11px;
-    letter-spacing:2px;
-    color: var(--gold-soft);
-    background: rgba(0,0,0,0.7);
-    padding: 0 8px;
-    border-radius: 12px;
-    margin-bottom:3px;
-    z-index:2;
-  }
-  .reel-card .tt{
-    font-family:'Playfair Display', serif;
-    font-weight:700;
-    font-size: 12px;
-    line-height:1.1;
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
-    background: rgba(0,0,0,0.7);
-    padding: 2px 6px;
-    border-radius: 6px;
-    z-index:2;
-    max-width:95%;
-  }
-  .gate-pointer{
-    position:absolute;
-    left:50%; top:-4px;
-    transform:translateX(-50%);
-    width:0; height:0;
-    border-left:9px solid transparent;
-    border-right:9px solid transparent;
-    border-top:12px solid var(--gold);
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,.5));
-    z-index:3;
-  }
-  .gate-pointer.bottom{ top:auto; bottom:-4px; transform:translateX(-50%) rotate(180deg); }
-  .gate-center-line{
-    position:absolute;
-    left:50%; top:0; bottom:0;
-    width:2px;
-    transform:translateX(-50%);
-    background: linear-gradient(180deg, transparent, rgba(212,175,55,.55), transparent);
-    z-index:2;
-    pointer-events:none;
-  }
-  .gate-fade{
-    position:absolute; top:0; bottom:0; width:60px; z-index:2; pointer-events:none;
-  }
-  .gate-fade.left{ left:0; background:linear-gradient(90deg, #1c0d10, transparent); }
-  .gate-fade.right{ right:0; background:linear-gradient(270deg, #1c0d10, transparent); }
+html, body {
+  margin: 0;
+  padding: 0;
+}
 
-  .spin-btn{
-    display:block;
-    margin: 18px auto 22px;
-    width: min(280px, 84%);
-    padding: 15px 18px;
-    font-family:'Barlow Condensed', sans-serif;
-    font-weight:700;
-    font-size: 21px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    text-align:center;
-    color: var(--black);
-    background: linear-gradient(180deg, var(--gold-soft), var(--gold));
-    border: none;
-    border-radius: 999px;
-    box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.6);
-    cursor:pointer;
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .spin-btn:active{ transform: scale(.97); }
-  .spin-btn:disabled{ opacity:.5; cursor:default; }
-  .empty-msg{
-    text-align:center;
-    font-family:'Playfair Display', serif;
-    font-size:16px;
-    color: var(--gold-soft);
-    margin: 10px 0 20px;
-    padding: 0 10px;
-  }
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(199, 18, 31, 0.35) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 70%, rgba(7, 21, 47, 0.4) 0%, transparent 45%),
+    linear-gradient(180deg, #070708 0%, #0a0a0d 50%, #070708 100%);
+  font-family: 'Barlow', sans-serif;
+  color: var(--cream-aged);
+  padding: 18px 14px 60px;
+  overflow-x: hidden;
+  position: relative;
+}
 
-  .tabs{
-    display:flex;
-    gap:8px;
-    max-width:520px;
-    margin: 0 auto 14px;
-  }
-  .tab-btn{
-    flex:1;
-    padding: 10px 8px;
-    border-radius: 10px;
-    border: 2px solid var(--burgundy-light);
-    background: rgba(255,255,255,.03);
-    color: var(--cream);
-    font-family:'Barlow Condensed', sans-serif;
-    font-weight:700;
-    letter-spacing:1px;
-    font-size: 15px;
-    text-transform:uppercase;
-    cursor:pointer;
-    transition: all .2s;
-  }
-  .tab-btn.active{
-    background: linear-gradient(180deg, var(--burgundy2), var(--burgundy));
-    border-color: var(--gold);
-    color: var(--gold-soft);
-  }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' fill='%23070708' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
 
-  .list-wrap{ max-width:520px; margin:0 auto; }
-  .movie-row{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    background: linear-gradient(160deg, rgba(246,234,208,.06), rgba(246,234,208,.02));
-    border: 1px solid rgba(212,175,55,.25);
-    border-radius: 10px;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    position:relative;
-  }
-  .movie-row .badge-year{
-    font-family:'Barlow Condensed', sans-serif;
-    font-weight:700;
-    font-size:14px;
-    color: var(--black);
-    background: var(--gold-soft);
-    padding: 3px 8px;
-    border-radius: 6px;
-    flex:0 0 auto;
-  }
-  .movie-row .m-title{
-    flex:1;
-    font-size: 14.5px;
-    line-height:1.25;
-  }
-  .movie-row .stars{
-    display:flex;
-    gap:2px;
-    flex:0 0 auto;
-  }
-  .movie-row .stars button{
-    background:none; border:none; padding:0; cursor:pointer;
-    font-size:16px; line-height:1; color: rgba(246,234,208,.25);
-    transition: color .2s;
-  }
-  .movie-row .stars button.filled{ color: var(--gold); }
-  .movie-row .undo-btn{
-    flex:0 0 auto;
-    background:none;
-    border:1px solid rgba(212,175,55,.4);
-    color: var(--gold-soft);
-    border-radius:6px;
-    font-size:11px;
-    padding: 5px 7px;
-    cursor:pointer;
-    font-family:'Barlow Condensed', sans-serif;
-    text-transform:uppercase;
-    letter-spacing:.5px;
-    transition: all .2s;
-  }
-  .movie-row .undo-btn:hover{ background: rgba(212,175,55,.1); }
-  .empty-list{
-    text-align:center;
-    color: rgba(246,234,208,.5);
-    font-size: 14px;
-    padding: 30px 10px;
-    font-style: italic;
-  }
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
 
-  .overlay{
-    position:fixed; inset:0;
-    background: rgba(8,3,4,.88);
-    display:flex; align-items:center; justify-content:center;
-    padding: 20px;
-    z-index: 50;
-    opacity:0; pointer-events:none;
-    transition: opacity .3s ease;
-    backdrop-filter: blur(6px);
-  }
-  .overlay.show{ opacity:1; pointer-events:auto; }
+.marquee {
+  position: relative;
+  text-align: center;
+  padding: 22px 10px 18px;
+  margin-bottom: 18px;
+  border: 2px solid var(--red-intense);
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(7, 21, 47, 0.3), rgba(139, 7, 18, 0.2));
+  box-shadow: 0 0 30px rgba(199, 18, 31, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  position: relative;
+}
 
-  .ticket{
-    width:100%; max-width: 450px;
-    max-height: 90vh;
-    background: linear-gradient(135deg, #f6ead0 0%, #ecd9ab 100%);
-    color: #1a1a1a;
-    border-radius: 20px;
-    padding: 0;
-    text-align:center;
-    position:relative;
-    box-shadow: 0 25px 80px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.4);
-    transform: scale(.85);
-    transition: transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    overflow:hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  .overlay.show .ticket{ transform: scale(1); }
+.marquee h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(22px, 7vw, 36px);
+  letter-spacing: 2px;
+  margin: 0 0 6px;
+  color: var(--red-intense);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
 
-  .ticket-header{
-    background: linear-gradient(135deg, var(--burgundy2) 0%, var(--burgundy) 100%);
-    padding: 20px 20px 16px;
-    position: relative;
-    border-bottom: 3px solid var(--gold);
-  }
+.marquee p {
+  margin: 0;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 12px;
+  color: var(--cream-aged);
+  opacity: 0.75;
+}
 
-  .ticket-header::before, .ticket-header::after{
-    content:'';
-    position:absolute;
-    width: 20px; height: 20px;
-    background: #1a0a0d;
-    border-radius:50%;
-    top:50%;
-    transform: translateY(-50%);
-  }
-  .ticket-header::before { left: -10px; }
-  .ticket-header::after { right: -10px; }
+.reel-wrap {
+  position: relative;
+  margin: 0 auto 16px;
+  max-width: 520px;
+  z-index: 2;
+  position: relative;
+}
 
-  .ticket-header .eyebrow{
-    font-family:'Barlow Condensed', sans-serif;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-size: 12px;
-    color: var(--gold-soft);
-    font-weight:700;
-    margin: 0 0 8px;
-  }
-  .ticket-header h2{
-    font-family:'Playfair Display', serif;
-    font-size: 28px;
-    margin: 0 0 6px;
-    line-height:1.2;
-    color: var(--cream);
-  }
-  .ticket-header .yr2{
-    font-family:'Barlow Condensed', sans-serif;
-    font-size:13px;
-    color: var(--gold-soft);
-    margin: 0;
-    letter-spacing: 1px;
-  }
+.sprockets {
+  height: 14px;
+  background-color: var(--black-deep);
+  background-image: radial-gradient(circle, var(--red-crimson) 3px, transparent 3.4px);
+  background-size: 26px 14px;
+  background-repeat: repeat-x;
+  background-position: center;
+  border-radius: 2px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
 
-  .ticket-body{
-    padding: 22px;
-    flex: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
+.reel-gate {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #0a0a0d 0%, #0d0d10 100%);
+  border-left: 3px solid var(--red-crimson);
+  border-right: 3px solid var(--red-crimson);
+  height: 160px;
+  display: flex;
+  align-items: center;
+  cursor: grab;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(199, 18, 31, 0.15);
+}
 
-  .ticket-body::-webkit-scrollbar {
-    width: 6px;
-  }
-  .ticket-body::-webkit-scrollbar-track {
-    background: rgba(0,0,0,.05);
-    border-radius: 10px;
-  }
-  .ticket-body::-webkit-scrollbar-thumb {
-    background: var(--gold-soft);
-    border-radius: 10px;
-  }
+.reel-gate.dragging {
+  cursor: grabbing;
+}
 
-  .poster-preview{
-    width: 160px;
-    height: 120px;
-    margin: 0 auto;
-    border-radius: 12px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,.3);
-    background-color: #1a1a2e;
-    border: 3px solid var(--gold-soft);
-  }
+.reel-track {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  will-change: transform;
+  transform: translateX(0);
+}
 
-  .synopsis{
-    text-align: left;
-    font-size: 14px;
-    line-height: 1.65;
-    color: #2a2a2a;
-    background: linear-gradient(135deg, rgba(212,175,55,.08) 0%, rgba(212,175,55,.04) 100%);
-    padding: 16px;
-    border-radius: 12px;
-    border-left: 4px solid var(--gold);
-  }
+.reel-card {
+  flex: 0 0 auto;
+  width: 148px;
+  height: 140px;
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  padding: 6px 8px 12px;
+  box-shadow: inset 0 0 0 1px rgba(199, 18, 31, 0.25), 0 4px 16px rgba(0, 0, 0, 0.7);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
+  background-color: #0a0a12;
+  cursor: pointer;
+  transition: transform 0.2s;
+  user-select: none;
+  overflow: hidden;
+}
 
-  .rate-stars{
-    display:flex; justify-content:center; gap:8px; margin-top: 8px;
-  }
-  .rate-stars button{
-    background:none; border:none; font-size:32px; cursor:pointer;
-    color: rgba(0,0,0,.15); padding:0;
-    transition: color .2s, transform .2s;
-  }
-  .rate-stars button:hover {
-    transform: scale(1.15);
-  }
-  .rate-stars button.filled{ color: var(--gold); }
+.reel-card:active {
+  transform: scale(0.97);
+}
 
-  .ticket-actions{ 
-    display:flex; 
-    gap:12px;
-    padding: 0 22px 22px;
-    margin-top: auto;
-  }
-  .ticket-actions button{
-    flex:1;
-    padding: 14px 12px;
-    border-radius: 12px;
-    border:none;
-    font-family:'Barlow Condensed', sans-serif;
-    font-weight:700;
-    letter-spacing:1.5px;
-    font-size: 14px;
-    text-transform:uppercase;
-    cursor:pointer;
-    transition: all .2s;
-  }
-  .btn-confirm{ 
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold)); 
-    color:var(--black);
-    box-shadow: 0 6px 20px rgba(212,175,55,.3);
-  }
-  .btn-confirm:hover{ transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,.4); }
-  .btn-confirm:active { transform: translateY(0); }
-  .btn-cancel{ 
-    background: transparent; 
-    border:2px solid #b8a476 !important; 
-    color:#8b7d66;
-  }
-  .btn-cancel:hover{ background: rgba(184, 164, 118, 0.12); }
+.reel-card .cover-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+  z-index: 0;
+  opacity: 0.2;
+  filter: blur(8px);
+  transform: scale(1.1);
+}
 
-  .footer-note{
-    text-align:center;
-    font-size:11px;
-    color: rgba(246,234,208,.35);
-    margin-top: 26px;
-    letter-spacing: .5px;
-  }
-  .reset-link{
-    background:none;border:none;color: rgba(246,234,208,.4);
-    text-decoration:underline; font-size:11px; cursor:pointer; margin-top:6px;
-    transition: color .2s;
-  }
-  .reset-link:hover{ color: rgba(246,234,208,.7); }
+.reel-card .cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.75) 100%);
+  border-radius: 6px;
+  z-index: 1;
+}
 
-  .drag-hint{
-    text-align: center;
-    font-size: 12px;
-    color: rgba(246,234,208,.4);
-    margin-top: 8px;
-    font-style: italic;
+.reel-card .yr {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--red-intense);
+  background: rgba(0, 0, 0, 0.75);
+  padding: 0 8px;
+  border-radius: 3px;
+  margin-bottom: 3px;
+  z-index: 2;
+}
+
+.reel-card .tt {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 2px 6px;
+  border-radius: 3px;
+  z-index: 2;
+  max-width: 95%;
+}
+
+.gate-pointer {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 12px solid var(--red-intense);
+  filter: drop-shadow(0 2px 4px rgba(199, 18, 31, 0.5));
+  z-index: 3;
+}
+
+.gate-pointer.bottom {
+  top: auto;
+  bottom: -4px;
+  transform: translateX(-50%) rotate(180deg);
+}
+
+.gate-center-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, rgba(199, 18, 31, 0.3), transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gate-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gate-fade.left {
+  left: 0;
+  background: linear-gradient(90deg, #0a0a0d, transparent);
+}
+
+.gate-fade.right {
+  right: 0;
+  background: linear-gradient(270deg, #0a0a0d, transparent);
+}
+
+.spin-btn {
+  display: block;
+  margin: 18px auto 22px;
+  width: min(280px, 84%);
+  padding: 15px 18px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--black-deep);
+  background: linear-gradient(180deg, var(--red-intense), var(--red-crimson));
+  border: 2px solid var(--red-crimson);
+  border-radius: 4px;
+  box-shadow: 0 8px 20px rgba(199, 18, 31, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.spin-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 12px rgba(199, 18, 31, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.spin-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.empty-msg {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--red-intense);
+  margin: 10px 0 20px;
+  padding: 0 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  max-width: 520px;
+  margin: 0 auto 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--blue-saturated);
+  background: rgba(7, 21, 47, 0.2);
+  color: var(--cream-aged);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background: linear-gradient(180deg, rgba(199, 18, 31, 0.3), rgba(139, 7, 18, 0.2));
+  border-color: var(--red-intense);
+  color: var(--red-intense);
+  box-shadow: 0 0 12px rgba(199, 18, 31, 0.15);
+}
+
+.list-wrap {
+  max-width: 520px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.movie-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(160deg, rgba(232, 223, 200, 0.05), rgba(232, 223, 200, 0.02));
+  border: 1px solid rgba(199, 18, 31, 0.2);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.movie-row .badge-year {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--red-intense);
+  background: rgba(139, 7, 18, 0.25);
+  padding: 4px 8px;
+  border-radius: 3px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(199, 18, 31, 0.2);
+}
+
+.movie-row .m-title {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.25;
+  color: var(--cream-aged);
+}
+
+.movie-row .stars {
+  display: flex;
+  gap: 2px;
+  flex: 0 0 auto;
+}
+
+.movie-row .stars button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  color: rgba(232, 223, 200, 0.25);
+  transition: color 0.2s;
+}
+
+.movie-row .stars button.filled {
+  color: var(--red-intense);
+}
+
+.movie-row .undo-btn {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid rgba(199, 18, 31, 0.3);
+  color: var(--red-intense);
+  border-radius: 3px;
+  font-size: 11px;
+  padding: 5px 7px;
+  cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+
+.movie-row .undo-btn:hover {
+  background: rgba(199, 18, 31, 0.1);
+  border-color: var(--red-intense);
+}
+
+.empty-list {
+  text-align: center;
+  color: rgba(232, 223, 200, 0.5);
+  font-size: 14px;
+  padding: 30px 10px;
+  font-style: italic;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 7, 8, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ticket {
+  width: 100%;
+  max-width: 450px;
+  max-height: 90vh;
+  background: linear-gradient(135deg, #0d0d15 0%, #141420 100%);
+  color: var(--cream-aged);
+  border-radius: 8px;
+  padding: 0;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(199, 18, 31, 0.1);
+  transform: scale(0.85);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(199, 18, 31, 0.25);
+}
+
+.overlay.show .ticket {
+  transform: scale(1);
+}
+
+.ticket-header {
+  background: linear-gradient(135deg, rgba(139, 7, 18, 0.4) 0%, rgba(7, 21, 47, 0.3) 100%);
+  padding: 20px 20px 16px;
+  position: relative;
+  border-bottom: 2px solid var(--red-intense);
+}
+
+.ticket-header .eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--red-intense);
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.ticket-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  margin: 0 0 6px;
+  line-height: 1.2;
+  color: var(--cream-aged);
+}
+
+.ticket-header .yr2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  color: var(--red-intense);
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.ticket-body {
+  padding: 22px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ticket-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ticket-body::-webkit-scrollbar-track {
+  background: rgba(199, 18, 31, 0.05);
+  border-radius: 10px;
+}
+
+.ticket-body::-webkit-scrollbar-thumb {
+  background: var(--red-intense);
+  border-radius: 10px;
+}
+
+.poster-preview {
+  width: 160px;
+  height: 120px;
+  margin: 0 auto;
+  border-radius: 4px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 8px 24px rgba(199, 18, 31, 0.2);
+  background-color: #0a0a12;
+  border: 2px solid rgba(199, 18, 31, 0.35);
+}
+
+.synopsis {
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--cream-aged);
+  background: linear-gradient(135deg, rgba(139, 7, 18, 0.1) 0%, rgba(7, 21, 47, 0.1) 100%);
+  padding: 16px;
+  border-radius: 4px;
+  border-left: 3px solid var(--red-intense);
+}
+
+.rate-stars {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.rate-stars button {
+  background: none;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: rgba(232, 223, 200, 0.2);
+  padding: 0;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.rate-stars button:hover {
+  transform: scale(1.15);
+}
+
+.rate-stars button.filled {
+  color: var(--red-intense);
+}
+
+.ticket-actions {
+  display: flex;
+  gap: 12px;
+  padding: 0 22px 22px;
+  margin-top: auto;
+}
+
+.ticket-actions button {
+  flex: 1;
+  padding: 14px 12px;
+  border-radius: 4px;
+  border: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, var(--red-intense), var(--red-crimson));
+  color: var(--black-deep);
+  box-shadow: 0 6px 20px rgba(199, 18, 31, 0.3);
+  border: 1px solid var(--red-crimson);
+}
+
+.btn-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(199, 18, 31, 0.4);
+}
+
+.btn-confirm:active {
+  transform: translateY(0);
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 1px solid rgba(232, 223, 200, 0.3);
+  color: var(--cream-aged);
+}
+
+.btn-cancel:hover {
+  background: rgba(232, 223, 200, 0.08);
+  border-color: var(--cream-aged);
+}
+
+.footer-note {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(232, 223, 200, 0.35);
+  margin-top: 26px;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 2;
+}
+
+.reset-link {
+  background: none;
+  border: none;
+  color: rgba(232, 223, 200, 0.4);
+  text-decoration: underline;
+  font-size: 11px;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: color 0.2s;
+}
+
+.reset-link:hover {
+  color: rgba(232, 223, 200, 0.7);
+}
+
+.drag-hint {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(232, 223, 200, 0.4);
+  margin-top: 8px;
+  font-style: italic;
+  position: relative;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
+}
 </style>
 </head>
 <body>
 
-  <div class="marquee">
-    <h1>★Roleta dos Oscars★</h1>
-    <p id="counterText">carregando...</p>
-  </div>
+<div class="marquee">
+  <h1>ROULETTE OF HORROR</h1>
+  <p id="counterText">carregando...</p>
+</div>
 
-  <div class="reel-wrap">
-    <div class="sprockets"></div>
-    <div class="reel-gate" id="reelGate">
-      <div class="gate-fade left"></div>
-      <div class="gate-fade right"></div>
-      <div class="gate-center-line"></div>
-      <div class="gate-pointer"></div>
-      <div class="gate-pointer bottom"></div>
-      <div class="reel-track" id="reelTrack"></div>
+<div class="reel-wrap">
+  <div class="sprockets"></div>
+  <div class="reel-gate" id="reelGate">
+    <div class="gate-fade left"></div>
+    <div class="gate-fade right"></div>
+    <div class="gate-center-line"></div>
+    <div class="gate-pointer"></div>
+    <div class="gate-pointer bottom"></div>
+    <div class="reel-track" id="reelTrack"></div>
+  </div>
+  <div class="sprockets"></div>
+</div>
+
+<div class="drag-hint">Arraste ou clique em um filme para ver detalhes</div>
+
+<button class="spin-btn" id="spinBtn">SORTEAR FILME</button>
+
+<div class="empty-msg" id="emptyMsg" style="display:none;">Todos os filmes já foram sorteados e assistidos!</div>
+
+<div class="tabs">
+  <button class="tab-btn active" id="tabPending">LISTA</button>
+  <button class="tab-btn" id="tabWatched">ASSISTIDOS</button>
+</div>
+
+<div class="list-wrap" id="listPending"></div>
+<div class="list-wrap" id="listWatched" style="display:none;"></div>
+
+<p class="footer-note">Toque nas estrelas para avaliar um filme assistido.<br>
+<button class="reset-link" id="resetBtn">reiniciar tudo</button>
+</p>
+
+<div class="overlay" id="overlay">
+  <div class="ticket">
+    <div class="ticket-header">
+      <div class="eyebrow">FILME SELECIONADO</div>
+      <h2 id="ticketTitle">—</h2>
+      <p class="yr2" id="ticketYear">—</p>
     </div>
-    <div class="sprockets"></div>
-  </div>
-
-  <div class="drag-hint">Arraste ou clique em um filme para ver o resumo</div>
-
-  <button class="spin-btn" id="spinBtn">🎬 Girar Roleta</button>
-  <div class="empty-msg" id="emptyMsg" style="display:none;">Todos os vencedores já foram sorteados e assistidos! 🍿🏆</div>
-
-  <div class="tabs">
-    <button class="tab-btn active" id="tabPending">Lista</button>
-    <button class="tab-btn" id="tabWatched">Assistidos</button>
-  </div>
-
-  <div class="list-wrap" id="listPending"></div>
-  <div class="list-wrap" id="listWatched" style="display:none;"></div>
-
-  <p class="footer-note">Toque nas estrelas para avaliar um filme assistido.<br>
-    <button class="reset-link" id="resetBtn">reiniciar tudo</button>
-  </p>
-
-  <div class="overlay" id="overlay">
-    <div class="ticket">
-      <div class="ticket-header">
-        <div class="eyebrow">🎟️ Bilhete Sorteado</div>
-        <h2 id="ticketTitle">—</h2>
-        <p class="yr2" id="ticketYear">—</p>
-      </div>
-      <div class="ticket-body">
-        <div class="poster-preview" id="ticketPoster"></div>
-        <div class="synopsis" id="ticketSynopsis">—</div>
-        <div class="rate-stars" id="ticketStars"></div>
-      </div>
-      <div class="ticket-actions">
-        <button class="btn-cancel" id="btnCancel">Cancelar</button>
-        <button class="btn-confirm" id="btnConfirm">Assistir</button>
-      </div>
+    <div class="ticket-body">
+      <div class="poster-preview" id="ticketPoster"></div>
+      <div class="synopsis" id="ticketSynopsis">—</div>
+      <div class="rate-stars" id="ticketStars"></div>
+    </div>
+    <div class="ticket-actions">
+      <button class="btn-cancel" id="btnCancel">Cancelar</button>
+      <button class="btn-confirm" id="btnConfirm">Assistir</button>
     </div>
   </div>
+</div>
 
 <script>
-// ============================================================
-// CAPAS REAIS via TMDb API
-// ============================================================
-
 const TMDB_ACCESS_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlOGUyOWQ1ZDIxY2FhM2Y5NTBjM2JiODFhN2UxZWY0YyIsIm5iZiI6MTc4NTk2MTc0My40MTUsInN1YiI6IjZhNzM5ZDBmMWRlZTEwOGZmZTMzMzhlMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.RHZaXP91LPz7u3vTgYFqJNy692xFgruDLljXL23qsas';
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w300';
-
 const posterCache = new Map();
 
 const MOVIE_SEARCH = {
-  '2026': 'Sinners',
-  '2025': 'Anora',
-  '2024': 'Anatomy of a Fall',
-  '2023': 'Everything Everywhere All at Once',
-  '2022': 'Belfast',
-  '2021': 'Promising Young Woman',
-  '2020': 'Parasite',
-  '2019': 'Green Book',
-  '2018': 'Get Out',
-  '2017': 'Manchester by the Sea',
-  '2016': 'Spotlight',
-  '2015': 'Birdman',
-  '2014': 'Her',
-  '2013': 'Django Unchained',
-  '2012': 'Midnight in Paris',
-  '2011': 'The King\'s Speech',
-  '2010': 'The Hurt Locker',
-  '2009': 'Milk',
-  '2008': 'Juno',
-  '2007': 'Little Miss Sunshine',
-  '2006': 'Crash',
-  '2005': 'Eternal Sunshine of the Spotless Mind',
-  '2004': 'Lost in Translation',
-  '2003': 'Talk to Her',
-  '2002': 'Gosford Park',
-  '2001': 'Almost Famous',
-  '2000': 'American Beauty',
-  '1999': 'Shakespeare in Love',
-  '1998': 'Good Will Hunting',
-  '1997': 'Fargo',
-  '1996': 'The Usual Suspects',
-  '1995': 'Pulp Fiction',
-  '1994': 'The Piano',
-  '1993': 'The Crying Game',
-  '1992': 'Thelma & Louise',
-  '1991': 'Ghost',
-  '1990': 'Dead Poets Society',
-  '1989': 'Rain Man',
-  '1988': 'Moonstruck',
-  '1987': 'Hannah and Her Sisters',
-  '1986': 'Witness',
-  '1985': 'Places in the Heart',
-  '1984': 'Tender Mercies',
-  '1983': 'Gandhi',
-  '1982': 'Chariots of Fire',
-  '1981': 'Melvin and Howard',
-  '1980': 'Breaking Away',
-  '1979': 'Coming Home',
-  '1978': 'Annie Hall',
-  '1977': 'Network',
-  '1976': 'Dog Day Afternoon',
-  '1975': 'Chinatown',
-  '1974': 'The Sting',
-  '1973': 'The Candidate',
-  '1972': 'The Hospital',
-  '1971': 'Patton',
-  '1970': 'Butch Cassidy and the Sundance Kid',
-  '1969': 'The Producers',
-  '1968': 'Guess Who\'s Coming to Dinner',
-  '1967': 'A Man for All Seasons',
-  '1966': 'Darling',
-  '1965': 'Father Goose',
-  '1964': 'How the West Was Won',
-  '1963': 'Divorce Italian Style',
-  '1962': 'Splendor in the Grass',
-  '1961': 'The Apartment',
-  '1960': 'Pillow Talk',
-  '1959': 'The Defiant Ones',
-  '1958': 'Designing Woman',
-  '1957': 'The Red Balloon',
-  '1956': 'Interrupted Melody',
-  '1955': 'Broken Lance',
-  '1954': 'Titanic',
-  '1953': 'The Lavender Hill Mob',
-  '1952': 'An American in Paris',
-  '1951': 'Sunset Boulevard',
-  '1950': 'Battleground',
-  '1949': 'The Search',
-  '1948': 'Bachelor and the Bobby-Soxer',
-  '1947': 'The Seventh Veil',
-  '1946': 'Marie-Louise',
-  '1945': 'Wilson',
-  '1944': 'Princess O\'Rourke',
-  '1943': 'Woman of the Year',
-  '1942': 'Citizen Kane',
-  '1941': 'The Great McGinty',
-  '1940': 'Mr. Smith Goes to Washington'
+  'Jacob\'s Ladder': '1990',
+  'Leviticus': '',
+  'Her Private Hell': '1968',
+  'The Love Witch': '2016',
+  'Phenomena': '1985',
+  'Deep Red': '1975',
+  'Phantom of the Paradise': '1974',
+  'The Fly': '1986',
+  'mother!': '2017',
+  'Bones and All': '2022',
+  'Stoker': '2013',
+  'Hereditary': '2018',
+  'Alice': '1988',
+  'Frankenstein': '',
+  'Don\'t Look Now': '1973',
+  'Lisa Frankenstein': '2024',
+  'Freaks': '1932',
+  'Audition': '1999',
+  'Interview with the Vampire': '1994',
+  'Nosferatu': '1922',
+  'Pulse': '2001',
+  'Jennifer\'s Body': '2009',
+  'Trouble Every Day': '2001',
+  'Bloody Muscle Body Builder in Hell': '2012',
+  'Godzilla': '1954',
+  'Opus': '2025',
+  'Altered States': '1980',
+  'Late Night with the Devil': '2023',
+  'Saint Maud': '2019',
+  'Nope': '2022',
+  'Kinds of Kindness': '2024'
 };
 
-// SINOPSES DETALHADAS E CRIATIVAS
 const SYNOPSES = {
-  '2026': 'Uma família do Harlem vê sua vida virar de cabeça para baixo quando segredos enterrados há tempos voltam à tona. Entre revelações chocantes, lealdades são testadas e a verdade emerge de forma brutal em um drama de tensão crescente.',
-  '2025': 'Anora, uma jovem mulher inteligente e perspicaz, trabalha como acompanhante em Nova York enquanto persegue seus sonhos de atriz. Sua vida muda radicalmente quando se envolve com a família ultrarrica de um cliente, desencadeando uma sequência de eventos inesperados.',
-  '2024': 'Sandra Voyt é acusada de assassinar seu marido em um case sensacionalista. Conforme seu julgamento se desdobra, a verdade sobre seu relacionamento tóxico é revelada de forma devastadora, desafiando a percepção da sociedade sobre vítimas e culpados.',
-  '2023': 'Evelyn Wang é uma mulher cansada levando uma vida monótona quando é arrastada para uma aventura alucinante através do multiverso. Armada com conhecimento absurdo e habilidades inesperadas, ela deve salvar a realidade enquanto descobre seu verdadeiro potencial.',
-  '2022': 'Um diretor retorna a Belfast, sua cidade natal, e revisita sua infância durante os violentos Troubles irlandeses. Através de memórias vívidas, ele reconstrói a mágica e o trauma de crescer em um lugar dividido pela guerra.',
-  '2021': 'Uma jovem mulher confronta um produtor cinematográfico poderoso em um julgamento explosivo por agressão sexual. Sua coragem em falar a verdade desafia a elite de Hollywood e inspira um movimento de mudança na indústria.',
-  '2020': 'A família Kim, pobre e desempregada, consegue trabalho infiltrando-se na vida luxuosa da família Park. O que começa como um arranjo financeiro se transforma em um thriller social revelador sobre classe, privilégio e desespero.',
-  '2019': 'Don Shirley, um genial pianista negro, contrata Tony Lip, um motorista branco do Bronx, para uma turnê pelo Profundo Sul segregacionista nos anos 60. A improvável amizade que surge desafia preconceitos enquanto enfrenta perigos raciais aterradores.',
-  '2018': 'Chris Washington, um jovem negro, é convidado para a casa da namorada para conhecer sua família branca. Conforme o fim de semana progride, ele descobre que está preso em uma conspiração aterradora e sofisticada de horror racial.',
-  '2017': 'Lee Chandler, um homem solitário vivendo modestamente, volta para sua cidade natal quando seu irmão morre. Forçado a enfrentar seu passado trágico e assumir o cuidado de seu sobrinho, ele gradualmente reconstrói sua vida com autenticidade.',
-  '2016': 'Jornalistas do Boston Globe investigam relatos de abuso sexual na Igreja Católica. Sua pesquisa meticulosa e corajosa revela um padrão sistemático de crimes encobertos que abala a instituição até seu núcleo.',
-  '2015': 'Sandro é maestro de renome que sofre um acidente vascular cerebral. Em sua jornada de recuperação em Manhattan, ele enfrenta limitações físicas, falta de esperança e pessoas inesperadas que o ajudam a redescobrir propósito.',
-  '2014': 'Theodore, um homem divorciado e introvertido, se apaixona por Samantha, um sistema operacional com inteligência artificial em um futuro próximo. Seu relacionamento inusitado explora temas de conexão humana em tempos digitais.',
-  '2013': 'Django é um escravo liberto que se une a um caçador de recompensas para encontrar sua esposa. Sua jornada sangrentamente épica pelo Antebellum South é um libelo contra a escravidão disfarçado de western satisfatório.',
-  '2012': 'Um casal americano em crise matrimonial embarca em uma fuga para Paris nos anos 1920. Conforme exploram a cidade mágica, eles descobre romance, nostalgia e a possibilidade de recuperar o que se perdeu.',
-  '2011': 'O Rei George VI precisa de ajuda para superar sua gagueira debilitante antes de fazer o discurso de sua vida durante a II Guerra Mundial. Um fonoaudiólogo sem convencionalismo o ajuda, e uma amizade improvável floresce.',
-  '2010': 'Uma equipe de artificieiros de bombas enfrenta diariamente a morte enquanto tenta desativar explosivos em Bagdá. Seu relacionamento com o perigo se torna obsessivo enquanto cada um lida com o trauma dessa profissão impossível.',
-  '2009': 'A vida de Harvey Milk, um jovem que se torna ativista LGBTQ+ e político em San Francisco, é retratada com urgência. Seu assassinato precoce marca um ponto de inflexão no movimento pelos direitos gays nos EUA.',
-  '2008': 'Juno McGuff é uma adolescente sarcástica que engravida e escolhe dar seu bebê para adoção. Sua jornada emocional a força a amadurecer enquanto navega relacionamentos complexos com sua família e a futura mãe.',
-  '2007': 'Olive Hoover, uma menina desajustada, quer se tornar uma campeã de beleza infantil para provar algo a si mesma. Sua jornada caótica por pequenas cidades americanas envolve sua família excêntrica em uma aventura memorável.',
-  '2006': 'Várias histórias se cruzam em Los Angeles após um acidente de carro que expõe as conexões invisíveis entre pessoas de diferentes raças, classes e circunstâncias.',
-  '2005': 'Um casal em crise terapêutica explora o conceito de relacionamentos abertos em Paris. Conforme as barreiras entre amor e desejo se dissolvem, eles confrontam a natureza elusiva da memória e conexão.',
-  '2004': 'Uma tradutora americana em Tóquio fica presa em um vácuo existencial. Seus encontros com um ator envelhecido desencadeiam uma conexão silenciosa e profunda que transcende idioma e idade.',
-  '2003': 'Um terapeuta de fala espanhol desenvolve uma relação terapêutica inusitada com um paciente com deficiência intelectual severa. Sua conexão abre caminhos inesperados para comunicação e amor.',
-  '2002': 'Vários membros da aristocracia britânica se reúnem em uma mansão durante tempos de mudança social. Seus segredos, paixões e intrigas refletem uma classe em declínio.',
-  '2001': 'Um adolescente idealista se torna amigo de jornalistas de rock nos anos 70 durante a golden age do rock and roll. Sua jornada de iniciação mistura música, ingenuidade e inocência perdida.',
-  '2000': 'Lester Burnham, homem de meia-idade atormentado, desmorona após descobrir que sua esposa quer o divórcio. Sua busca por redenção e significado o leva a explorar desejos reprimidos de forma perigosa.',
-  '1999': 'A vida de William Shakespeare é reimaginada enquanto ele luta com paixão, política e criatividade ao escrever Romeu e Julieta. A ficção e realidade se misturam em romance e teatro.',
-  '1998': 'Will Hunting é um gênio matemático preso em Boston que trabalha como porteiro. Quando seu talento é descoberto, dois professores o desafiam a confrontar seu passado traumático e potencial desperdiçado.',
-  '1997': 'Dois casais em Fargo, Minnesota, enfrentam o inverno brutal enquanto tramam um sequestro que sai desesperadamente do controle. A tensão moral e consequências éticas explodem de forma violenta.',
-  '1996': 'Criminosos, policiais e espiões se reúnem em um quarto de hotel em Los Angeles em uma teia de traição e morte. As narrativas se cruzam em um thriller de trama intrincada.',
-  '1995': 'Em Los Angeles, um criminoso e uma prostituta se encontram e exploram relacionamentos doentios e violência. Uma parábola sobre crime, romantismo e consequências morais.',
-  '1994': 'Ada McGrath, uma mulher muda com paixão ardente, é vendida em casamento para um fazendeiro na Nova Zelândia colonial. Seu instrumento, o piano, se torna sua voz enquanto ela navega amor, luto e rebelião.',
-  '1993': 'Um soldado volta para home de uma guerra no exterior carregando a culpa de suas ações. A paranoia e trauma o arrastam para um ciclo destruidor enquanto tenta readaptar-se à vida civil.',
-  '1992': 'Thelma e Louise, duas mulheres ordinárias cansadas de suas vidas, embarcam em uma fuga que se torna cada vez mais selvagem. Sua jornada de autodescobrimento desafia gênero e mortalidade.',
-  '1991': 'O fantasma de Sam Wheat retorna para o mundo dos vivos após seu assassinato. Usando uma médium com poderes, ele tenta salvar sua namorada Molly de forma sobrenatural e romântica.',
-  '1990': 'Professor Keating inspira seus alunos em uma escola preparatória de elite a "carpe diem" e pensar por si próprios. Seu ensinamento transforma gerações enquanto ele enfrenta a instituição conservadora.',
-  '1989': 'Raymond Babbit é um homem com autismo e deficiências intelectuais que é libertado de uma instituição. Sua jornada inesperada com seu irmão o revela como savant extraordinário enquanto ambos aprendem sobre conexão.',
-  '1988': 'Loretta Castorini é uma viúva de meia-idade em Brooklyn que se apaixona por seu futuro cunhado. A comédia romântica explora família italiana, tradição e oportunidades inesperadas de amor.',
-  '1987': 'As vidas interconectadas de um grupo de mulheres em Nova York se desenrolam com humor, melancolia e profundidade. Relacionamentos, carreiras e autossabotagem são explorados com gentileza.',
-  '1986': 'John Book é um policial que vive a vida dupla entre a comunidade Amish onde se esconde e o mundo criminal. Sua evolução pessoal desafia ambas as culturas que reclama como lar.',
-  '1985': 'Edna Spalding, viúva desesperada, torna-se fotoperiodista para sustentar sua família. Seu crescimento pessoal é inspirador enquanto ela documenta histórias humanas pelo mundo.',
-  '1984': 'Udall Hatch é um homem com deficiência que oferece sua vida para salvar seu juiz e professor. Seu sacrifício e redenção formam um drama musical comovente sobre conexão humana.',
-  '1983': 'A vida épica de Mahatma Gandhi é retratada desde sua transformação de advogado tímido até líder de uma revolução não-violenta. Sua jornada gegen o imperialismo britânico inspirou gerações.',
-  '1982': 'Dois atletas britânicos competem nas Olimpíadas de 1924 com razões diferentes. Um é judeu enfrentando preconceço; o outro busca honra. Sua histórias de determinação exploram classe e discriminação.',
-  '1981': 'Um homem ordinário ganha o jackpot da loteria mas enfrenta tentações de sua comunidade. Seu infortúnio financeiro inesperado testa sua moralidade e relacionamentos.',
-  '1980': 'Dave Stohler é um garotinho talentoso que descobre seu amor por ciclismo em um verão transformador. Seu crescimento pessoal reflete juventude americana e possibilidades.',
-  '1979': 'Dois amantes soldados, um americano e uma vietnamita, são separados pela guerra. Sua correspondência épica reflete o impacto humano do conflito vietnamita.',
-  '1978': 'Annie Hall é uma mulher sofisticada em Nova York que navega amor, carreira e identidade. Sua relação com Alvy Singer captura a melancolia romântica e autossabotagem urbana.',
-  '1977': 'Howard Beale, âncora de notícias enlouquecido, desencadeia uma revolta cultural contra a corrupção corporativa. Seu manifesto profético questiona realidade e ratings televisivos.',
-  '1976': 'Frank Morris, um gênio criminoso, é confinado em Alcatraz. Sua fuga audaciosa é um testamento de inteligência, determinação e esperança contra sistemas opressivos.',
-  '1975': 'Jake Gittes é um detetive particular envolvido em um caso aparentemente simples que desmorona em conspiraçãoo e corrupção. Seu desespero crescente reflete injustiça sistêmica.',
-  '1974': 'Dois comparsas de sucesso que roubam principalmente executam uma string of elaborate cons culminando em seu maior golpe. Sua química e confiança mantêm histórias envolventes.',
-  '1973': 'Um homem ordinário se candidata a prefeito em uma pequena cidade e descobre a corrupção sistêmica da política local. Seu idealismo enfrenta pragmatismo e compromisso moral.',
-  '1972': 'Um hospital urbano é o palco para diárias morais enquanto médicos e pacientes enfrentam vida e morte. Suas histórias entrelaçadas revelam humanidade no caos médico.',
-  '1971': 'General George Patton lidera tropas americanas na Europa durante a II Guerra Mundial. Seu carisma, ambição e lealdade moldam campanhas que mudam o curso da guerra.',
-  '1970': 'Butch Cassidy e o Sundance Kid são ladrões de trem encantadores enfrentando progresso inevitável. Sua amizade e humor definem clássicos westerns enquanto fogem do fim.',
-  '1969': 'Dois produtores de teatro nervosos financiam uma peça sobre a história de Hitler esperando fracassar. Sua conspiração se transforma em sucesso inesperado em um cabaré absurdo.',
-  '1968': 'Joanna Drayton leva seu namorado negro para conhecer sua família branca saudável durante a era dos direitos civis. As dinâmicas raciais e familiares criam comédia e tensão genuína.',
-  '1967': 'Um homem é executado injustamente por um crime que não cometeu. Sua busca por vingança atravessa fronteiras enquanto confronta assassinos e injustiça sistêmica.',
-  '1966': 'Uma mulher britânica é seduzida e manipulada por um estranho em um jogo perigoso e erótico. Seu poder desaparece conforme ela se afunda mais profundamente em obsessão e risco.',
-  '1965': 'Um viúvo militar e uma viúva ao seu lado formam uma ligação tocante enquanto enfrentam solidão. Seu romance nascente é gentil, melancolicamente esperançoso.',
-  '1964': 'A jornada épica de construir a primeira ferrovia transcontinental americana é retratada com escala cinematográfica. Seus engenheiros, capitalistas e operários moldam o destino manifesto.',
-  '1963': 'Um marido italiano engana sua esposa repetidamente enquanto ela planeja sua vingança criativa. Seu divórcio é tanto cômico quanto corrosivo, refletindo dinâmicas matrimoniais decadentes.',
-  '1962': 'Um menino jovem anseia por experiências sexuais enquanto sua namorada abastada o observa com afeição proteora. Seus namoros exploram adolescência, classe e inocência perdida.',
-  '1961': 'C.C. Baxter é gerente de apartamento envolvido em políticas corporativas corruptas. Sua jornada moral desafia conformidade enquanto ele confronta favoritismo executivo.',
-  '1960': 'Um compositor apaixonado compõe uma música para uma mulher que o rejeita. Seu romance não retornado é expresso através de melodia inesquecível e nostalgia eterna.',
-  '1959': 'Dois homens negros são acusados de estupro em um julgamento explosivo no sul segregacionista. Sua defesa legal é um testamento contra preconceito racial institucionalizado.',
-  '1958': 'Uma mulher confronta inseguranças sobre seu corpo e feminilidade. Sua jornada de autoaceitação é tocante enquanto ela redescobre confiança em si mesma.',
-  '1957': 'Um balão vermelho mágico segue um menino pela Paris poética. Seu relacionamento imaginário é alegoria tocar sobre infância, inocência e beleza perdida.',
-  '1956': 'Uma mulher recupera sua vida e carreira de concertina após sofrer um acidente devastador. Sua resiliência é musical e inspiradora enquanto ela confronta limitações físicas.',
-  '1955': 'Um fazendeiro enfrenta conflitos familiares profundos em seu rancho. Suas relacionamentos complexos revelam tensões sobre herança, honra e lealdade.',
-  '1954': 'Os passageiros do Titanic enfrentam seus destinos conforme o navio afunda no Atlântico. Suas histórias entrelaçadas revelam classe, coragem e sacrifício durante o desastre.',
-  '1953': 'Criminosos sofisticados planejam o roubo perfeito na famosa Colina Lavanda. Sua execução elaborada é um testamento à inteligência criminal e diversão astuta.',
-  '1952': 'Um soldado americano e uma bailarina francesa se apaixonam em Paris pós-guerra. Seu romance transatlântico é musical e bittersweet enquanto navegam destinos separados.',
-  '1951': 'Norma Desmond, estrela de cinema esquecida, vive reclusivamente enquanto um jovem roteirista a explora. Seu descenso à loucura retrata obsessão e declínio de Hollywood.',
-  '1950': 'Soldados americanos experimentam a realidade brutal da Guerra da Coreia. Suas histórias revelam humanidade sob fogo enquanto eles navegam moralidade em guerra.',
-  '1949': 'Uma mãe pesquisa desesperadamente por seu filho perdido durante a II Guerra Mundial. Sua jornada emocional transcontinental é um testamento ao amor materno inabalável.',
-  '1948': 'Um sargento experiente se apaixona por uma mulher jovem em uma base militar americana. Seu romance militar testa lealdade entre dever e coração.',
-  '1947': 'Uma mulher heroicamente esconde um desertor da Gestapo durante a ocupação nazista da Europa. Seu sacrifício é um testamento à coragem humana contra tirania.',
-  '1946': 'Duas meninas se conhecem na Suíça durante a guerra e desenvolvem amizade profunda. Seu relacionamento especial captura inocência ameaçada pelo conflito global.',
-  '1945': 'O presidente Franklin D. Roosevelt lidera a nação através da Grande Depressão e II Guerra Mundial. Seu liderança persistente molda o século americano.',
-  '1944': 'Uma mulher criativa se disfarça para evitar um casamento indesejado. Sua fuga e romance subsequente celebram agência feminina com humor e encanto.',
-  '1943': 'Uma mulher rivalizacom seu colega de trabalho pelo amor de um homem em contexto corporativo. Seu triângulo amoroso reflete dinâmicas de gênero e poder no local de trabalho.',
-  '1942': 'Charles Foster Kane é um magnata poderoso que controla a vida em sua pequena cidade americana. Seu império de ilusão desmorona conforme seus segredos são revelados.',
-  '1941': 'Um homem simples cuja lealdade é explorada se torna governador através de maquinações políticas. Sua ascensão retrata corrupção política e ambição mal orientada.',
-  '1940': 'Um cidadão comum confronta o sistema político aterrorizado por corrupção. Seu discurso apaixonado em defesa da democracia permanece atemporal em relevância.'
+  'Jacob\'s Ladder': 'Um veterano da Guerra do Vietnã retorna a Nova York assombrado por alucinações perturbadoras e pesadelos cada vez mais intensos que desafiam sua sanidade e realidade.',
+  'Leviticus': 'Um drama psicológico envolvido em mistério e horror, explorando temas de religião, trauma e a fragilidade da mente humana.',
+  'Her Private Hell': 'Uma exploração sombria da psique feminina em um romance gótico que combina sedução com horror latente.',
+  'The Love Witch': 'Uma bruxaria moderna disfarçada de contos de fadas, onde uma mulher sedutora navega amor e magia em um mundo que não a compreende.',
+  'Phenomena': 'Uma jovem com o dom de comunicar-se com insetos se vê envolvida em uma série de rituais de morte em uma escola de balé suíça.',
+  'Deep Red': 'Um compositor testemunha um assassinato brutal e entra em uma teia de morte, conspiração e misério arquitetado de forma meticulosa.',
+  'Phantom of the Paradise': 'Um retorcimento moderno do clássico, onde um compositor desprezado se torna um monstro mascarado em um teatro de depravação.',
+  'The Fly': 'Um cientista se transforma gradualmente em uma criatura de inseto em uma exploração visceral de desumanização e perda de controle.',
+  'mother!': 'Uma mulher enfrenta um caos crescente quando sua casa é invadida por visitantes perturbadores em um filme de horror alucinógeno e alegórico.',
+  'Bones and All': 'Dois canibais marginalizados navegam o Midwest americano em um romance sombrio de amor, fome e sobrevivência à margem da sociedade.',
+  'Stoker': 'Uma menina órfã recebe a visita de um tio misterioso cuja presença desencadeia perturbações psicológicas e eróticas inquietantes.',
+  'Hereditary': 'Uma família é assombrada por segredos ocultos e presenças malignas que se revelam em um horror desesperador e verdadeiramente terrível.',
+  'Alice': 'Uma exploração surrealista e perturbadora de um conto infantil, onde o horror emerge das fraturas da imaginação.',
+  'Frankenstein': 'A tragédia seminal da criatura rejeitada, um testamento ao medo da imortalidade e consequências da ambição desmedida.',
+  'Don\'t Look Now': 'Um casal em luto em Veneza é perseguido por presenças espectrais e sinais perturbadores em um thriller de horror psicológico.',
+  'Lisa Frankenstein': 'Uma reinterpretação moderna e gótica do mito Frankenstein com humor negro e romance sombrio.',
+  'Freaks': 'Circo de horrores onde pessoas com deficiências físicas se tornam personagens perturbadores em uma narrativa de vingança e depravação.',
+  'Audition': 'Um homem viúvo busca amor em uma audição de cinema que se desdobra em tortura visceral e pesadelo psicológico.',
+  'Interview with the Vampire': 'Vampiros existem nas sombras da história humana em um épico gótico de sedução, condenação e imortalidade sofrida.',
+  'Nosferatu': 'O conde Orlock, vampiro ancestral, persegue uma cidade em pânico no clássico silencioso que definiu o horror cinematográfico.',
+  'Pulse': 'Computadores infectados por uma entidade sobrenatural transmitem morte através do ciberespaço em um horror tecnológico genuinamente perturbador.',
+  'Jennifer\'s Body': 'Uma adolescente é possuída por um demônio e se torna um predador em uma sátira de horror punk e feminismo perturbado.',
+  'Trouble Every Day': 'Recém-casados navegam Paris enquanto uma mulher sofre de um transtorno que a torna uma predadora canibal violenta.',
+  'Bloody Muscle Body Builder in Hell': 'Uma exploração extrema e transgressor de horror visual onde o corpo humano é destruído em rituais obscenos.',
+  'Godzilla': 'Uma criatura atômica emerge do oceano para devastar o Japão em metáfora poderosa sobre guerra nuclear e destruição.',
+  'Opus': 'Um compositor experimenta loucura e obsessão em busca de sua obra perfeita em um thriller psicológico perturbador.',
+  'Altered States': 'Um cientista experimenta com privação sensorial e drogas psicodélicas, desencadeando transformações evolucionárias e monstruosas.',
+  'Late Night with the Devil': 'Um programa de TV noturno descende ao caos quando forças sobrenaturais invadem a transmissão em tempo real.',
+  'Saint Maud': 'Uma enfermeira religiosa desenvolve obsessão violenta por sua paciente em um horror psicológico de fé corrompida.',
+  'Nope': 'Um casal de cineastas enfrenta um fenômeno aéreo alienígena e perturbador em um Western de ficção científica e horror.',
+  'Kinds of Kindness': 'Histórias entrelaçadas exploram a perversidade humana e o horror de relacionamentos tóxicos em comunidades isoladas.'
 };
 
 async function fetchPosterUrl(year, title) {
   const cacheKey = `${year}-${title}`;
-  
   if (posterCache.has(cacheKey)) {
     return posterCache.get(cacheKey);
   }
 
   try {
-    const searchTitle = MOVIE_SEARCH[year] || title;
-    const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(searchTitle)}&year=${year}&language=pt-BR`;
+    let query = title;
+    if (year && year !== '') {
+      query += ` ${year}`;
+    }
     
+    const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US`;
     const response = await fetch(url, {
       headers: {
         'Authorization': `Bearer ${TMDB_ACCESS_TOKEN}`,
         'Content-Type': 'application/json'
       }
     });
-    
     const data = await response.json();
-    
     if (data.results && data.results.length > 0) {
       const posterPath = data.results[0].poster_path;
       if (posterPath) {
@@ -793,7 +829,6 @@ async function fetchPosterUrl(year, title) {
         return posterUrl;
       }
     }
-    
     return null;
   } catch (error) {
     console.warn(`Erro ao buscar capa para ${title} (${year}):`, error);
@@ -803,32 +838,19 @@ async function fetchPosterUrl(year, title) {
 
 function generateFallbackPoster(year, title) {
   const colors = [
-    ['#1a1a2e', '#16213e', '#e94560'],
-    ['#0c0c1d', '#1a1a3e', '#f5a623'],
-    ['#1e0a1e', '#3d0c3d', '#d4af37'],
-    ['#0a1a1a', '#0d2a2a', '#48c774'],
-    ['#1a0a0a', '#3d1515', '#e74c3c'],
-    ['#0a0a2a', '#1a1a4a', '#3498db'],
+    ['#070708', '#0d0d15', '#c1121f'],
+    ['#07152f', '#123c78', '#c1121f'],
+    ['#0d0d0d', '#1a1a1a', '#8f0712'],
+    ['#070708', '#0d1a1d', '#123c78'],
+    ['#1a0a0a', '#2a1515', '#c1121f'],
+    ['#0a0a2a', '#15152a', '#8f0712']
   ];
-  const idx = (parseInt(year) + title.length) % colors.length;
+  
+  const idx = (parseInt(year || 0) + title.length) % colors.length;
   const [bg1, bg2, accent] = colors[idx];
   const shortTitle = title.length > 28 ? title.substring(0, 25) + '...' : title;
   
-  return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E
-    %3Cdefs%3E
-      %3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E
-        %3Cstop offset='0%25' stop-color='${bg1}'/%3E
-        %3Cstop offset='100%25' stop-color='${bg2}'/%3E
-      %3C/linearGradient%3E
-    %3C/defs%3E
-    %3Crect width='300' height='450' fill='url(%23g)'/%3E
-    %3Crect x='10' y='10' width='280' height='430' fill='none' stroke='${accent}' stroke-width='2' opacity='0.3' rx='8'/%3E
-    %3Ctext x='50%25' y='40%25' font-family='Barlow Condensed, sans-serif' font-weight='700' font-size='60' fill='${accent}' text-anchor='middle' dominant-baseline='middle' opacity='0.8'%3E🎬%3C/text%3E
-    %3Ctext x='50%25' y='55%25' font-family='Playfair Display, serif' font-weight='700' font-size='18' fill='%23f6ead0' text-anchor='middle' dominant-baseline='middle'%3E${shortTitle}%3C/text%3E
-    %3Ctext x='50%25' y='70%25' font-family='Barlow Condensed, sans-serif' font-weight='600' font-size='14' fill='rgba(255,255,255,0.4)' text-anchor='middle' dominant-baseline='middle'%3E${year}%3C/text%3E
-    %3Crect x='0' y='0' width='300' height='6' fill='${accent}' opacity='0.5'/%3E
-    %3Crect x='0' y='444' width='300' height='6' fill='${accent}' opacity='0.5'/%3E
-  %3C/svg%3E`;
+  return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='450'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='${bg1}'/%3E%3Cstop offset='100%25' stop-color='${bg2}'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='300' height='450' fill='url(%23g)'/%3E%3Crect x='10' y='10' width='280' height='430' fill='none' stroke='${accent}' stroke-width='2' opacity='0.4' rx='6'/%3E%3Ctext x='50%25' y='35%25' font-family='Playfair Display, serif' font-weight='700' font-size='48' fill='${accent}' text-anchor='middle' dominant-baseline='middle' opacity='0.6'%3E●%3C/text%3E%3Ctext x='50%25' y='55%25' font-family='Playfair Display, serif' font-weight='700' font-size='16' fill='${accent}' text-anchor='middle' dominant-baseline='middle'%3E${shortTitle}%3C/text%3E%3Ctext x='50%25' y='70%25' font-family='Barlow Condensed, sans-serif' font-weight='600' font-size='13' fill='rgba(255,255,255,0.35)' text-anchor='middle' dominant-baseline='middle'%3E${year}%3C/text%3E%3Crect x='0' y='0' width='300' height='4' fill='${accent}' opacity='0.6'/%3E%3Crect x='0' y='446' width='300' height='4' fill='${accent}' opacity='0.6'/%3E%3C/svg%3E`;
 }
 
 function loadPosterIntoElement(element, year, title) {
@@ -855,96 +877,46 @@ function loadPosterIntoElement(element, year, title) {
 }
 
 const MOVIES = [
-["2026","Sinners"],
-["2025","Anora"],
-["2024","Anatomy of a Fall"],
-["2023","Everything Everywhere All at Once"],
-["2022","Belfast"],
-["2021","Promising Young Woman"],
-["2020","Parasite"],
-["2019","Green Book"],
-["2018","Get Out"],
-["2017","Manchester by the Sea"],
-["2016","Spotlight"],
-["2015","Birdman or (The Unexpected Virtue of Ignorance)"],
-["2014","Her"],
-["2013","Django Unchained"],
-["2012","Midnight in Paris"],
-["2011","The King's Speech"],
-["2010","The Hurt Locker"],
-["2009","Milk"],
-["2008","Juno"],
-["2007","Little Miss Sunshine"],
-["2006","Crash"],
-["2005","Eternal Sunshine of the Spotless Mind"],
-["2004","Lost in Translation"],
-["2003","Talk to Her"],
-["2002","Gosford Park"],
-["2001","Almost Famous"],
-["2000","American Beauty"],
-["1999","Shakespeare in Love"],
-["1998","Good Will Hunting"],
-["1997","Fargo"],
-["1996","The Usual Suspects"],
-["1995","Pulp Fiction"],
-["1994","The Piano"],
-["1993","The Crying Game"],
-["1992","Thelma & Louise"],
-["1991","Ghost"],
-["1990","Dead Poets Society"],
-["1989","Rain Man"],
-["1988","Moonstruck"],
-["1987","Hannah and Her Sisters"],
-["1986","Witness"],
-["1985","Places in the Heart"],
-["1984","Tender Mercies"],
-["1983","Gandhi"],
-["1982","Chariots of Fire"],
-["1981","Melvin and Howard"],
-["1980","Breaking Away"],
-["1979","Coming Home"],
-["1978","Annie Hall"],
-["1977","Network"],
-["1976","Dog Day Afternoon"],
-["1975","Chinatown"],
-["1974","The Sting"],
-["1973","The Candidate"],
-["1972","The Hospital"],
-["1971","Patton"],
-["1970","Butch Cassidy and the Sundance Kid"],
-["1969","The Producers"],
-["1968","Guess Who's Coming to Dinner"],
-["1967","A Man for All Seasons"],
-["1966","Darling"],
-["1965","Father Goose"],
-["1964","How the West Was Won"],
-["1963","Divorce Italian Style"],
-["1962","Splendor in the Grass"],
-["1961","The Apartment"],
-["1960","Pillow Talk"],
-["1959","The Defiant Ones"],
-["1958","Designing Woman"],
-["1957","The Red Balloon (roteiro original)"],
-["1956","Interrupted Melody"],
-["1955","Broken Lance"],
-["1954","Titanic (1953)"],
-["1953","The Lavender Hill Mob"],
-["1952","An American in Paris"],
-["1951","Sunset Boulevard"],
-["1950","Battleground"],
-["1949","The Search"],
-["1948","Bachelor and the Bobby-Soxer"],
-["1947","The Seventh Veil"],
-["1946","Marie-Louise"],
-["1945","Wilson"],
-["1944","Princess O'Rourke"],
-["1943","Woman of the Year"],
-["1942","Citizen Kane"],
-["1941","The Great McGinty"],
-["1940","Mr. Smith Goes to Washington"],
-].map(([year,title]) => ({ id: year, year, title }));
+  ["1990", "Jacob's Ladder"],
+  ["", "Leviticus"],
+  ["1968", "Her Private Hell"],
+  ["2016", "The Love Witch"],
+  ["1985", "Phenomena"],
+  ["1975", "Deep Red"],
+  ["1974", "Phantom of the Paradise"],
+  ["1986", "The Fly"],
+  ["2017", "mother!"],
+  ["2022", "Bones and All"],
+  ["2013", "Stoker"],
+  ["2018", "Hereditary"],
+  ["1988", "Alice"],
+  ["", "Frankenstein"],
+  ["1973", "Don't Look Now"],
+  ["2024", "Lisa Frankenstein"],
+  ["1932", "Freaks"],
+  ["1999", "Audition"],
+  ["1931", "Frankenstein"],
+  ["1994", "Interview with the Vampire"],
+  ["1922", "Nosferatu"],
+  ["2001", "Pulse"],
+  ["2009", "Jennifer's Body"],
+  ["2001", "Trouble Every Day"],
+  ["2012", "Bloody Muscle Body Builder in Hell"],
+  ["1954", "Godzilla"],
+  ["2025", "Opus"],
+  ["1980", "Altered States"],
+  ["2023", "Late Night with the Devil"],
+  ["2019", "Saint Maud"],
+  ["2022", "Nope"],
+  ["2024", "Kinds of Kindness"]
+].map(([year, title], index) => ({
+  id: `${index}-${year}-${title}`,
+  year,
+  title
+}));
 
-const STORAGE_KEY = 'oscar-roulette-state-v6';
+const STORAGE_KEY = 'horror-roulette-state-v1';
+
 let state = null;
 let spinning = false;
 let dragging = false;
@@ -972,28 +944,33 @@ const els = {
   btnConfirm: document.getElementById('btnConfirm'),
   btnCancel: document.getElementById('btnCancel'),
   resetBtn: document.getElementById('resetBtn'),
-  reelGate: document.getElementById('reelGate'),
+  reelGate: document.getElementById('reelGate')
 };
 
-function loadState(){
-  const saved=localStorage.getItem(STORAGE_KEY);
-  if(saved){state=JSON.parse(saved);} else {state={pending:MOVIES.map(m=>({...m})),watched:[]};saveState();}
+function loadState() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) {
+    state = JSON.parse(saved);
+  } else {
+    state = { pending: MOVIES.map(m => ({...m})), watched: [] };
+    saveState();
+  }
 }
 
-function saveState(){
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-function shuffle(arr){
+function shuffle(arr) {
   const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]] = [a[j],a[i]];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
 }
 
-function makeCard(movie){
+function makeCard(movie) {
   const d = document.createElement('div');
   d.className = 'reel-card';
   d.dataset.year = movie.year;
@@ -1023,70 +1000,75 @@ function makeCard(movie){
   return d;
 }
 
-function renderStaticReel(){
+function renderStaticReel() {
   els.reelTrack.style.transition = 'none';
   els.reelTrack.style.transform = 'translateX(0)';
   currentTranslate = 0;
   els.reelTrack.innerHTML = '';
-  const showList = state.pending.length ? state.pending : [{year:'', title:'Sem filmes'}];
+  
+  const showList = state.pending.length ? state.pending : [{year: '', title: 'Sem filmes'}];
   const display = shuffle(showList).slice(0, 12);
   const cycle = display.concat(display).concat(display);
+  
   cycle.forEach(m => els.reelTrack.appendChild(makeCard(m)));
 }
 
-function updateCounter(){
-  els.counterText.textContent = `${state.pending.length} Filmes · ${state.watched.length} Assistidos`;
+function updateCounter() {
+  els.counterText.textContent = `${state.pending.length} filmes · ${state.watched.length} assistidos`;
 }
 
-function renderLists(){
+function renderLists() {
   updateCounter();
+  
   els.listPending.innerHTML = '';
-  if(state.pending.length === 0){
-    els.listPending.innerHTML = '<div class="empty-list">Nenhum filme pra assistir. Você viu tudo! 🎉</div>';
+  if (state.pending.length === 0) {
+    els.listPending.innerHTML = '<div class="empty-list">Nenhum filme para assistir. Todos foram vistos!</div>';
   } else {
-    state.pending.slice().sort((a,b)=> b.year - a.year).forEach(m => {
+    state.pending.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year)).forEach(m => {
       const row = document.createElement('div');
       row.className = 'movie-row';
-      row.innerHTML = `<span class="badge-year">${m.year}</span><span class="m-title">${m.title}</span>`;
+      row.innerHTML = `<span class="badge-year">${m.year || '—'}</span><span class="m-title">${m.title}</span>`;
       els.listPending.appendChild(row);
     });
   }
-
+  
   els.listWatched.innerHTML = '';
-  if(state.watched.length === 0){
+  if (state.watched.length === 0) {
     els.listWatched.innerHTML = '<div class="empty-list">Nenhum filme assistido ainda.</div>';
   } else {
-    state.watched.slice().sort((a,b)=> b.year - a.year).forEach(m => {
+    state.watched.slice().sort((a, b) => parseInt(b.year) - parseInt(a.year)).forEach(m => {
       const row = document.createElement('div');
       row.className = 'movie-row';
-      const starsHtml = [1,2,3,4,5].map(n =>
-        `<button data-id="${m.id}" data-n="${n}" class="star-edit ${n <= (m.rating||0) ? 'filled' : ''}">★</button>`
+      const starsHtml = [1, 2, 3, 4, 5].map(n =>
+        `<button data-id="${m.id}" data-n="${n}" class="star-edit ${n <= (m.rating || 0) ? 'filled' : ''}">★</button>`
       ).join('');
       row.innerHTML = `
-        <span class="badge-year">${m.year}</span>
+        <span class="badge-year">${m.year || '—'}</span>
         <span class="m-title">${m.title}</span>
         <span class="stars">${starsHtml}</span>
         <button class="undo-btn" data-id="${m.id}">voltar</button>
       `;
       els.listWatched.appendChild(row);
     });
+    
     els.listWatched.querySelectorAll('.star-edit').forEach(btn => {
       btn.addEventListener('click', async () => {
         const id = btn.dataset.id, n = Number(btn.dataset.n);
         const movie = state.watched.find(x => x.id === id);
-        if(movie) {
+        if (movie) {
           movie.rating = (movie.rating === n) ? 0 : n;
           saveState();
           renderLists();
         }
       });
     });
+    
     els.listWatched.querySelectorAll('.undo-btn').forEach(btn => {
       btn.addEventListener('click', async () => {
         const id = btn.dataset.id;
         const idx = state.watched.findIndex(x => x.id === id);
-        if(idx > -1) {
-          const [m] = state.watched.splice(idx,1);
+        if (idx > -1) {
+          const [m] = state.watched.splice(idx, 1);
           delete m.rating;
           state.pending.push(m);
           saveState();
@@ -1099,13 +1081,13 @@ function renderLists(){
   }
 }
 
-function toggleEmptyState(){
+function toggleEmptyState() {
   const empty = state.pending.length === 0;
   els.spinBtn.style.display = empty ? 'none' : 'block';
   els.emptyMsg.style.display = empty ? 'block' : 'none';
 }
 
-function switchTab(which){
+function switchTab(which) {
   const p = which === 'pending';
   els.tabPending.classList.toggle('active', p);
   els.tabWatched.classList.toggle('active', !p);
@@ -1113,26 +1095,25 @@ function switchTab(which){
   els.listWatched.style.display = p ? 'none' : 'block';
 }
 
-function buildRateStars(container, initial, onChange){
+function buildRateStars(container, initial, onChange) {
   container.innerHTML = '';
-  for(let n=1;n<=5;n++){
+  for (let n = 1; n <= 5; n++) {
     const b = document.createElement('button');
     b.textContent = '★';
     b.dataset.n = n;
-    if(n <= initial) b.classList.add('filled');
+    if (n <= initial) b.classList.add('filled');
     b.addEventListener('click', () => onChange(n));
     container.appendChild(b);
   }
 }
 
-function refreshTicketStars(){
+function refreshTicketStars() {
   buildRateStars(els.ticketStars, pendingRating, (n) => {
     pendingRating = (pendingRating === n) ? 0 : n;
     refreshTicketStars();
   });
 }
 
-// INTERAÇÃO COM ARRASTO
 const cardWidth = 148, gap = 10, step = cardWidth + gap;
 const gateWidth = els.reelGate.clientWidth;
 
@@ -1156,16 +1137,12 @@ function onDragEnd(e) {
   if (!dragging) return;
   dragging = false;
   els.reelGate.classList.remove('dragging');
-  
   currentTranslate += dragOffset;
-  
   const snappedIndex = Math.round(currentTranslate / step);
   const snappedTranslate = snappedIndex * step;
-  
   currentTranslate = snappedTranslate;
   els.reelTrack.style.transition = 'transform 0.3s ease-out';
   els.reelTrack.style.transform = `translateX(-${snappedTranslate}px)`;
-  
   dragOffset = 0;
 }
 
@@ -1176,14 +1153,15 @@ document.addEventListener('touchmove', onDragMove);
 document.addEventListener('mouseup', onDragEnd);
 document.addEventListener('touchend', onDragEnd);
 
-async function spin(){
-  if(spinning || state.pending.length === 0) return;
+async function spin() {
+  if (spinning || state.pending.length === 0) return;
+  
   spinning = true;
   els.spinBtn.disabled = true;
-
+  
   const targetIndex = Math.floor(Math.random() * state.pending.length);
   const target = state.pending[targetIndex];
-
+  
   let sequence = [];
   const otherMovies = state.pending.filter(m => m.id !== target.id);
   
@@ -1196,58 +1174,62 @@ async function spin(){
   }
   
   sequence.push(target);
-
+  
   els.reelTrack.style.transition = 'none';
   els.reelTrack.style.transform = 'translateX(0)';
   currentTranslate = 0;
   els.reelTrack.innerHTML = '';
+  
   sequence.forEach(m => els.reelTrack.appendChild(makeCard(m)));
-
+  
   void els.reelTrack.offsetWidth;
-
+  
   const targetIdxInSeq = sequence.length - 1;
-  const targetCenter = 10 + targetIdxInSeq * step + cardWidth/2;
-  const offset = targetCenter - gateWidth/2;
-
+  const targetCenter = 10 + targetIdxInSeq * step + cardWidth / 2;
+  const offset = targetCenter - gateWidth / 2;
+  
   currentTranslate = offset;
-
+  
   requestAnimationFrame(() => {
-    els.reelTrack.style.transition = 'transform 4.4s cubic-bezier(0.10,0.68,0.14,1)';
+    els.reelTrack.style.transition = 'transform 4.4s cubic-bezier(0.10, 0.68, 0.14, 1)';
     els.reelTrack.style.transform = `translateX(-${offset}px)`;
   });
-
+  
   const onEnd = () => {
     els.reelTrack.removeEventListener('transitionend', onEnd);
     spinning = false;
     els.spinBtn.disabled = false;
     openTicket(target);
   };
+  
   els.reelTrack.addEventListener('transitionend', onEnd);
 }
 
-function openTicket(movie){
+function openTicket(movie) {
   pendingTarget = movie;
   pendingRating = 0;
+  
   els.ticketTitle.textContent = movie.title;
-  els.ticketYear.textContent = `Vencedor de ${movie.year}`;
-  els.ticketSynopsis.textContent = SYNOPSES[movie.year] || 'Sinopse não disponível.';
+  els.ticketYear.textContent = movie.year ? `${movie.year}` : '—';
+  els.ticketSynopsis.textContent = SYNOPSES[movie.title] || 'Sinopse não disponível.';
   
   loadPosterIntoElement(els.ticketPoster, movie.year, movie.title);
-  
   refreshTicketStars();
+  
   els.overlay.classList.add('show');
 }
 
-function closeTicket(){
+function closeTicket() {
   els.overlay.classList.remove('show');
   pendingTarget = null;
 }
 
-async function confirmTicket(){
-  if(!pendingTarget) return;
+async function confirmTicket() {
+  if (!pendingTarget) return;
+  
   const idx = state.pending.findIndex(m => m.id === pendingTarget.id);
-  if(idx > -1){
-    const [m] = state.pending.splice(idx,1);
+  if (idx > -1) {
+    const [m] = state.pending.splice(idx, 1);
     m.rating = pendingRating;
     state.watched.push(m);
     saveState();
@@ -1255,11 +1237,13 @@ async function confirmTicket(){
     renderStaticReel();
     toggleEmptyState();
   }
+  
   closeTicket();
 }
 
-async function resetAll(){
-  if(!confirm('Isso vai apagar todo o progresso e restaurar a lista original. Continuar?')) return;
+async function resetAll() {
+  if (!confirm('Isso vai apagar todo o progresso e restaurar a lista original. Continuar?')) return;
+  
   state = { pending: MOVIES.map(m => ({...m})), watched: [] };
   saveState();
   renderLists();
@@ -1274,12 +1258,13 @@ els.tabPending.addEventListener('click', () => switchTab('pending'));
 els.tabWatched.addEventListener('click', () => switchTab('watched'));
 els.resetBtn.addEventListener('click', resetAll);
 
-(async function init(){
+(async function init() {
   loadState();
   renderLists();
   renderStaticReel();
   toggleEmptyState();
 })();
 </script>
+
 </body>
 </html>
